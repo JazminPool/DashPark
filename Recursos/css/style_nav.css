@@ -1,0 +1,85 @@
+
+/*Propiedades del lado izquierdo de login*/
+    #izquierda-index .navbar-nav .nav-item .nav-link{
+        font-weight:400;
+        text-transform:uppercase;
+    }
+    @media (min-width:992px){
+        #izquierda-index{
+            text-align:center;
+            position:fixed;
+            top:0; left:0; display:flex; flex-direction:column;
+            width:42rem; /*Empieza el nav*/
+            height:100vh
+        }
+        #izquierda-index .navbar-brand{display:flex;margin:auto auto 0;padding:.5rem}
+        #izquierda-index .navbar-brand .img-profile{
+            max-width:10rem;max-height:10rem;border:.5rem solid rgba(255,255,255,.2)}
+        #izquierda-index .navbar-collapse{
+            display:flex;align-items:flex-start;flex-grow:0;width:100%;margin-bottom:auto}
+        #izquierda-index .navbar-collapse .navbar-nav{flex-direction:column;width:100%}
+        #izquierda-index .navbar-collapse .navbar-nav .nav-item{display:block}
+        #izquierda-index .navbar-collapse .navbar-nav .nav-item .nav-link{display:block}
+    }
+/***Propiedades lado derecho del login******/
+    .body-index{
+        padding-top:54px;
+    }
+    @media (min-width:992px){
+    .body-index{
+        padding-top:0;
+        padding-left:42rem /*Empieza cuerpo*/
+    }
+    }
+/*cuerpo principal lado derecho del nav*/
+    .cuerpo{  background-color: #f6f7f8; /*f6f7f8*/ }
+
+
+/*Color del nav*/
+.bg-primary{background-color:#9b423c!important} /*#ed8b43, #154677  */
+
+
+    
+/*Propiedades de modal*/    
+    .modal-header-color-edit{
+        background-color: #17a2b8;
+    }
+    .modal-header-color-add{
+        background-color: rgb(99, 197, 6);
+    }
+    .modal-title-edit{
+        color: #f6f7f8;
+    }
+
+
+
+/*Propiedades de las fuentes*/
+    .txt_center{
+        text-align: center;
+    }
+    .fuente_monse{
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 300;
+    }
+    .fuente_uppercase{ text-transform: uppercase; }
+    
+    .fuente_especial{ color: #6f6ff9; }
+    
+    .lorena{  color: rgb(27, 27, 27); }
+
+    .link-font{
+        color: rgb(255, 255, 255) !important;
+    }
+    .link-font:hover{
+        color: rgb(8, 8, 8) !important;
+    }
+    
+    .vertical_centro{
+        vertical-align: middle;
+        text-align: center;
+    }
+
+
+
+/*<div class="row align-items-start"> eso es para alinear los items al centro
+<div class="row align-items-center">*/

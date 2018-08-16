@@ -1,0 +1,148 @@
+body {
+    /*font-family: 'Raleway', sans-serif;*/
+    font-family: 'Quicksand', sans-serif;
+}
+.body_bg{
+    background-color:#00bcd4;
+}
+.bg_content{
+	background-color: #e6e6e6;
+}
+/*Tabla corte final*/
+.text_table{
+	font-size: 12px;
+}
+
+/*CONTENIDO*/
+.main {
+	margin-top: 70px;
+    margin-left: 195px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+.padcar{
+	padding: 15px;
+}
+small{
+	color: #a75911 !important;
+}
+.inp_caj{
+	font-size: 20px;
+	color: #302c29 !important;
+	width: 100%;
+	border: none;
+    border-bottom: 2px solid #ffc107;
+}
+.inp_caj:hover{
+	border-bottom-color: #f0b810;
+}
+
+
+/*HEADER Y NAV*/
+.header{
+	top: 0;
+	background: #373a3a;
+	border-bottom: 1px solid #17191a;
+	position: fixed;
+	left: 0;
+	right: 0;
+	z-index: 300;
+	min-height: 60px;
+	padding: 0 15px;
+}
+.logo{
+	color: white !important;
+	font-family: 'Raleway', sans-serif;
+	font-size: 25px;
+	float: left;
+	margin-top: 15px;
+	font-weight: 700;
+	cursor: pointer;
+}
+.logo:hover{
+	color: #278b7b !important;
+}
+.btn_logout{
+	float: right;
+	margin-top: 12px;
+}
+
+.sidenav {
+	border-right: 1px solid #17191a;
+    height: 100%; /*Alto*/
+    width: 195px; /*Ancho*/
+    position: fixed;
+    z-index: 1;
+    top: 60px;
+    left: 0;
+    background-color: #101111;
+    overflow-x: hidden;
+    padding-top: 10px;
+}
+.icon_nav{
+	padding: 6px 8px 6px 5px;
+	text-decoration: none;
+}
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	border-bottom: 1px solid #0d0e0e;
+    font-size: 20px;
+    color: #dadada;
+    display: block;
+}
+.sidenav a:hover {
+	background-color: #5e5e5e5d;
+	border-bottom: 1px solid #122222;
+    color: #278b7b;
+}
+
+
+/*LOGIN*/
+.contenedor{
+	left: 50%;
+	margin-left: -200px;
+}
+.icon_{
+	padding: 6px 12px;
+}
+.shadows{
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 8px 200px 0 rgba(0, 0, 0, 0.19);
+}
+.inp_login{
+	width: 80%;
+	border: none;
+    border-bottom: 2px solid #00bcd4;
+}
+.inp_login:hover{
+	border-bottom-color: #05afc5;
+}
+.btn_Login{
+	cursor: pointer;
+	float: right;
+	color: white;
+	background-color: rgb(255, 87, 115);
+}
+
+
+.centrar_div{
+	position: absolute;
+	/*nos posicionamos en el centro del navegador*/
+	top:50%;
+	left:50%;
+	/*determinamos una anchura*/
+    width:400px;
+	/*indicamos que el margen izquierdo, es la mitad de la anchura*/
+	margin-left:-200px;
+	/*determinamos una altura*/
+	height:300px;
+	/*indicamos que el margen superior, es la mitad de la altura*/
+	margin-top:-150px;
+	
+	padding:5px;
+}
