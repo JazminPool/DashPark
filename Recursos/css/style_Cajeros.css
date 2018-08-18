@@ -1,0 +1,22 @@
+/*
+*
+* Aqui se definen los estilos de 'Cajeros'
+*
+*/
+
+/*Tipo 'label' de cajeros*/
+small{
+	color: #a75911 !important;
+}
+
+/*Input solo borde abajo*/
+.inp_caj{
+	font-size: 20px;
+	color: #302c29 !important;
+	width: 100%;
+	border: none;
+    border-bottom: 2px solid #ffc107;
+}
+.inp_caj:hover{
+	border-bottom-color: #f0b810;
+}

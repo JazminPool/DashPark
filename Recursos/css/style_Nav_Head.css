@@ -1,0 +1,85 @@
+/*
+* 
+* HEADER
+*
+*/
+
+/*Cosas como de responsive*/
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+/*Propiedades del header*/
+.header{
+	top: 0;
+	background: #373a3a;
+	border-bottom: 1px solid #17191a;
+	position: fixed;
+	left: 0;
+	right: 0;
+	z-index: 300;
+	min-height: 45px;
+	padding: 0 15px;
+}
+/*Fuente del 'logo'*/
+.logo{
+	color: white !important;
+	font-family: 'Raleway', sans-serif;
+	font-size: 20px;
+	float: left;
+	margin-top: 8px;
+	margin-left: 20px;
+	font-weight: 700;
+	cursor: pointer;
+}
+.logo:hover{
+	color: #278b7b !important;
+}
+/*cerrar sesion boton*/
+.btn_logout{
+	font-size: 13px;
+	float: right;
+	margin-top: 8px;
+}
+
+/*
+* 
+* SIDENAV
+*
+*/
+
+/*Propiedades principales del side*/
+.sidenav {
+	border-right: 1px solid #17191a;
+    height: 100%; /*Alto*/
+    width: 165px; /*Ancho*/
+    position: fixed;
+    z-index: 1;
+    top: 45px;
+    left: 0;
+    background-color: #101111;
+    overflow-x: hidden;
+    padding-top: 10px;
+}
+
+/*iconos del nav*/
+.icon_nav{
+	padding: 5px 8px 6px 6px;
+	text-decoration: none;
+}
+
+/*Cada opcion del side*/
+.sidenav a {
+    padding: 10px 8px 6px 16px;
+	text-decoration: none;
+	border-bottom: 1px solid #0d0e0e;
+    font-size: 15px;
+    color: #dadada;
+    display: block;
+}
+.sidenav a:hover {
+	background-color: #5e5e5e5d;
+	border-bottom: 1px solid #122222;
+    color: #278b7b;
+}

@@ -1,0 +1,37 @@
+/*
+*
+* Aqui se definen propiedades mas generales a usar
+*
+*/
+
+/*Fuente principal*/
+body {
+    /*font-family: 'Raleway', sans-serif;*/
+    font-family: 'Quicksand', sans-serif;
+}
+
+/*Color principal del body*/
+.bg_content{
+	background-color: #e6e6e6;
+}
+
+/*Contenedor principal de todas las paginas*/
+.main {
+	margin-top: 40px; /*40 es el total*/
+    margin-left: 165px; 
+    font-size: 28px; 
+    padding: 0px 10px;
+}
+.content{
+    padding: 15px; /*esto se suma mas el margin.top del main*/
+}
+
+/*Tipo 'label' de fuente pequeña que se usa en los cards*/
+.p_card{
+	font-size: 14px;
+}
+
+/*Padding de los cards*/
+.padcar{
+	padding: 15px;
+}

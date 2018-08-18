@@ -1,0 +1,18 @@
+/*
+*
+* Aqui se define las propiedades de todas las tablas
+*
+*/
+
+/*Tabla corte final*/
+.text_table{
+	font-size: 12px;
+}
+/*Tablas pequeñitas*/
+.text_table_pq{
+	font-size: 13px;
+}
+
+table{
+	cursor: default;
+}

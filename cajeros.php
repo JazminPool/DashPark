@@ -9,6 +9,7 @@
 </head>
 
 <body class="bg_content">    
+    <?php include('header.php')?>
     <?php include('nav.php')?>
 
    <div class="main">
@@ -20,7 +21,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <p class="lead">Seleccionar cajero para visualizar sus datos</p>
-                            <select class="form-control" id="">
+                            <select class="form-control form-control-sm" id="">
                                 <option>Cajero 1</option>
                                 <option>Cajero 2</option>
                                 <option>Cajero 3</option>
