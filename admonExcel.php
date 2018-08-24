@@ -9,51 +9,43 @@
 </head>
 <body class="bg_content">
     <?php include('header.php')?>
-
+    <?php include("Editar_datos.php");?>
    <div class="main">
        <div class="content">
-
+        <form action="definir_accion.php" method="POST">
             <div class="row"> <!--Row para editar valores de las tablas-->
                 <div class="card w-100 mb-2 padcar shadows">
-                    <h4>Editar valores</h4>   
-
+                    <h4>Editar valores </h4>  <?php $var=$_GET['date']; ?> 
+                    <input type="hidden" value=<?php echo $var ?> name="fecha">                
                     <div class="row"> <!--Row 1-->
                         <!-- Boletos fisicos -->
                         <div class="col">
                             <table class="table table-bordered table-hover  text_table_pq">
-                                <thead class="thead-dark">
+                                <thead class="thead-dark">                 
                                 <tr>
                                     <th scope="col" colspan=2>Boletos físicos</th>
-                                    <th scope="col">Diferencia</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <th scope="row">Turno 1</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese valor" type="text">
+                                                <input name="turno1_fisico" class="inp_login text-dark" placeholder="Ingrese valor" type="text">
                                             </td>
-                                            <td>0</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Turno 2</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese valor" type="text">
+                                                <input name="turno2_fisico" class="inp_login text-dark" placeholder="Ingrese valor" type="text">
                                             </td>
-                                            <td>1</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Turno 3</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese valor" type="text">
+                                                <input name="turno3_fisico" class="inp_login text-dark" placeholder="Ingrese valor" type="text">
                                             </td>
-                                            <td>1</td>
                                     </tr>
-                                    <tr class="table-active">
-                                        <th scope="row">Total</th>
-                                        <th scope="row">180</th>
-                                        <th scope="row">0</th>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                         </div><!--fin de columna editar boletos fisicos-->
@@ -70,26 +62,21 @@
                                     <tr>
                                         <th scope="row">Turno 1</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese cantidad $" type="text">
+                                                <input name="turno1_efectivo" class="inp_login text-dark" placeholder="Ingrese cantidad $" type="text">
                                             </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Turno 2</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese cantidad $" type="text">
+                                                <input name="turno2_efectivo" class="inp_login text-dark" placeholder="Ingrese cantidad $" type="text">
                                             </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Turno 3</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese cantidad $" type="text">
+                                                <input name="turno3_efectivo" class="inp_login text-dark" placeholder="Ingrese cantidad $" type="text">
                                             </td>
-                                    </tr>
-                                    <tr class="table-active">
-                                        <th scope="row">Total</th>
-                                        <th scope="row">$545</th>
-                                    </tr>
-                                    
+                                    </tr>                                    
                                 </tbody>
                             </table>
                         </div><!--fin de columna editar Efectivo y tarjetas-->
@@ -110,7 +97,7 @@
                                     <tr>
                                         <th scope="row">Folios emisor</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese cantidad" type="text">
+                                                <input name="emisor_siguiente" class="inp_login text-dark" placeholder="Ingrese cantidad" type="text">
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -118,7 +105,7 @@
                                     <tr>
                                         <th scope="row">Folios rojos</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese cantidad" type="text">
+                                                <input name="rojos_siguiente" class="inp_login text-dark" placeholder="Ingrese cantidad" type="text">
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -126,7 +113,7 @@
                                     <tr>
                                         <th scope="row">Contador</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese cantidad" type="text">
+                                                <input name="contador_siguiente" class="inp_login text-dark" placeholder="Ingrese cantidad" type="text">
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -134,7 +121,7 @@
                                     <tr>
                                         <th scope="row">Coches dentro</th>
                                             <td>
-                                                <input name="" class="inp_login text-dark" placeholder="Ingrese cantidad" type="text">
+                                                <input name="coches_siguiente" class="inp_login text-dark" placeholder="Ingrese cantidad" type="text">
                                             </td>
                                             <td>23</td>
                                             <td>23</td>
@@ -156,17 +143,17 @@
 
                         <div class="col-4">
                             <p class="lead">Turno 1</p>
-                            <textarea class="form-control" id="" rows="2"></textarea>
+                            <textarea class="form-control" name="turno1_observacion" rows="2"></textarea>
                         </div> <!--Fin de col-->
                         
                         <div class="col-4">
                             <p class="lead">Turno 2</p>
-                            <textarea class="form-control" id="" rows="2"></textarea>
+                            <textarea class="form-control" name="turno2_observacion" rows="2"></textarea>
                         </div> <!--Fin de col-->
                         
                         <div class="col-4">
                             <p class="lead">Turno 3</p>
-                            <textarea class="form-control" id="" rows="2"></textarea>
+                            <textarea class="form-control" name="turno3_observacion" rows="2"></textarea>
                         </div> <!--Fin de col-->
 
                     </div><!--fin row de comentarios -->
@@ -176,16 +163,19 @@
                     <div class="row"> <!--Row de resumen del dia-->
                         <div class="col-8">
                             <h5>Agregar resumen del día</h5>
-                            <textarea class="form-control" id="" rows="2"></textarea>
+                            <textarea class="form-control" name="resumen_dia" rows="2"></textarea>
                         </div> <!--Fin de col-->
 
+                        <div class="col-4">
+                            <button type="submit" name="guardar_admin" class="btn btn-success  btn-sm">Guardar</button>  
+                            <button type="submit" name="cancelar_admin" class="btn btn-danger btn-block">Cancelar</button>   
+                        </div>  
                     </div><!--fin row de resumen del dia -->
+                      
                 </div> <!--Fin del card-->
             </div><!--Fin del row card comentarios-->
-
+        </form>
        </div><!--Fin container-->
    </div><!--Fin main-->
-
-
 </body>
 </html>

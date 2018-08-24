@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,13 +7,11 @@
     <title>DashPark</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include('links.php')?>
-    <?php  include("DatosBd.php"); ?>
+    <?php include("DatosBd.php");?>
 </head>
-<body class="bg_content">
-    
+<body class="bg_content">   
     <?php include('header.php')?>
     <?php include('nav.php')?>
-
    <div class="main">
        <div class="content">
     <form action="" method="POST">
@@ -29,28 +28,24 @@
                             <p class="p_card">Seleccionar fecha</p>
                             <button type="submit" name="consultar_cortes" class="btn btn-warning btn-block btn-sm">Consultar</button>                        
                         </div><!--fin cardbody-->
-                        
                         <div class="col-md-2">
                             <p class="p_card">Editar valores</p>
-                            <a href="admonExcel.php" class="btn btn-dark btn-block btn-sm">Administrar</a>                        
+                            <button type="submit" name="ver_admin" class="btn btn-dark btn-block btn-sm">Administrar</button>                        
                         </div><!--fin cardbody-->
-
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card-->
             </div><!--Fin row de seccion:opciones-->
     </form>
             <div class="row"> <!--Row de tablas-->
                 <div class="card w-100 mb-2 padcar shadows">
-
                     <div class="row"> <!--CRAN AL ALACRAN AQUI-->      
                           <?php     
                             if(isset($_POST['consultar_cortes']))
-                            {
-                               
+                            {                            
                                 $fecha_corte=$_POST['date'];
                                 $fecha=date("Ymd",strtotime($fecha_corte)); //Debe ser así para que agarre la consulta
-                                BD::mostrar_cortefinal($fecha);              
-                             }
+                                BD::mostrar_cortefinal($fecha);      
+                                //editar_bd::editar_fecha($fecha);                       
                         ?>
                     </div><!--fin row de tablas -->
                     <div class="row container">    
@@ -66,100 +61,21 @@
             <div class="row"> <!--Row de tablitas-->
                 <div class="card w-100 mb-2 padcar shadows">
                     <div class="row">
-
-                        <!-- Boletos fisicos -->
-                        <div class="col">
-                            <table class="table table-bordered table-hover  text_table_pq">
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col" colspan=2>Boletos físicos</th>
-                                    <th scope="col">Diferencia</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Turno 1</th>
-                                            <td>30</td>
-                                            <td>0</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Turno 2</th>
-                                            <td>1</td>
-                                            <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Turno 3</th>
-                                            <td>4242</td>
-                                            <td>1</td>
-                                    </tr>
-                                    <tr class="table-active">
-                                        <th scope="row">Total</th>
-                                        <th scope="row">180</th>
-                                        <th scope="row">0</th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div><!--fin de columna boletos fisicos-->
-
-                        <!-- Efectivo y Tarjeta -->
-                        <div class="col">
-                            <table class="table  table-bordered table-hover text_table_pq">
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col" colspan=3>Efectivo y Tarjeta</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Turno 1</th>
-                                            <td>$590</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Turno 2</th>
-                                            <td>$590</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Turno 3</th>
-                                            <td>$590</td>
-                                    </tr>
-                                    <tr class="table-active">
-                                        <th scope="row">Total</th>
-                                        <th scope="row">$545</th>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-                        </div><!--fin de columna Efectivo y tarjetas-->
+                           <?php                      
+                                BD::boletos_fisico();                          
+                                BD::dinero_turnos();
+                                BD::total_cobrados();
+                            }else if(isset($_POST['ver_admin']))
+                            {
+                                $fecha_corte=$_POST['date'];
+                                $fecha=date("Ymd",strtotime($fecha_corte));
+                                header("Location:admonExcel.php?date=".urlencode($fecha));
+                            }
+                            ?>
+                        <!--fin de columna Efectivo y tarjetas-->
 
                         <!-- Total cobrados -->
-                        <div class="col">
-                            <table class="table  table-bordered table-hover text_table_pq">
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col" colspan=3>Total cobrados</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Turno 1</th>
-                                            <td>90</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Turno 2</th>
-                                            <td>90</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Turno 3</th>
-                                            <td>90</td>
-                                    </tr>
-                                    <tr class="table-active">
-                                        <th scope="row">Total</th>
-                                        <th scope="row">545</th>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-                        </div><!--fin de columna total cobrados -->
+                      <!--fin de columna total cobrados -->
 
                         <!-- Tabla sin nombre -->
                         <div class="col">
@@ -278,9 +194,6 @@
 
        </div><!--Fin container-->
    </div><!--Fin main-->
-
-
-    
-
 </body>
 </html>
+<?php ob_end_flush(); ?>
