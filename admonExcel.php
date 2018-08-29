@@ -3,18 +3,33 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DashPark</title>
+    <title>< / DashPark ></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include('links.php')?>
 </head>
 <body class="bg_content">
     <?php include('header.php')?>
 
+    <div class="side_card">
+        <div class="card card_bg_side w-100 mb-2 padcar">
+            
+            <div class="row padcar">
+                <label class="text-center text-light"> Fecha actual elegida </label>
+            </div><!--Fin row de fecha-->
+            <div class="row padcar">
+                <button type="submit" class="btn btn-info btn-block shadows">Guardar</button>
+            </div><!--Fin de btn guardar-->
+            <div class="row padcar">
+                <a href="cortefinal.php" class="btn btn-dark btn-block shadows">Cancelar</a>
+            </div><!--Fin de btn cancelar-->
+             
+        </div> <!--Fin card-->
+    </div> <!--Fin del side card-->
+
    <div class="main">
        <div class="content">
-
             <div class="row"> <!--Row para editar valores de las tablas-->
-                <div class="card w-100 mb-2 padcar shadows">
+                <div class="card w-100 mb-2 padcar">
                     <h4>Editar valores</h4>   
 
                     <div class="row"> <!--Row 1-->

@@ -6,9 +6,9 @@ class Conneciones{
     public $database;
     public $conn;
     public function __construct(){
-        $this->host="192.168.100.37";
-        $this->user="servidor";
-        $this->password="123";
+        $this->host="localhost"; //192.168.100.37 - localhost
+        $this->user="root"; //servidor - root
+        $this->password=""; //123 - nada
         $this->database="cortes_estacionamiento";     
     }
     public function Conectar()

@@ -11,7 +11,7 @@ Class BD{
         $consulta_cajeros="SELECT * from empledos_cajeros";
         $resultado_cajeros=$cone->ExecuteQuery($consulta_cajeros) or die("Error al consultar cajeros");
 
-        echo "<select class='form-control form-control-sm' name='id_empleado'>";
+        echo "<select class='form-control form-control-sm text-center' name='id_empleado'>";
         while($columna_cajeros=$resultado_cajeros->fetch_array())
         {
            
@@ -32,8 +32,8 @@ Class BD{
         $resultado_reporte=$cone->ExecuteQuery($consulta_reporte) or die ("Error al consultar reporte");
 
         echo "
-        <div class='col'>
-        <table class='table  table-bordered table-hover text_table_pq'>
+        <div class='col contenedor'>
+        <table class='table table-responsive table-sm table-hover text_table_pq'>
         <thead class='thead-dark'>";
         while($columna_reporte=$resultado_reporte->fetch_array()){
         echo 
@@ -98,9 +98,7 @@ Class BD{
         }
         echo " 
         </table>
-        <table class='table'>
-        </table>
-         </div>";
+         </div> <!--Fin de columna-->";
         
     }
 

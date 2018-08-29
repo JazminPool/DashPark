@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DashPark</title>
+    <title>< / DashPark ></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include('links.php')?>
     <?php  include("DatosBd.php"); ?>
@@ -15,6 +15,7 @@
 
    <div class="main">
        <div class="content">
+       
     <form action="" method="POST">
             <div class="row"> <!--Row del ecabezado de opciones-->
                 <div class="card w-100 mb-2 padcar shadows">
@@ -32,7 +33,7 @@
                         
                         <div class="col-md-2">
                             <p class="p_card">Editar valores</p>
-                            <a href="admonExcel.php" class="btn btn-dark btn-block btn-sm">Administrar</a>                        
+                            <a href="admonExcel.php" class="btn btn-dark btn-block btn-sm shadows">Administrar</a>                        
                         </div><!--fin cardbody-->
 
                     </div><!--fin row de select y date-->
