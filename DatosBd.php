@@ -1,5 +1,5 @@
 <?php
-require("conexion.php");
+include("conexion.php");
 
 Class BD{
     public static $array_boletos=null;
@@ -31,11 +31,99 @@ Class BD{
             echo "<option value='".$columna_cajeros['idempledos_cajeros']."'>".$columna_cajeros['Nombre_cajero']." ".$columna_cajeros['apellido_patCaje']."</option>";          
         }
         echo "</select>"; 
+       // $cone->Cerrar();
     }
+    public function trae_datos($fecha)
+    {
+        $cone=new Conneciones();
+        $cone->Conectar();
+       
+        $consulta_datos="SELECT folios_rojos.folio_entrada, folio_emisor.emisor_entrada,coches_dentro.coches_incio,
+        contador_est.inicio_contador,tarjetas_control.entrada_tarjeta,reportes_cortes.total_salidas from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos INNER JOIN contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
+        Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
+        INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
+        reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
+        INNER JOIN turnos_caje ON empledos_cajeros.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje WHERE reportes_cortes.fecha_corte=".$fecha."";
+        $resultado_corteFinal=$cone->ExecuteQuery($consulta_datos) or die ("Error al consultar corte final1");
+
+        while($columna_datos=$resultado_corteFinal->fetch_array())
+        {
+            $array_turno1[]=array(
+                
+                'folio_entrada' =>$columna_datos['folio_entrada'],
+                'emisor_entrada' =>$columna_datos['emisor_entrada'],
+                'coches_dentro' =>$columna_datos['coches_incio'],
+                'contador' =>$columna_datos['inicio_contador'],
+                'tarjetas'=>$columna_datos['entrada_tarjeta'],
+                'salidas_totales'=>$columna_datos['total_salidas']
+                
+        );
+            
+        }
+        $consulta_diasig="SELECT * from dia_siguiente WHERE fecha_siguiente='$fecha'";
+        $resultado_corte=$cone->ExecuteQuery($consulta_diasig) or die("Error al consultar datos siguientes");
+        while($columna_sig=$resultado_corte->fetch_array())
+        {
+            $array_siguiente[]=array(
+                'id_siguiente'=>$columna_sig['iddia_siguiente'],
+                'fecha_sig'=>$columna_sig['fecha_siguiente'],
+                'emisor_sig'=>$columna_sig['folio_emisor'],
+                'rojo_sig'=>$columna_sig['folios_rojos'],
+                'contador_sig'=>$columna_sig['contador'],
+                'coches_sig'=>$columna_sig['coches_dentro'],
+                'resumen'=>$columna_sig['resumen_dia']
+            );
+        }
+        
+
+        $array_resultados=       
+            array(
+                array(
+                'res_rojos'=>$array_turno1[1]['folio_entrada']-1,
+                'res_difrojos'=>$array_turno1[1]['folio_entrada']-$array_turno1[0]['folio_entrada'],
+                'res_emisor'=>$array_turno1[1]['emisor_entrada']-1,
+                'res_difemisor'=>$array_turno1[1]['emisor_entrada']-$array_turno1[0]['emisor_entrada'],
+                'res_contador'=>$array_turno1[1]['contador']-1,
+                'res_difcontador'=>$array_turno1[1]['contador']-$array_turno1[0]['contador'],
+                'res_coches'=>$array_turno1[0]['coches_dentro']+$array_turno1[0]['tarjetas']+($array_turno1[2]['folio_entrada']-$array_turno1[1]['folio_entrada'])+$array_turno1[0]['salidas_totales']
+                ),
+                array(
+                    'res_rojos'=>$array_turno1[2]['folio_entrada']-1,
+                    'res_difrojos'=>$array_turno1[2]['folio_entrada']-$array_turno1[1]['folio_entrada'],
+                    'res_emisor'=>$array_turno1[2]['emisor_entrada']-1,
+                    'res_difemisor'=>$array_turno1[2]['emisor_entrada']-$array_turno1[1]['emisor_entrada'],
+                    'res_contador'=>$array_turno1[2]['contador']-1,
+                    'res_difcontador'=>$array_turno1[2]['contador']-$array_turno1[1]['contador'],
+                    'res_coches'=>$array_turno1[1]['coches_dentro']+$array_turno1[1]['tarjetas']+($array_turno1[2]['folio_entrada']-$array_turno1[1]['folio_entrada'])+$array_turno1[1]['salidas_totales'],
+                ),
+                array(
+                    'res_rojos'=>$array_siguiente[0]['rojo_sig']-1,
+                    'res_difrojos'=>$array_siguiente[0]['rojo_sig']-$array_turno1[2]['folio_entrada'],
+                    'res_emisor'=>$array_siguiente[0]['emisor_sig']-1,
+                    'res_difemisor'=> $array_siguiente[0]['emisor_sig']-$array_turno1[2]['emisor_entrada'],
+                    'res_contador'=>$array_siguiente[0]['contador_sig']-1,
+                    'res_difcontador'=>$array_siguiente[0]['contador_sig']-$array_turno1[2]['contador'],
+                    'res_coches'=>$array_turno1[2]['coches_dentro']+$array_turno1[2]['tarjetas']+($array_siguiente[0]['rojo_sig']-$array_turno1[2]['folio_entrada'])+$array_turno1[2]['salidas_totales']
+                )
+                );
+
+                $actualizar_rojos="UPDATE folios_rojos
+                SET folio_salida=
+                    CASE
+                        WHEN idfolios_rojos=$array_turno1[0][0] then $array_resultados[0][0]
+                        WHEN idfolios_rojos=$array_turno1[1][0] then $array_resultados[1][0]
+                        WHEN idfolios_rojos=$array_turno1[2][0] then $array_resultados[2][0]
+                    END
+                    WHERE idfolios_rojos IN($array_turno1[0][0],$array_turno1[1][0],$array_turno1[2][0])";
+                    $resultdo_updaterojos=$cone->ExecuteQuery($actualizar_rojos) or die ("ERROR EN EL UPDATE ROJOS");
+                self::mostrar_cortefinal($fecha);
+            }
 
     public function mostrar_reporte($id_empleado,$fecha){
         $cone=new Conneciones();
         $cone->Conectar();
+
 
         $consulta_reporte="SELECT * from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
         inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos inner join contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
@@ -49,6 +137,7 @@ Class BD{
         <table class='table  table-bordered table-hover text_table_pq'>
         <thead class='thead-dark'>";
         while($columna_reporte=$resultado_reporte->fetch_array()){
+           
         echo 
         " <tr>
             <th scope='col' colspan=2>Reporte de cajero: ".$columna_reporte['Nombre_cajero']." ".$columna_reporte['apellido_patCaje']."</th>
@@ -114,7 +203,7 @@ Class BD{
         <table class='table'>
         </table>
          </div>";
-        
+       
     }
 
 
@@ -128,13 +217,18 @@ Class BD{
         Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
         INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
         reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
-        INNER JOIN turnos_caje ON empledos_cajeros.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje WHERE reportes_cortes.fecha_corte=".$fecha."";
+        INNER JOIN turnos_caje ON empledos_cajeros.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje 
+        
+        WHERE reportes_cortes.fecha_corte=".$fecha."";
         $resultado_corteFinal=$cone->ExecuteQuery($consulta_corteFinal) or die ("Error al consultar corte final");
 
+        $verificador=mysqli_num_rows($resultado_corteFinal) or die("NO HAY NADA PARA MOSTRAR");
+
+        if($verificador>0){
         while($columna_corteFina=$resultado_corteFinal->fetch_array())
         {
         echo "
-    <div class='col-4'>
+        <div class='col-4'>
         <table class='table table-hover table-responsive table-sm text_table'>
             <caption> <strong>Observaciones:</strong> 
                 ".$columna_corteFina['observacion_cajero']."
@@ -180,7 +274,6 @@ Class BD{
                 <tr>
                     <th scope='row'>Entradas con tarjeta</th>
                         <td>".$columna_corteFina['entrada_tarjeta']."</td>
-                        <td>".$columna_corteFina['salidas_tarjeta']."</td>
                         <td></td>
                 </tr>
                 <tr>
@@ -238,19 +331,16 @@ Class BD{
         $efec_tarje[]=$columna_corteFina['efectivo_tarjeta'];
         $turnos[]=$columna_corteFina['descripcion'];
         $boletos[]=$columna_corteFina['boletos_totales'];
-        
         }
         self::Obtener_Boletos($nuevo,$efec_tarje,$turnos,$boletos);
-     
-        $cone->Cerrar();   
+        //$cone->Cerrar();   
+    }else {echo "No hay nada para mostrar";}
+
     }
 
     public function boletos_fisico()
     {
-        
-       
-
-        
+                
             $turnos_todos=self::$array_turnos;
             $nuevo_array=self::$array_boletos;
             echo "<div class='col'>
@@ -348,6 +438,8 @@ Class BD{
         </table>
     </div>";
     }
+
+
 
     
     public function sumar_valores($valor)

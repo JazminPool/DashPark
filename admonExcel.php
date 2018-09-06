@@ -143,17 +143,17 @@
 
                         <div class="col-4">
                             <p class="lead">Turno 1</p>
-                            <textarea class="form-control" name="turno1_observacion" rows="2"></textarea>
+                            <textarea class="form-control" name="turno1_bservacion" rows="2"></textarea>
                         </div> <!--Fin de col-->
                         
                         <div class="col-4">
                             <p class="lead">Turno 2</p>
-                            <textarea class="form-control" name="turno2_observacion" rows="2"></textarea>
+                            <input type="text" class="form-control" name="turno2_bservacion" rows="2"></input>
                         </div> <!--Fin de col-->
                         
                         <div class="col-4">
                             <p class="lead">Turno 3</p>
-                            <textarea class="form-control" name="turno3_observacion" rows="2"></textarea>
+                            <textarea class="form-control" name="turno3_bservacion" rows="2"></textarea>
                         </div> <!--Fin de col-->
 
                     </div><!--fin row de comentarios -->

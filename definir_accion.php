@@ -22,19 +22,18 @@ else if(isset($_POST['guardar_admin']))
      $coches_siguiente=$_POST['coches_siguiente'];
 
     /*OBSERVACIONES POR TURNO*/
-    $ob_turno1=$_POST['turno1_observacion'];
-    $ob_turno2=$_POST['turno2_observacion'];
-    $ob_turno3=$_POST['turno3_observacion'];
+    $ob_turno1=$_POST['turno1_bservacion'];
+    $ob_turno2=$_POST['turno2_bservacion'];
+    $ob_turno3=$_POST['turno3_bservacion'];
 
     /*AGREGAR OBSERVACION DEL DIA*/
     $ob_dia=$_POST['resumen_dia'];
 
-    editar_bd::enviar_efectivo($fecha,$turno1_efectivo,$turno2_efectivo,$turno3_efectivo);
-    
+    editar_bd::enviar_efectivo($fecha,$turno1_efectivo,$turno2_efectivo,$turno3_efectivo);  
     editar_bd::enviar_fisicos($fecha,$fisicos_uno,$fisicos_dos,$fisicos_tres);
-/*    editar_bd::enviar_observaciones($fecha,$ob_turno1,$ob_turno2,$ob_turno3);
-    editar_bd::dia_siguiente($fecha,$emisor_siguiente,$rojos_siguiente,$contador_siguiente,$coches_siguiente,$ob_dia);
-*/
+    editar_bd::enviar_observaciones($fecha,$ob_turno1,$ob_turno2,$ob_turno3);
+    //editar_bd::dia_siguiente($fecha,$emisor_siguiente,$rojos_siguiente,$contador_siguiente,$coches_siguiente,$ob_dia);
+
 
 }
 

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include('links.php')?>
     <?php include("DatosBd.php");?>
+
 </head>
 <body class="bg_content">   
     <?php include('header.php')?>
@@ -44,8 +45,9 @@
                             {                            
                                 $fecha_corte=$_POST['date'];
                                 $fecha=date("Ymd",strtotime($fecha_corte)); //Debe ser así para que agarre la consulta
-                                BD::mostrar_cortefinal($fecha);      
-                                //editar_bd::editar_fecha($fecha);                       
+                                BD::trae_datos($fecha);
+                                //BD::mostrar_cortefinal($fecha);      
+                                                     
                         ?>
                     </div><!--fin row de tablas -->
                     <div class="row container">    
