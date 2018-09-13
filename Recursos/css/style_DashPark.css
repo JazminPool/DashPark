@@ -26,6 +26,11 @@ body {
     padding: 15px; /*esto se suma mas el margin.top del main*/
 }
 
+/*Alinear elementos derecha:*/
+.al_left{
+    float: left;
+}
+
 /*Tipo 'label' de fuente pequeña que se usa en los cards*/
 .p_card{
 	font-size: 14px;

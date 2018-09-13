@@ -25,20 +25,20 @@
                         </div><!--fin cardbody-->
                         <div class="col-md-4">
                             <p class="p_card">Seleccionar fecha</p>
-                            <input id="date" class="form-control form-control-sm" name="date" type="date">                         
+                            <input id="date" class="form-control form-control-sm text-center" name="date" type="date">                         
                         </div><!--fin cardbody-->
                         <div class="col-md-4">
                             <p class="p_card">Ver corte del cajero seleccionado</p>
-                            <button type="submit" name="ver_empleado" class="btn btn-sm btn-primary btn-block">Corte</button>
+                            <button type="submit" name="ver_empleado" class="btn btn-sm shadows btn-info btn-block">Corte</button>
                         </div><!--fin cardbody-->
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card-->
             </div><!--Fin row encabezado-->
-         </form>   
+            </form>
             <div class="row">
                 <div class="card w-100 mb-2 padcar shadows">
                     <div class="row">
-                        <!-- Reporte -->                           
+                        <!-- Reporte -->                            
                         <?php     
                             if(isset($_POST['ver_empleado']))
                             {
@@ -50,7 +50,9 @@
                                 
                              }
                         ?>
-                    </div><!--fin row de tablas -->
+                    </div><!--Fin de row-->
+                </div> <!--Fin de card-->
+            </div><!--fin row de tablas -->
        </div><!--Fin container-->
    </div><!--Fin main-->
 

@@ -6,17 +6,26 @@
 
 /*Tipo 'label' de cajeros*/
 small{
-	color: #a75911 !important;
+	font-size: 16px;
+	color: #3d2f21 !important;
 }
 
 /*Input solo borde abajo*/
 .inp_caj{
-	font-size: 20px;
+	font-size: 14px;
 	color: #302c29 !important;
 	width: 100%;
 	border: none;
-    border-bottom: 2px solid #ffc107;
+    border-bottom: 2px solid #1f1d1a;
 }
 .inp_caj:hover{
-	border-bottom-color: #f0b810;
+	border-bottom-color: #2c240c;
+}
+
+/*Icono de ver contraseña*/
+.see_pwd{
+	cursor: pointer;
+}
+.see_pwd:hover{
+	color: #616060;
 }

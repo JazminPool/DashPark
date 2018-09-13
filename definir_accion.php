@@ -32,9 +32,22 @@ else if(isset($_POST['guardar_admin']))
     editar_bd::enviar_efectivo($fecha,$turno1_efectivo,$turno2_efectivo,$turno3_efectivo);  
     editar_bd::enviar_fisicos($fecha,$fisicos_uno,$fisicos_dos,$fisicos_tres);
     editar_bd::enviar_observaciones($fecha,$ob_turno1,$ob_turno2,$ob_turno3);
-    //editar_bd::dia_siguiente($fecha,$emisor_siguiente,$rojos_siguiente,$contador_siguiente,$coches_siguiente,$ob_dia);
+    editar_bd::dia_siguiente($fecha,$emisor_siguiente,$rojos_siguiente,$contador_siguiente,$coches_siguiente,$ob_dia);
+    header('Location:cortefinal.php');
 
 
+}else if(isset($_POST['AgregarCincho']))
+{
+    $NumCinchos=$_POST['NumPaquete'];
+    $desdeCinchos=$_POST['desdeCinchos'];
+    $hastaCinchos=$_POST['hastaCinchos'];
+    
+    editar_bd::InsertarCinchos($NumCinchos,$desdeCinchos,$hastaCinchos);
+}
+else if(isset($_POST['eliminar_cincho']))
+{
+    $idCincho=$_POST['idCincho'];
+    editar_bd::EliminaCincho($idCincho);
 }
 
 

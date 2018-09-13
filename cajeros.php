@@ -1,84 +1,83 @@
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DashPark</title>
+    <title>< / DashPark ></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php include('links.php')?>
+    <?php include('links.php'); include('DatosBd.php');?>
 </head>
 
 <body class="bg_content">    
     <?php include('header.php')?>
     <?php include('nav.php')?>
-
    <div class="main">
-       <h2>Información de los cajeros</h2>
-       <div class="container">
-            <div class="row">
-
-                <div class="card w-100 mb-2 padcar">
+       <div class="content">
+       <h4>Información de los cajeros</h4>
+        <form action="" method="POST">       
+            <div class="row">        
+                <div class="card w-100 mb-2 padcar shadows">
                     <div class="row">
-                        <div class="col-md-8">
-                            <p class="lead">Seleccionar cajero para visualizar sus datos</p>
-                            <select class="form-control form-control-sm" id="">
-                                <option>Cajero 1</option>
-                                <option>Cajero 2</option>
-                                <option>Cajero 3</option>
-                            </select>                                
-                        </div><!--fin col-md-6-->
-
-                        <div class="col-md-4">
-                            <p class="lead">Dar de alta a un nuevo cajero</p>
-                            <button type="button" class="btn btn-warning btn-block">Añadir nuevo</button>                      
-                        </div><!--fin col-md-6-->
+                        <div class="col-md-6">
+                            <p class="p_card">Seleccionar cajero para visualizar sus datos</p>
+                            <?php BD::mostrar_cajeros(); ?>                               
+                        </div><!--fin col-md-8-->
+                        <div class="col-md-3">
+                            <p class="p_card">Visualizar información del cajero</p>
+                            <button type="submit" class="btn btn-success btn-sm shadows btn-block" name="verCajero">Ver</button>                      
+                        </div><!--fin col-md-4-->
+                        <div class="col-md-3">
+                            <p class="p_card">Dar de alta a un nuevo cajero</p>
+                            <button type="submit" class="btn btn-dark btn-sm shadows btn-block" name="anadirCajero">Añadir nuevo</button>                      
+                        </div><!--fin col-md-4-->
                     </div><!--fin row de select y date-->
-                </div> <!--Fin card header -->
-
-                <div class="card w-100 mb-2 padcar">
-                    <div class="row">
-                        <div class="card-body col-md-6">
-                            <small> Nombre(s): </small>
-                            <input name="" class="inp_caj text-dark" type="text">                            
-                        </div><!--fin col-md-6-->
-
-                        <div class="card-body col-md-6">
-                            <small> Apellidos: </small>
-                            <input name="" class="inp_caj text-dark" type="text">                      
-                        </div><!--fin col-md-6-->
-                    </div><!--fin row de nombre y apellido-->
-                    <br>
-                    <div class="row">
-                            <div class="card-body col-md-6">
-                                <small> Nombre de usuario: </small>
-                                <input name="" class="inp_caj text-dark" type="text">                            
-                            </div><!--fin col-md-6-->
-    
-                            <div class="card-body col-md-6">
-                                <small> Contraseña: </small>
-                                <input name="" class="inp_caj text-dark" type="text">                      
-                            </div><!--fin col-md-6-->
-                        </div><!--fin row de nombre y apellido-->
+                </div> <!--Fin card header -->     
+                </form>         
+                <div class="card w-100 mb-2 padcar shadows"> <!--Card del formulario-->
+                    <div class="">
+                        <?php
+                            if(isset($_POST['verCajero']))
+                            {
+                                $idCajero=$_POST['id_empleado'];
+                            BD::mostrarDatosCajeros($idCajero);
+                            }else if(isset($_POST['anadirCajero']))
+                            {
+                              BD::MostrarFormulario();
+                              
+                            }
+                            if(isset($_POST['guardarCajero']))
+                            {
+                                if(empty($_POST['idCajero']))
+                                {
+                                   $nomb=$_POST['nombreCajero'];
+                                   $apellidos=$_POST['apellidosCajero'];
+                                   $usuario=$_POST['usuarioCajero'];
+                                   $password=$_POST['passwordCajero'];
+                                   BD::InsertarNuevoCajero($nomb,$apellidos,$usuario,$password);
+                                }else {
+                                    
+                                    $id=$_POST['idCajero'];
+                                    $nomb=$_POST['nomCajero'];
+                                    $apellidos=$_POST['apeCajero'];
+                                    $usuario=$_POST['usuCajero'];
+                                    $password=$_POST['passCajero'];
+                                   BD::ModificarEmpleado($id,$nomb,$apellidos,$usuario,$password);
+                                }
+                            }else if(isset($_POST['eliminarUsuario']))
+                            {
+                                $id=$_POST['idCajero'];
+                                BD::EliminarEmpleado($id);
+                            }                       
+                        ?>
+                        
+                        </div> <!--Fin row botones-->
+                    </div>
                 </div> <!--Fin card de formulario-->
-
-                <div class="card w-100 mb-2 padcar">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="lead text-primary">Guardar los datos del cajero</p>
-                            <button type="button" class="btn btn-primary btn-block">Guardar</button>                                                   
-                        </div><!--fin col-md-6-->
-
-                        <div class="col-md-6">
-                            <p class="lead text-danger">Eliminar al cajero permanentemente</p>
-                            <button type="button" class="btn btn-danger btn-block">Eliminar usuario</button>                      
-                        </div><!--fin col-md-6-->
-                    </div><!--fin row de botones-->
-                </div> <!--Fin card de botones-->
-
             </div><!--Fin row-->
+       
        </div><!--Fin container-->
    </div><!--Fin main-->
-
-
 </body>
 </html>
+<?php ob_end_flush(); ?>

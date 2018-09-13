@@ -1,22 +1,38 @@
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>DashPark</title>
+    <title>< / DashPark ></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include('links.php')?>
 </head>
 <body class="bg_content">
     <?php include('header.php')?>
-    <?php include("Editar_datos.php");?>
+    <form action="definir_accion.php" method="POST">
+    <div class="side_card">
+        <div class="card card_bg_side w-100 mb-2 padcar">
+            <?php $fecha=$_GET['date']; ?>
+            <div class="row padcar">
+                <label class="text-center text-light"> <?php echo $fecha; ?> </label>
+            </div><!--Fin row de fecha-->
+            <div class="row padcar">
+                <button type="submit" name="guardar_admin" class="btn btn-info btn-block shadows">Guardar</button>
+            </div><!--Fin de btn guardar-->
+            <div class="row padcar">
+                <buttont type="submit" name="cancelar_admin" class="btn btn-dark btn-block shadows">Cancelar</button>
+            </div><!--Fin de btn cancelar-->
+             
+        </div> <!--Fin card-->
+    </div> <!--Fin del side card-->
+
    <div class="main">
        <div class="content">
-        <form action="definir_accion.php" method="POST">
             <div class="row"> <!--Row para editar valores de las tablas-->
-                <div class="card w-100 mb-2 padcar shadows">
-                    <h4>Editar valores </h4>  <?php $var=$_GET['date']; ?> 
-                    <input type="hidden" value=<?php echo $var ?> name="fecha">                
+                <div class="card w-100 mb-2 padcar">
+                    <h4>Editar valores</h4>   
+                    <input name="fecha" class="inp_login text-dark" type="hidden" value="<?php echo $fecha; ?>">
                     <div class="row"> <!--Row 1-->
                         <!-- Boletos fisicos -->
                         <div class="col">
@@ -148,7 +164,7 @@
                         
                         <div class="col-4">
                             <p class="lead">Turno 2</p>
-                            <input type="text" class="form-control" name="turno2_bservacion" rows="2"></input>
+                            <textarea type="text" class="form-control" name="turno2_bservacion" rows="2"></textarea>
                         </div> <!--Fin de col-->
                         
                         <div class="col-4">
@@ -165,11 +181,6 @@
                             <h5>Agregar resumen del día</h5>
                             <textarea class="form-control" name="resumen_dia" rows="2"></textarea>
                         </div> <!--Fin de col-->
-
-                        <div class="col-4">
-                            <button type="submit" name="guardar_admin" class="btn btn-success  btn-sm">Guardar</button>  
-                            <button type="submit" name="cancelar_admin" class="btn btn-danger btn-block">Cancelar</button>   
-                        </div>  
                     </div><!--fin row de resumen del dia -->
                       
                 </div> <!--Fin del card-->
@@ -179,3 +190,4 @@
    </div><!--Fin main-->
 </body>
 </html>
+<?php ob_end_flush(); ?>
