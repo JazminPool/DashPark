@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include('links.php')?>
 </head>
-<body class="bg_content" onload="mueveReloj()">
+<body class="bg_content">
     
     <?php include('header.php')?>
     <?php include('nav.php')?>
