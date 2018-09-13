@@ -3,6 +3,16 @@
     <link href="Recursos/css/nav/style_nav.css" rel="stylesheet">
     <script src="Recursos/js/resume.min.js"></script>
 
+ <!-- Chartjs -->
+    <link rel="stylesheet" href="Recursos/css/Chartcss/styleChart.css"/>
+    <script src="Recursos/js/Chartjs/Chart.bundle.js"></script>
+    <script src="Recursos/js/Chartjs/utils.js"></script>
+    <script src="Recursos/js/Chartjs/analyser.js"></script>
+    <script src="Recursos/js/Chartjs/meses.js"></script>
+    <script src="Recursos/js/Chartjs/dias.js"></script>
+    <script src="Recursos/js/Chartjs/turnos.js"></script>
+
+
 <!-- Descargado Bootstrap CSS y Propio css -->
     <link rel="stylesheet" href="Recursos/css/bootstrap/bootstrap.min.css"/>
     <link rel="stylesheet" href="Recursos/css/style_DashPark.css"/>
@@ -12,7 +22,7 @@
     <link rel="stylesheet" href="Recursos/css/style_tablas.css"/>
     <link rel="stylesheet" href="Recursos/css/style_Cajeros.css"/>
     <link rel="stylesheet" href="Recursos/css/style_Inicio.css"/>
-
+    <link rel="stylesheet" href="Recursos/css/style_Charts.css"/>
 
 
 <!--Google fonts-->
