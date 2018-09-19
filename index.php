@@ -12,7 +12,7 @@
 <body class="body_bg">
     <div class="container"> 
         <div class="row">                
-            <div class="col-sm-5 contenedor"> <!--MainContenedor card-->
+            <div class="col-sm-5 center"> <!--MainContenedor card-->
                 <br />
                 <h1 class="display-4 text-center text-light">DashPark</h1>
                 <p class="lead text-center text-white">Administrador de Estacionamiento</p>

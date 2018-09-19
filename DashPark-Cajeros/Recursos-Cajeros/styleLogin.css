@@ -2,13 +2,16 @@
 * LOGIN
 *
 */
+body {
+    font-family: 'Raleway', sans-serif !important;
+    /* font-family: 'Quicksand', sans-serif; */
+}
 
 /*Color del fondo*/
 .body_bg{
-    /* background-color:#00bcd4; */
-    background-color:#16191a;
+    background-color:teal;
 }
-/*Que el contenedor este 'centrado'*/
+
 .center{
     margin: auto;
 }
