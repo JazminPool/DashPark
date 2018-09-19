@@ -154,14 +154,162 @@ Class editar_bd {
 
         $insertarDiaSiguiente="INSERT INTO dia_siguiente (iddia_siguiente,fecha_siguiente,folio_emisor,folios_rojos,
         contador,coches_dentro,resumen_dia) VALUES ($rojo_sig,$fecha,$em_sig,$rojo_sig,$conta_sig,$coches_sig,'$resumen')";
-        print_r($insertarDiaSiguiente);
+     
         $resultadoSiguiente=$cone->ExecuteQuery($insertarDiaSiguiente) or die ("ERROR AL INSERTAR DIA SIGUIENTE");
+        $cone->Cerrar();
         
     }
 
-      
-    }
-           
+    public function MostrarAdministradores()
+    {
+        try{
+            $cone=new Conneciones();
+            $cone->Conectar();
     
+            $MostrarAdministradores="SELECT * from administrados_caje";
+            $resultadoAdministrados=$cone->ExecuteQuery($MostrarAdministradores) or die ("ERROR AL CONSULTAR ADMIN");
+            echo "<select class='form-control form-control-sm text-center' name='idAmin'>";
+                while($columnaAdmin=$resultadoAdministrados->fetch_array())
+                {
+                    echo "<option value='".$columnaAdmin['idadministrados_caje']."'>".$columnaAdmin['nombre_admin']." ".$columnaAdmin['apellido_pat_admin']."</option>";
+                }
+           echo "</select>";   
+           //$cone->Cerrar();    
+        }catch(mysqli_sql_exception $e){
+           echo $e->getMessage();
+        }
+                      
+    }
+    public function mostrarDatosAdmin($idAdmin)
+    {
+        $cone=new Conneciones();
+        $cone->Conectar();
+        $MostrarDatosAdmin="SELECT * from administrados_caje WHERE idadministrados_caje=$idAdmin";
+        $resultadoAdmin=$cone->ExecuteQuery($MostrarDatosAdmin) or die ("NO SE HA PODIDO VER ADMIN");
+        echo "<form action='administradores.php' method='POST'>";
+        While($colAdmin=$resultadoAdmin->fetch_array())
+        {
+    echo"<div class='row'>  
+        <div class='col-6'>
+            <small> Nombre(s): </small>
+            <input name='nomAdmin' maxlength='35' class='form-control text-dark' type='text' value=".$colAdmin['nombre_admin'].">                            
+        </div>
+    </div>
+    
+    <div class='row'>
+        <div class='col-md-6'>
+            <small> Apellidos: </small>
+            <input name='ApeAdmin' maxlength='35' class='form-control text-dark' type='text' value=".$colAdmin['apellido_pat_admin'].">
+        </div>
+    </div> 
 
+    <div class='row'>  
+        <div class='col-md-6'>
+            <small> Nombre de usuario administrador: </small>
+            <input name='usuAdmin' maxlength='35'  class='form-control text-dark' type='text' value=".$colAdmin['usuario_admin'].">     
+        </div>
+    </div> 
+    
+    <div class='row'> 
+        <div class='col-md-6'>
+            <small> Contraseña de administrador: </small>
+            <div class='row'>
+                <div class='col-10'>
+                    <input name='passAdmin' maxlength='35' id='showpass' class='form-control text-dark' type='password' value=".$colAdmin['password_admin']."> 
+                </div>
+                <div class='col-1'>
+                    <i class='al_left far fa-eye see_pwd' onclick='showPass()'></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='card-body al_left'>
+            <button type='submit' name='guardarAdmin' class='btn btn-info shadows'>Guardar</button>    
+            <button type='submit' name='eliminarAdmin' class='btn btn-danger shadows'>Eliminar usuario</button>  
+        </div>
+    </div>";
+    }
+    echo "</form>";
+    }
+    public function MostrarFormAdmin()
+    {
+        echo"
+        <form action='administradores.php' method='POST'>
+            <div class='row'>  
+                <div class='col-6'>
+                    <small> Nombre(s): </small>
+                     <input  maxlength='35' class='form-control text-dark' type='text' name='nombreAdmin'>                            
+                </div>
+            </div>
+    
+    <div class='row'> 
+        <div class='col-md-6'>
+            <small> Apellidos: </small>
+            <input  maxlength='35' class='form-control text-dark' type='text' name='apellidosAdmin'>
+        </div>
+    </div>
+
+    <div class='row'>  
+        <div class='col-md-6'>
+            <small> Nombre de usuario de administrador: </small>
+            <input  maxlength='35'  class='form-control text-dark' type='text' name='usuarioAdmin'>     
+        </div>
+    </div> 
+    
+    <div class='row'>
+        <div class='col-md-6'>
+            <small> Contraseña de administrador: </small>
+            <div class='row'>
+                <div class='col-10'>
+                    <input maxlength='35' id='showpass' class='form-control text-dark' type='password' name='passwordAdmin'> 
+                </div>
+                <div class='col-1'>
+                    <i class='al_left far fa-eye see_pwd' onclick='showPass()'></i>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class='row'>
+            <div class='card-body al_left'>
+                <button type='submit' class='btn btn-info shadows' name='guardarAdmin'>Guardar</button>    
+            </div>
+    </div> 
+    </form>
+    ";
+    }
+    public function InsertarNuevoAdmin($nomb,$apellidos,$usuario,$password)
+    {
+        $cone= new Conneciones();
+        $cone->Conectar();
+        $insertarNuevoAdmin="INSERT INTO administrados_caje (idadministrados_caje,nombre_admin,apellido_pat_admin,usuario_admin,password_admin)
+         VALUES (null,'$nomb','$apellidos','$usuario','$password')";
+       $resultado_nuevo=$cone->ExecuteQuery($insertarNuevoAdmin) or die("ERROR AL INSERTAR NUEVO ADMINISTRADOR");
+        header('Location:administradores.php');
+        $cone->Cerrar();
+    }
+    public function ModificarAdmin($idAdmin,$Nombre,$Apellido,$Usuario,$contrasena)
+    {
+        $cone=new Conneciones();
+        $cone->Conectar();
+        $modificarAdmin="UPDATE empledos_cajeros SET Nombre_cajero='$Nombre', apellido_patCaje='$Apellido',
+        usuario_caje='$Usuario', password_caje='$contrasena' WHERE idempledos_cajeros=$idAdmin";
+       // print_r($modificarEmpleado);
+        $resultadoModif=$cone->ExecuteQuery($modificarAdmin) or die ("Error al modificar administrador");
+        header('Location:administradores.php');
+        $cone->Cerrar();
+    }
+    public function EliminarAdmin($idAdmin)
+    {
+        $cone=new Conneciones();
+        $cone->Conectar();
+        $eliminarAdmin="DELETE From administrados_caje WHERE idadministrados_caje=$idAdmin";
+        $resultadoEliminar=$cone->ExecuteQuery($eliminarAdmin) or die ("Error en eliminar Admin");
+        header('Location: administradores.php');
+        $cone->Cerrar();
+    }
+      
+}          
+    
 ?>

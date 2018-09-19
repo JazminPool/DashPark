@@ -50,7 +50,8 @@ Class BD{
         $cone->Conectar();
        
         $consulta_datos="SELECT folios_rojos.folio_entrada,folios_rojos.diferencia_folio ,folio_emisor.emisor_entrada,coches_dentro.coches_incio,
-        contador_est.inicio_contador,tarjetas_control.entrada_tarjeta,reportes_cortes.total_salidas,contador_est.diferencia_contador from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        contador_est.inicio_contador,tarjetas_control.entrada_tarjeta,reportes_cortes.total_salidas,contador_est.diferencia_contador,
+        boletos_tipos.boletos_perdidos, coches_dentro.coches_salida from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
         inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos INNER JOIN contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
         Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
         INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
@@ -69,7 +70,9 @@ Class BD{
                 $columna_datos['entrada_tarjeta'],  //4 
                 $columna_datos['total_salidas'],  //5
                 $columna_datos['diferencia_contador'], //6
-                $columna_datos['diferencia_folio'] //7
+                $columna_datos['diferencia_folio'], //7
+                $columna_datos['boletos_perdidos'], //8
+                $columna_datos['coches_salida'] //9
                 
         );
             self::ArrayTotales($array_turno1);
@@ -105,22 +108,22 @@ Class BD{
 
                 /*0 FOLIO ENTRADA; 1 FOLIO EMISOR; 2 COCHES DENTRO; 3 CONTADOR; 4 TARJETAS; 5 SALIDAS TOTALES*/
                 array( //turno 2, operaciones
-                    $array_turno1[2][0]-1,
-                    $array_turno1[2][0]-$array_turno1[1][0],
-                    $array_turno1[2][1]-1,
-                    $array_turno1[2][1]-$array_turno1[1][1],
-                    $array_turno1[2][3]-1,
-                    $array_turno1[2][3]-$array_turno1[1][3],
+                    $array_turno1[2][0]-1, //entrada rojos
+                    $array_turno1[2][0]-$array_turno1[1][0], //diferencia folio rojos
+                    $array_turno1[2][1]-1, //entrada emisor
+                    $array_turno1[2][1]-$array_turno1[1][1], //diferencia emisor
+                    $array_turno1[2][3]-1, //entrada contador
+                    $array_turno1[2][3]-$array_turno1[1][3], //diferencia contador
                     $array_turno1[1][2]+$array_turno1[1][4]+($array_turno1[2][0]-$array_turno1[1][0])-$array_turno1[1][5],
                 ),
                 /*FOLIOS ROJOS 3; EMISOR SIGUIENTE 2; CONTADOR SIGUIENTE: 4;*/
                 array( //turno 3 operaciones
-                    $array_siguiente[0][3]-1,
-                    $array_siguiente[0][3]-$array_turno1[2][0],
-                    $array_siguiente[0][2]-1,
-                    $array_siguiente[0][2]-$array_turno1[2][2],
-                    $array_siguiente[0][4]-1,
-                    $array_siguiente[0][4]-$array_turno1[2][3],
+                    $array_siguiente[0][3]-1, //entrada rojos
+                    $array_siguiente[0][3]-$array_turno1[2][0], //diferencia foliios rojos
+                    $array_siguiente[0][2]-1, //entrada emisor
+                    $array_siguiente[0][2]-$array_turno1[2][1], //diferencia emisor
+                    $array_siguiente[0][4]-1, //entrada contador
+                    $array_siguiente[0][4]-$array_turno1[2][3], //diferencia contador
                     $array_turno1[2][2]+$array_turno1[2][4]+($array_siguiente[0][3]-$array_turno1[2][0])-$array_turno1[2][5]
                 )
                 );
@@ -183,7 +186,13 @@ Class BD{
             WHEN idcoches_dentro=".$array_turno1[0][0]." then  ".$array_resultados[0][6]."
             WHEN idcoches_dentro=".$array_turno1[1][0]." then  ".$array_resultados[1][6]."
             WHEN idcoches_dentro=".$array_turno1[2][0]." then  ".$array_resultados[2][6]."
-        END
+        END, 
+                diferencia_coches=
+                    CASE
+                        WHEN idcoches_dentro=".$array_turno1[0][0]." then  0
+                        WHEN idcoches_dentro=".$array_turno1[1][0]." then  ".$array_turno1[0][9]."
+                        WHEN idcoches_dentro=".$array_turno1[2][0]." then  ".$array_turno1[1][9]."
+                    END
             WHERE idcoches_dentro IN (".$array_turno1[0][0].",".$array_turno1[1][0].",".$array_turno1[2][0].")";
             $resultado_coches=$cone->ExecuteQuery($actualizar_cochesdentro) or die ("ERROR EN EL UPDATE coches");
                 
@@ -410,7 +419,6 @@ Class BD{
     }
     public function MostrarTablaTotales()
     {
-        $TotalEntradas=self::$arraytotales[0][7]+self::$arraytotales[1][7]+self::$arraytotales[2][7];
         $TotalSalidas=self::$arraytotales[0][5]+self::$arraytotales[1][5]+self::$arraytotales[2][5];
         $TotalContador=self::$arraytotales[0][6]+self::$arraytotales[1][6]+self::$arraytotales[2][6];
     
@@ -422,10 +430,6 @@ Class BD{
                     </tr>
                 </thead>
         <tbody>
-            <tr>
-                <th scope='row'>Total entradas</th>
-                    <td>".$TotalEntradas."</td>
-            </tr>
             <tr>
                 <th scope='row'>Total salidas</th>
                     <td>".$TotalSalidas."</td>
@@ -514,8 +518,8 @@ Class BD{
             <tr>
                 <th scope='row'>Coches dentro</th>
                     <td>".self::$arraySiguiente[0][5]."</td>
-                    <td>23</td>
-                    <td>23</td>
+                    <td>".self::$arraytotales[1][9]."</td>
+                    <td>".self::$arraytotales[1][9]."</td>
             </tr>
         </tbody>
     </table>";
@@ -523,34 +527,42 @@ Class BD{
 
     public function boletos_fisico()
     {              
-            $turnos_todos=self::$array_turnos;
             $nuevo_array=self::$array_boletos;
+            $BoletosTotales=self::$arraytotales[0][7]+self::$arraytotales[1][7]+self::$arraytotales[2][7];
+            $BoletosPerdidos=self::$arraytotales[0][8]+self::$arraytotales[1][8]+self::$arraytotales[2][8];
+            $TotalBoletos= self::sumar_valores($nuevo_array);
+            $TotalFinal=$BoletosTotales-$BoletosPerdidos-$TotalBoletos;
             echo "<div class='col'>
             <table class='table table-bordered table-hover  text_table_pq'>
             <thead class='thead-dark'>
                 <tr>
                     <th scope='col' colspan=2>Boletos físicos</th>
-                     <th scope='col'>Diferencia</th>
+                   
                  </tr>
             </thead>";
-            foreach($nuevo_array as $valores =>$valor)
-            {
-        echo "               
-        <tbody>
-            <tr>
-             <th scope='row'>".$turnos_todos[$valores]."</th>
-          
-                    <td>".$valor."</td>
-                    <td>0</td>
-            </tr>
-            ";   
-            }
-        echo 
-       "
+            echo "               
+            <tbody>
+                <tr>
+                 <th scope='row'>TOTAL ENTRADA BOLETOS</th>
+              
+                        <td>".$BoletosTotales."</td>
+                </tr>
+                <tr>
+                <th scope='row'>BOLETOS PERDIDOS</th>
+             
+                       <td>".$BoletosPerdidos."</td>
+               </tr>
+               <tr>
+               <th scope='row'>BOLETOS FISICOS</th>
+            
+                      <td>".$TotalBoletos. "</td>
+              </tr>
+                ";   
+        echo "
         <tr class='table-active'>
-            <th scope='row'>Total</th>";
-            echo "<th scope='row'>". BD::sumar_valores($nuevo_array); "</th>";
-        echo    "<th scope='row'>0</th>
+            <th scope='row'>BOLETOS FISICOS</th>";
+            echo "<th scope='row'>".$TotalFinal. "</th>";
+      echo "
         </tr>
     </tbody>
         </table>

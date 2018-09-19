@@ -44,24 +44,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">Turno 1</th>
+                                        <th scope="row">BOLETOS FÍSICOS</th>
                                             <td>
                                                 <input name="turno1_fisico" class="inp_login text-dark" placeholder="Ingrese valor" type="text">
                                             </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Turno 2</th>
-                                            <td>
-                                                <input name="turno2_fisico" class="inp_login text-dark" placeholder="Ingrese valor" type="text">
-                                            </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Turno 3</th>
-                                            <td>
-                                                <input name="turno3_fisico" class="inp_login text-dark" placeholder="Ingrese valor" type="text">
-                                            </td>
-                                    </tr>
-                                    
+                                    </tr>                                    
                                 </tbody>
                             </table>
                         </div><!--fin de columna editar boletos fisicos-->
@@ -139,8 +126,6 @@
                                             <td>
                                                 <input name="coches_siguiente" class="inp_login text-dark" placeholder="Ingrese cantidad" type="text">
                                             </td>
-                                            <td>23</td>
-                                            <td>23</td>
                                     </tr>
                                 </tbody>
                             </table>

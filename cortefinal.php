@@ -83,12 +83,7 @@
                         <!-- Total total -->
                         <div class="col">
                             <?php BD::MostrarTablaTotales();
-                            }else if(isset($_POST['ver_admin']))
-                             {
-                                $fecha_corte=$_POST['date'];
-                                $fecha=date("Ymd",strtotime($fecha_corte));
-                                header("Location:admonExcel.php?date=".urlencode($fecha));
-                             } ?>
+                            ?>
                         </div><!--fin de columna total total -->
 
                     </div><!--fin row de tablas -->
@@ -102,7 +97,13 @@
                         
                         <!-- Dia siguiente -->
                         <div class="col">
-                         <?php BD::MostrarDiaSiguiente(); ?>
+                         <?php BD::MostrarDiaSiguiente(); 
+                            }else if(isset($_POST['ver_admin']))
+                         {
+                            $fecha_corte=$_POST['date'];
+                            $fecha=date("Ymd",strtotime($fecha_corte));
+                            header("Location:admonExcel.php?date=".urlencode($fecha));
+                         } ?>
                         </div><!--fin de columna Dia sifuiente-->
 
                     </div><!--fin row de dia sig-->
