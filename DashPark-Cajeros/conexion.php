@@ -11,14 +11,14 @@ class conexionbd{
         $this->password=""; //123 - nada
         $this->database="cortes_estacionamiento";     
     }
-    public function Conectar()
-    {
-        $this->conn=new mysqli($this->host,$this->user,$this->password,$this->database);
-        if($this->conn->connect_errno)
-        {
+    public function Conectar_bd(){
+        $this->conn=new mysqli($this->host,$this->user,$this->password,$this->database); //este es el bueno xdxdxd
+       
+        if($this->conn->connect_errno){
             die("Error al conectarse a la base de datos");
         }
     }
+    
     public function Cerrar()
     {
         $this->conn->close();

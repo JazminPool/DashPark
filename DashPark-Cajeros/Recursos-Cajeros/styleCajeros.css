@@ -4,7 +4,10 @@ body{
 .bg_main{
 	background-color: rgb(241, 241, 241);
 }
-
+.right{
+	margin-left: 8% !important;
+	float: right !important;
+}
 /*****************/
 /***** HEADER ****/
 /*****************/
@@ -18,6 +21,14 @@ body{
 }
 .jumbotron div h5{
 	padding: 1px;
+}
+input[type=time]{
+	font-family: 'Montserrat', sans-serif !important;
+	font-size: 16px;
+	padding: 2px 8px;
+	background-color: #f2f7f7;
+	border: 1px solid #0e0d0d;
+	color: #2d2e2e;
 }
 
 /*****************/
@@ -33,6 +44,9 @@ h1{
 /*****************/
 div input{
 	margin-bottom: 10px;
+}
+input{
+	font-family: 'Montserrat', sans-serif !important;
 }
 
 /*****************/
@@ -57,7 +71,7 @@ div select{
 .reloj{
 	float: right !important;
 	font-family: 'Montserrat', sans-serif !important;
-	font-weight: 300;
+	font-weight: 400;
 	width: 100%;
 	text-align: center;
     cursor: default;
@@ -69,4 +83,19 @@ div select{
 			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
 	-webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 			transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+h1 .reloj{
+	font-size: 28px;
+}
+h5 .reloj{
+	font-size: 20px;
+}
+
+/*****************/
+/***** footer ****/
+/*****************/
+.foot{
+    background: #f2f2f2 !important;
+    background: #024141 !important;
+    color: #ffffffb3;
 }
