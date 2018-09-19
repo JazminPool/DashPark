@@ -15,7 +15,7 @@
    
    <div class="main">
        <div class="content">
-        <form action="" method="POST"> 
+        <form action="" method="POST">
             <div class="row">
                 <div class="card w-100 mb-2 padcar shadows">
                     <div class="row">
@@ -34,7 +34,7 @@
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card-->
             </div><!--Fin row encabezado-->
-         </form>   
+            </form>
             <div class="row">
                 <div class="card w-100 mb-2 padcar shadows">
                     <div class="row">
