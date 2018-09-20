@@ -1,5 +1,6 @@
 <?php
 include("conexion.php");
+include("modales.php");
 Class BD{
     public static $array_boletos=null;
     public static $array_dinero=null;
@@ -441,6 +442,7 @@ Class BD{
             
         </tbody>
     </table>";
+    
     }
 
     public function MostrarDatosCuentas()
@@ -493,7 +495,7 @@ Class BD{
         <table class='table table-hover text_table_pq'>
         <thead class='thead-dark'>
         <tr>
-            <th scope='col' colspan=4>Día siguiente</th>
+            <th scope='col' colspan=3>Día siguiente</th>
         </tr>
         </thead>
         <tbody>
@@ -501,24 +503,20 @@ Class BD{
                 <th scope='row'>Folios emisor</th>
                     <td>".self::$arraySiguiente[0][2]."</td>
                     <td></td>
-                    <td></td>
             </tr>
             <tr>
                 <th scope='row'>Folios rojos</th>
                     <td>".self::$arraySiguiente[0][3]."</td>
-                    <td></td>
                     <td></td>
             </tr>
             <tr>
                 <th scope='row'>Contador</th>
                     <td>".self::$arraySiguiente[0][4]."</td>
                     <td></td>
-                    <td></td>
             </tr>
             <tr>
                 <th scope='row'>Coches dentro</th>
                     <td>".self::$arraySiguiente[0][5]."</td>
-                    <td>".self::$arraytotales[1][9]."</td>
                     <td>".self::$arraytotales[1][9]."</td>
             </tr>
         </tbody>
@@ -536,8 +534,7 @@ Class BD{
             <table class='table table-bordered table-hover  text_table_pq'>
             <thead class='thead-dark'>
                 <tr>
-                    <th scope='col' colspan=2>Boletos físicos</th>
-                   
+                    <th scope='col' colspan=2><center>Boletos físicos <button type='submit' class='btn btn-sm btn-light' data-toggle='modal' data-target='#modal_BoletosFisicos'><i class='fas fa-edit'></i></button></center></th>
                  </tr>
             </thead>";
             echo "               
@@ -577,7 +574,7 @@ Class BD{
         <table class='table  table-bordered table-hover text_table_pq'>
             <thead class='thead-dark'>
             <tr>
-                <th scope='col' colspan=3>Efectivo y Tarjeta</th>
+                <th scope='col' colspan=2><center>Efectivo y Tarjeta<button type='submit' class='btn btn-sm btn-light' data-toggle='modal' data-target='#modal_EfectivoTarjeta'> Modificar <i class='fas fa-edit'></i></button></center></th>
             </tr>
             </thead>
             <tbody>";
@@ -609,7 +606,7 @@ Class BD{
         <table class='table  table-bordered table-hover text_table_pq'>
             <thead class='thead-dark'>
             <tr>
-                <th scope='col' colspan=3>Total cobrados</th>
+                <th scope='col' colspan=2><center>Total cobrados </center></th>
             </tr>
             </thead>
             <tbody>";
