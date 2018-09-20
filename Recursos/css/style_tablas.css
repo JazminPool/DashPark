@@ -19,3 +19,7 @@ table{
 .text_table_md{
 	font-size: 15px;
 }
+/*padding de la tabla*/
+.table th{
+	/* padding: .25rem; */
+}
