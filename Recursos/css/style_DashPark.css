@@ -40,3 +40,8 @@ body {
 .padcar{
 	padding: 15px;
 }
+.font500{
+    text-align: center;
+    font-size: 16px !important;
+    font-weight: 500;
+}

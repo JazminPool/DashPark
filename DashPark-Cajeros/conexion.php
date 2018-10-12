@@ -4,7 +4,6 @@ class conexionbd{
     public $user;
     public $password;
     public $database;
-    public $conn;
     public function __construct(){
         $this->host="localhost"; //192.168.100.37 - localhost
         $this->user="root"; //servidor - root
@@ -17,6 +16,7 @@ class conexionbd{
         if($this->conn->connect_errno){
             die("Error al conectarse a la base de datos");
         }
+
     }
     
     public function Cerrar()
@@ -28,5 +28,10 @@ class conexionbd{
          $result = $this->conn->query($sql);
          return $result;
         }
+    public function ExecuteQuery2($sql,$flag){
+            
+     $result = $this->conn->query($sql,$flag);
+     return $result;
+    }
 }
 ?>  

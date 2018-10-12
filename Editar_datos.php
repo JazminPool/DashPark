@@ -4,12 +4,15 @@ include("conexion.php");
 Class editar_bd {
 
     public static $id_array;
-    public function mostrar_id(&$id_array)
+    public static $fecha;
+    public function mostrar_id(&$id_array,$fecha)
     {
         self::$id_array=$id_array;
+        self::$fecha=$fecha;
+        
     }
 
-    public function enviar_efectivo($fecha,$efectivo1,$efectivo2,$efectivo3)
+    public function ObtenerFecha($fecha)
     {
         $cone=new Conneciones();
         $cone->Conectar();
@@ -23,8 +26,13 @@ Class editar_bd {
         {
             $array_id[]=$columa_res['idreportes_cortes'];
         }   
-        self::mostrar_id($array_id);
+        self::mostrar_id($array_id,$fecha);
+    }
 
+    public function enviar_efectivo($efectivo1,$efectivo2,$efectivo3)
+    {
+        $cone=new Conneciones();
+        $cone->Conectar();
             $array_nuevo=self::$id_array;
             $envia_efe="UPDATE reportes_cortes
                         SET efectivo_tarjeta = 
@@ -34,11 +42,11 @@ Class editar_bd {
                             WHEN idreportes_cortes = $array_nuevo[2] THEN $efectivo3
                             END
                         WHERE idreportes_cortes IN ($array_nuevo[0],$array_nuevo[1],$array_nuevo[2])
-                        AND fecha_corte = $fecha";
+                        ";
     $resultdo_update=$cone->ExecuteQuery($envia_efe) or die ("ERROR EN EL UPDATE");       
     } 
 
-    public function enviar_fisicos($fecha,$fisico1,$fisico2,$fisico3)
+    public function enviar_fisicos($fecha,$fisico1)
     {
         $array_id=self::$id_array;
 
@@ -48,8 +56,8 @@ Class editar_bd {
                         SET boletos_fisicos = 
                             CASE 
                             WHEN idboletos_tipos = $array_id[0] THEN $fisico1
-                            WHEN idboletos_tipos = $array_id[1] THEN $fisico2
-                            WHEN idboletos_tipos = $array_id[2] THEN $fisico3
+                            WHEN idboletos_tipos = $array_id[1] THEN $fisico1
+                            WHEN idboletos_tipos = $array_id[2] THEN $fisico1
                             END
                         WHERE idboletos_tipos IN ($array_id[0],$array_id[1],$array_id[2])
                 ";
@@ -147,14 +155,13 @@ Class editar_bd {
         $cone->Cerrar();
     }
 
-    public function dia_siguiente($fecha,$em_sig,$rojo_sig,$conta_sig,$coches_sig,$resumen)
+    public function dia_siguiente($em_sig,$rojo_sig,$conta_sig,$coches_sig)
     {
         $cone=new Conneciones();
         $cone->Conectar();
-
+        $fechadeSig=self::$fecha;
         $insertarDiaSiguiente="INSERT INTO dia_siguiente (iddia_siguiente,fecha_siguiente,folio_emisor,folios_rojos,
-        contador,coches_dentro,resumen_dia) VALUES ($rojo_sig,$fecha,$em_sig,$rojo_sig,$conta_sig,$coches_sig,'$resumen')";
-     
+        contador,coches_dentro,resumen_dia) VALUES ($rojo_sig,$fechadeSig,$em_sig,$rojo_sig,$conta_sig,$coches_sig,null)";
         $resultadoSiguiente=$cone->ExecuteQuery($insertarDiaSiguiente) or die ("ERROR AL INSERTAR DIA SIGUIENTE");
         $cone->Cerrar();
         
@@ -308,6 +315,30 @@ Class editar_bd {
         $resultadoEliminar=$cone->ExecuteQuery($eliminarAdmin) or die ("Error en eliminar Admin");
         header('Location: administradores.php');
         $cone->Cerrar();
+    }
+
+    public function actualizarNuevoCorte($cochesNuvo,$entradasNuevo,$saltarjeNuevo,$cobradosNuevo,$toleranciaNuevo,$guadaNuevo,$cortesiaNuevo,$perdidosNuevo,$fecha,$idFolio,$observacionNuevo)
+    {
+        $resultadoBoletos=$cobradosNuevo+$toleranciaNuevo+$guadaNuevo+$cortesiaNuevo+$perdidosNuevo;
+        $resultadoTotales=$resultadoBoletos+$saltarjeNuevo;
+        $cone=new Conneciones();
+        $cone->Conectar();
+
+        $actualizarCoches="UPDATE coches_dentro SET coches_incio=".$cochesNuvo." WHERE idcoches_dentro=".$idFolio."";
+        $resultadoCoches=$cone->ExecuteQuery($actualizarCoches) or die ("ERROR EN COCHES");
+
+        $actualizarTarjetas="UPDATE tarjetas_control SET entrada_tarjeta=".$entradasNuevo.", salidas_tarjeta=".$saltarjeNuevo."
+        WHERE idtarjetas_control=".$idFolio."";
+        $resultadoTarjetas=$cone->ExecuteQuery($actualizarTarjetas) or die ("ERROR TARJETAS");
+        
+        $actualizarBoletos="UPDATE boletos_tipos SET boletos_cobrados=".$cobradosNuevo.", boletos_tolerancia=".$toleranciaNuevo.",
+        boletos_guada=".$guadaNuevo.", boletos_cortesia=".$cortesiaNuevo.", boletos_perdidos=".$perdidosNuevo.", boletos_totales=".$resultadoBoletos." 
+        WHERE idboletos_tipos=".$idFolio."";
+        $resultadoBoletos=$cone->ExecuteQuery($actualizarBoletos) or die ("Error boletos");
+        
+        $actualizarSalidas="UPDATE reportes_cortes SET total_salidas=".$resultadoTotales.", observacion_cajero='".$observacionNuevo."' WHERE idreportes_cortes=".$idFolio."";
+        $resultadoSalidas=$cone->ExecuteQuery($actualizarSalidas) or die ("ERROR salidas reportes");
+        header('Location:cortefinal.php');
     }
       
 }          

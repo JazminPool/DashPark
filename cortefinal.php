@@ -47,7 +47,7 @@
                                 $fecha_corte=$_POST['date'];
                                 $fecha=date("Ymd",strtotime($fecha_corte)); //Debe ser así para que agarre la consulta
                                 BD::trae_datos($fecha);
-                                //BD::mostrar_cortefinal($fecha);      
+                                //BD::mostrar_cortefinal($fecha);     
                                                      
                         ?>
                     </div><!--fin row de tablas -->

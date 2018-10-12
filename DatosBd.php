@@ -1,6 +1,5 @@
 <?php
 include("conexion.php");
-include("modales.php");
 Class BD{
     public static $array_boletos=null;
     public static $array_dinero=null;
@@ -8,6 +7,8 @@ Class BD{
     public static $boletos_totales=null;
     public static $arraytotales=null;
     public static $arraySiguiente=null;
+    public static $fecha=null;
+    public static $Datos=null;
 
     public function Obtener_boletos(&$array_boletos,&$array_dinero,&$array_turnos,&$boletos_totales)
      {   //global $array_boletos;
@@ -24,6 +25,14 @@ Class BD{
     public function DiaSiguiente(&$arraySiguiente)
     {
         self::$arraySiguiente=$arraySiguiente;
+    }
+    public function FechaCorte($fecha)
+    {
+        self::$fecha=$fecha;
+    }
+    public function DatosCambiar($Datos)
+    {
+        self::$Datos=$Datos;
     }
   
     
@@ -44,7 +53,6 @@ Class BD{
         echo "</select>"; 
         $cone->Cerrar();
     }
-    /*ESTO NO QUEDA :cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc*/
     public function trae_datos($fecha)
     {
         $cone=new Conneciones();
@@ -52,7 +60,7 @@ Class BD{
        
         $consulta_datos="SELECT folios_rojos.folio_entrada,folios_rojos.diferencia_folio ,folio_emisor.emisor_entrada,coches_dentro.coches_incio,
         contador_est.inicio_contador,tarjetas_control.entrada_tarjeta,reportes_cortes.total_salidas,contador_est.diferencia_contador,
-        boletos_tipos.boletos_perdidos, coches_dentro.coches_salida from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        boletos_tipos.boletos_perdidos, coches_dentro.coches_salida, boletos_tipos.boletos_fisicos from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
         inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos INNER JOIN contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
         Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
         INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
@@ -73,7 +81,8 @@ Class BD{
                 $columna_datos['diferencia_contador'], //6
                 $columna_datos['diferencia_folio'], //7
                 $columna_datos['boletos_perdidos'], //8
-                $columna_datos['coches_salida'] //9
+                $columna_datos['coches_salida'], //9
+                $columna_datos['boletos_fisicos'] //10
                 
         );
             self::ArrayTotales($array_turno1);
@@ -93,6 +102,7 @@ Class BD{
             );
         }
         self::DiaSiguiente($array_siguiente);
+        self::FechaCorte($fecha);
 
         $array_resultados=       
             array(
@@ -202,7 +212,12 @@ Class BD{
             echo "ERROR AL INSERTAR";}
             self::mostrar_cortefinal($fecha);
             }  
-//esto ya quedooooooooooooooooooooooo
+
+    /**
+    *  Método mostrar_reporte ya quedó
+    *  Muestra el reporte de la fecha de un cajero en especifico 
+    * Última modificación: 18/08/18 ; GLoria Aguilar
+    **/
     public function mostrar_reporte($id_empleado,$fecha){
         $cone=new Conneciones();
         $cone->Conectar();
@@ -287,12 +302,16 @@ Class BD{
         $cone->Cerrar();
     }
 
-
+    /*
+    * Método con modal ya quedó
+    *Última modificación: Gloria Aguilar 27/09/18
+    *Se agrego el método swithc
+    */
     public function mostrar_cortefinal($fecha)
     {
+        $editar_turno="editar";
         $cone=new Conneciones();
         $cone->Conectar();
-
         $consulta_corteFinal="SELECT * from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
         inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos inner join contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
         Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
@@ -316,7 +335,13 @@ Class BD{
             </caption>
             <thead class='thead-dark'>
             <tr>
-                <th scope='col' colspan=2>Reporte final</th>
+                <th scope='col' colspan=2>
+                    <button type='submit' class='btn btn-sm btn-light' style='float:left;' data-toggle='modal' 
+                    data-target='#editar".$columna_corteFina['folio_entrada']."'>
+                        <i class='fas fa-edit'></i>
+                    </button>
+                    <center>Reporte final </center>
+                </th>  
                 <th scope='col'>Entrada</th>
                 <th scope='col'>Salida</th>
             </tr>
@@ -407,17 +432,209 @@ Class BD{
                 </tr>
             </tbody>
         </table>
-    </div><!--fin de columna t1-->";
+    </div>";
+        self::Swithc($columna_corteFina['folio_entrada'],$fecha);
         $nuevo[]=$columna_corteFina['boletos_fisicos'];
         $efec_tarje[]=$columna_corteFina['efectivo_tarjeta'];
         $turnos[]=$columna_corteFina['descripcion'];
         $boletos[]=$columna_corteFina['boletos_totales'];
         }
-        self::Obtener_Boletos($nuevo,$efec_tarje,$turnos,$boletos);
+        self::Obtener_Boletos($nuevo,$efec_tarje,$turnos,$boletos);     
         $cone->Cerrar();   
     }else {echo "No hay nada para mostrar";}
+    }
+
+    /**
+    *Método Swithc ya quedó
+    *se manda a llamar los datos conforme fecha y el idfoliorojo
+    *Última modificación: Gloria Aguilar 27/09/18
+    */
+    public function Swithc($id,$fecha)
+    {
+        $cone=new Conneciones();
+        $cone->Conectar();
+        $consulta_datosFinal="SELECT folios_rojos.folio_entrada,folios_rojos.folio_salida, folios_rojos.diferencia_folio,
+        folio_emisor.emisor_entrada,folio_emisor.emisor_salida,folio_emisor.diferencia_emisor,contador_est.inicio_contador,
+        contador_est.salida_contador,contador_est.diferencia_contador, coches_dentro.coches_incio,coches_dentro.coches_salida,
+        coches_dentro.diferencia_coches, tarjetas_control.entrada_tarjeta, tarjetas_control.salidas_tarjeta,
+        boletos_tipos.boletos_cobrados,boletos_tipos.boletos_tolerancia, boletos_tipos.boletos_guada,boletos_tipos.boletos_cortesia,
+        boletos_tipos.boletos_perdidos,boletos_tipos.boletos_totales,reportes_cortes.total_salidas, empledos_cajeros.Nombre_cajero,
+        reportes_cortes.observacion_cajero from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos inner join contador_est ON 
+        reportes_cortes.id_contador=contador_est.idcontador_est Inner join folio_emisor ON 
+        reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
+        INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
+        reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
+        INNER JOIN turnos_caje ON empledos_cajeros.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje    
+        WHERE reportes_cortes.fecha_corte=".$fecha." AND reportes_cortes.idreportes_cortes=".$id."";
+        $resultadoDatos=$cone->ExecuteQuery($consulta_datosFinal) or die ("Error en Datos Final");
+        while($columnaRes=$resultadoDatos->fetch_array())
+        {
+            $arrayDatos[]=array(
+                $columnaRes['folio_entrada'], //0
+                $columnaRes['folio_salida'], //1
+                $columnaRes['diferencia_folio'], //2
+                $columnaRes['emisor_entrada'], //3
+                $columnaRes['emisor_salida'], //4
+                $columnaRes['diferencia_emisor'], //5
+                $columnaRes['inicio_contador'], //6
+                $columnaRes['salida_contador'], //7
+                $columnaRes['diferencia_contador'], //8
+                $columnaRes['coches_incio'], //9
+                $columnaRes['coches_salida'], //10
+                $columnaRes['diferencia_coches'], //11
+                $columnaRes['entrada_tarjeta'], //12
+                $columnaRes['salidas_tarjeta'], //13
+                $columnaRes['boletos_cobrados'], //14
+                $columnaRes['boletos_tolerancia'], //15
+                $columnaRes['boletos_guada'], //16
+                $columnaRes['boletos_cortesia'], //17
+                $columnaRes['boletos_perdidos'], //18
+                $columnaRes['boletos_totales'], //19
+                $columnaRes['total_salidas'], //20
+                $columnaRes['Nombre_cajero'], //21
+                $columnaRes['observacion_cajero'] //22
+            );
+
+            self::ModalEditarTurnos($id,$arrayDatos,$fecha);
+        }
+        $cone->Cerrar();   
+    }
+
+    /**
+    *ESTE MÉTODO YA QUEDO
+    *Última modificación: Gloria Aguilar 27/09/18
+    *Modal con array, ya actualiza
+    **/
+    public function ModalEditarTurnos($id,$array,$fecha)
+    {   
+        echo "
+        <form action='definir_accion.php' method='POST'>
+        <div class='modal fade' id='editar".$id."' tabindex='-1' role='dialog' aria-labelledby='modal_EditTurnosTitle' aria-hidden='true'>
+            <div class='modal-dialog modal-dialog-centered modal-lg' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-body bg-light'>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button><h4>Turno 1</h4>
+                        <div class='row'>
+                            <div class='col-md-12'>
+                                <table class='table table-hover table-responsive table-sm text_table'>
+                                    <caption> <strong>Observaciones:</strong> 
+                                        <input type='text' name='observacionNuevo' value='".$array[0][22]."' class='inp_editTurn font500'>
+                                    </caption>
+                                    <thead class='thead-dark'>
+                                        <tr>
+                                            <th scope='col' colspan=2>
+                                                <center>Reporte final </center>
+                                            </th>  
+                                            <th scope='col'>Entrada</th>
+                                            <th scope='col'>Salida</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class='table-active'>
+                                            <th scope='row'>turno</th>
+                                                <td>".$array[0][21]."</td>
+                                                <td><input type='text' name='' value='' class='inp_editTurn font500'></td>
+                                                <td><input type='text' name='' value='' class='inp_editTurn font500'></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Folio emisor</th>
+                                                <td class='inp_textCenter'>".$array[0][3]."</td>
+                                                <td>".$array[0][4]."</td>
+                                                <td>".$array[0][5]."</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Folios rojos</th>
+                                                <td>".$array[0][0]."</td>
+                                                <td>".$array[0][1]."</td>
+                                                <td>".$array[0][2]."</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Contador</th>
+                                                <td>".$array[0][6]."</td>
+                                                <td>".$array[0][7]."</td>
+                                                <td>".$array[0][8]."</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Coches dentro</th>
+                                                <td><input type='text' name='cochesNuevo' class='inp_editTurn font500' value=".$array[0][9]."></td>
+                                                <td>".$array[0][10]."</td>
+                                                <td>".$array[0][11]."</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Entradas con tarjeta</th>
+                                                <td><input type='text' name='entradasNuevo' class='inp_editTurn font500' value=".$array[0][12]."></td>
+                                                <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Boletos cobrados</th>
+                                                <td><input type='text' name='cobradosNuevo' value='".$array[0][14]."' class='inp_editTurn font500'></td>
+                                                <td></td>
+                                                <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Boletos tolerancia</th>
+                                                <td><input type='text' name='toleranciaNuevo' value=".$array[0][15]." class='inp_editTurn font500'></td>
+                                                <td></td>
+                                                <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Cortesías</th>
+                                                <td><input type='text' name='cortesiaNuevo' value=".$array[0][17]." class='inp_editTurn font500'></td>
+                                                <td></td>
+                                                <td></td>  
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>GUADA</th>
+                                                <td><input type='text' name='guadaNuevo' value=".$array[0][16]." class='inp_editTurn font500'></td>
+                                                <td></td>
+                                                <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Boletos perdidos</th>
+                                                <td><input type='text' name='perdidosNuevo' value=".$array[0][18]." class='inp_editTurn font500'></td>
+                                                <td></td>
+                                                <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Boletos totales</th>
+                                                <td>".$array[0][19]."</td>
+                                                <td></td>
+                                                <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Salidas con tarjeta</th>
+                                                <td><input type='text' name='saltarjeNuevo' value=".$array[0][13]." class='inp_editTurn font500'></td>
+                                                <td></td>
+                                                <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope='row'>Salidas totales</th>
+                                                <td>".$array[0][20]."</td>
+                                                <td></td>
+                                                <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <input type='hidden' name='fechaCorte' value='".$fecha."'>
+                                <input type='hidden' name='idFolio' value='".$array[0][0]."'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='modal-footer bg-light'>
+                        <button type='button' class='btn btn-danger btn-sm' data-dismiss='modal'>Cancelar</button> 
+                        <button type='submit' class='btn btn-info btn-sm' name='nuevoCorte'>Guardar</button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        </form>";
     
     }
+
+ 
     public function MostrarTablaTotales()
     {
         $TotalSalidas=self::$arraytotales[0][5]+self::$arraytotales[1][5]+self::$arraytotales[2][5];
@@ -495,7 +712,11 @@ Class BD{
         <table class='table table-hover text_table_pq'>
         <thead class='thead-dark'>
         <tr>
-            <th scope='col' colspan=3>Día siguiente</th>
+            <th scope='col' colspan=3>Día siguiente 
+                <button type='submit' class='btn btn-sm btn-light' style='float: right;' data-toggle='modal' data-target='#modal_DiaSig".self::$fecha."'>
+                    Modificar <i class='fas fa-edit'></i>
+                </button>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -521,20 +742,21 @@ Class BD{
             </tr>
         </tbody>
     </table>";
+    self::modal_DiaSig();
     }
 
     public function boletos_fisico()
     {              
-            $nuevo_array=self::$array_boletos;
+            $nuevo_array=self::$arraytotales[0][10];
             $BoletosTotales=self::$arraytotales[0][7]+self::$arraytotales[1][7]+self::$arraytotales[2][7];
             $BoletosPerdidos=self::$arraytotales[0][8]+self::$arraytotales[1][8]+self::$arraytotales[2][8];
-            $TotalBoletos= self::sumar_valores($nuevo_array);
-            $TotalFinal=$BoletosTotales-$BoletosPerdidos-$TotalBoletos;
+            $TotalFinal=$BoletosTotales-$BoletosPerdidos-$nuevo_array;
             echo "<div class='col'>
             <table class='table table-bordered table-hover  text_table_pq'>
             <thead class='thead-dark'>
                 <tr>
-                    <th scope='col' colspan=2><center>Boletos físicos <button type='submit' class='btn btn-sm btn-light' data-toggle='modal' data-target='#modal_BoletosFisicos'><i class='fas fa-edit'></i></button></center></th>
+                    <th scope='col' colspan=2><center>Boletos físicos <button type='submit' class='btn btn-sm btn-light' 
+                    data-toggle='modal' data-target='#modal_BoletosFisicos".self::$fecha."'><i class='fas fa-edit'></i></button></center></th>
                  </tr>
             </thead>";
             echo "               
@@ -552,29 +774,63 @@ Class BD{
                <tr>
                <th scope='row'>BOLETOS FISICOS</th>
             
-                      <td>".$TotalBoletos. "</td>
+                      <td>".$nuevo_array. "</td>
               </tr>
                 ";   
         echo "
         <tr class='table-active'>
-            <th scope='row'>BOLETOS FISICOS</th>";
+            <th scope='row'>TOTAL FALTANTE</th>";
             echo "<th scope='row'>".$TotalFinal. "</th>";
       echo "
         </tr>
     </tbody>
         </table>
         </div>";
+        self::ModalTotalCobrados();
+    }
+
+    public function ModalTotalCobrados()
+    {
+        
+        echo "
+    <form action='definir_accion.php' method='POST'>
+        <div class='modal fade' id='modal_BoletosFisicos".self::$fecha."' tabindex='-1' role='dialog' aria-labelledby='modal_BoletosFisicosTitle' aria-hidden='true'>
+        <div class='modal-dialog modal-dialog-centered' role='document'>
+          <div class='modal-content'>
+            <div class='modal-body bg-light'>
+              <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+              </button><h2>Boletos físicos</h2> <br>
+              <div class='row'>
+                  <div class='col-md-12'>
+                      <h5>Boletos físicos:</h5>
+                      <input type='text' name='boletosTotales' value='".self::$arraytotales[0][10]  ."' class='form-control'><br>
+                      <input type='hidden' name='fechaCorte' value='".self::$fecha."'>
+                  </div>
+              </div>
+            </div>
+            <div class='modal-footer bg-light'>
+              <button type='button' class='btn btn-danger btn-sm' data-dismiss='modal'>Cancelar</button> 
+              <button type='submit' class='btn btn-info btn-sm' name='ingresarCobrados'>Guardar</button>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </form>";
+    
     }
     
     public function dinero_turnos()
     {
         $dinero_tarjetas=self::$array_dinero;
+        $Fecha=self::$fecha;
         echo "       
         <div class='col'>
         <table class='table  table-bordered table-hover text_table_pq'>
             <thead class='thead-dark'>
             <tr>
-                <th scope='col' colspan=2><center>Efectivo y Tarjeta<button type='submit' class='btn btn-sm btn-light' data-toggle='modal' data-target='#modal_EfectivoTarjeta'> Modificar <i class='fas fa-edit'></i></button></center></th>
+                <th scope='col' colspan=2><center>Efectivo y Tarjeta<button type='submit' class='btn btn-sm btn-light' data-toggle='modal' 
+                data-target='#modal_EfectivoTarjeta".$Fecha."'> Modificar <i class='fas fa-edit'></i></button></center></th>
             </tr>
             </thead>
             <tbody>";
@@ -595,6 +851,95 @@ Class BD{
             </tbody>
         </table>
         </div>";
+        self::ModalEfectivoyTarjeta();
+    }
+
+    public function ModalEfectivoyTarjeta()
+    {
+        $Fecha=self::$fecha;
+        echo "
+    <form action='definir_accion.php' method='POST'>    
+        <div class='modal fade' id='modal_EfectivoTarjeta".$Fecha."' tabindex='-1' role='dialog' aria-labelledby='modalTabla_totalesTitle' aria-hidden='true'>
+        <div class='modal-dialog modal-dialog-centered' role='document'>
+          <div class='modal-content'>
+            <div class='modal-body bg-light'>
+              <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+              </button><h2>Efectivo y tarjeta</h2> <br>
+              <div class='row'>
+                  <div class='col-md-12'>
+                      <h5>Total 1:</h5>
+                      <input type='text' name='turno1_efectivo' value='".self::$array_dinero[0]."' class='form-control'><br>
+                  </div>
+              </div>
+              <div class='row'>
+                  <div class='col-md-12'>
+                      <h5>Total 2:</h5>
+                      <input type='text' name='turno2_efectivo' value='".self::$array_dinero[1]."' class='form-control'><br>
+                  </div>
+              </div>
+              <div class='row'>
+                  <div class='col-md-12'>
+                      <h5>Total 3:</h5>
+                      <input type='text' name='turno3_efectivo' class='form-control' value='".self::$array_dinero[2]."'><br>
+                      <input type='hidden' name='fechaCorte' value='".self::$fecha."'>
+                  </div>
+              </div>
+            </div>
+            <div class='modal-footer bg-light'>
+              <button type='button' class='btn btn-danger btn-sm' data-dismiss='modal'>Cancelar</button> 
+              <button type='submit' class='btn btn-info btn-sm' name='guardarFisicos'>Guardar</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </form>";
+    }
+    public function modal_DiaSig(){
+        echo "
+    <form action='definir_accion.php' method='POST'>
+          <div class='modal fade' id='modal_DiaSig".self::$fecha."' tabindex='-1' role='dialog' aria-labelledby='modal_DiaSigTitle' aria-hidden='true'>
+            <div class='modal-dialog modal-dialog-centered' role='document'>
+              <div class='modal-content'>
+                <div class='modal-body bg-light'>
+                  <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                  </button><h2>Día siguiente</h2> <br>
+                  <div class='row'>
+                      <div class='col-md-12'>
+                          <h5>Folio emisor: </h5>
+                          <input type='text' name='emisor_siguiente' class='form-control'><br>
+                      </div>
+                  </div>
+                  <div class='row'>
+                      <div class='col-md-12'>
+                          <h5>Folios rojos: </h5>
+                          <input type='text' name='rojos_siguiente' class='form-control'><br>
+                      </div>
+                  </div>
+                  <div class='row'>
+                      <div class='col-md-12'>
+                          <h5>Contador: </h5>
+                          <input type='text' name='contador_siguiente' class='form-control' value=''><br>
+                      </div>
+                  </div>
+                  <div class='row'>
+                    <div class='col-md-12'>
+                        <h5>Coches dentro: </h5>
+                        <input type='text' name='coches_siguiente' class='form-control' value=''><br>
+                        <input type='hidden' name='fechaCorte' value='".self::$fecha."'>
+                    </div>
+                  </div>  
+                </div>
+                <div class='modal-footer bg-light'>
+                  <button type='button' class='btn btn-danger btn-sm' data-dismiss='modal'>Cancelar</button> 
+                  <button type='submit' class='btn btn-info btn-sm' name='guardarDiaSig'>Guardar</button>
+              </div>
+              </div>
+            </div>
+          </div>
+    </form>";   
+
     }
     public function total_cobrados()
     {

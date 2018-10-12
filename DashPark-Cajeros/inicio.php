@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!isset($_SESSION['usuario'])){
+	header('Location:index.php');}
+	else{
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,13 +27,13 @@
 <!-- Header -->
     <div class="jumbotron bordernone">
         <div class="container">
-            
+        <form action="acciones.php" Method="POST">    
             <div class="row">
                 <div class="col-md-1 text-center col-sm-12">
                     <i class="fas fa-user-alt icon_cajero"></i>
                 </div> <!--Fin de icono-->
                 <div class="col-md-3 text-center">
-                    <h1>Cajero 1</h1>
+                    <h1><?php echo $_SESSION['usuario'];?></h1>
                     <?php consultas::trae_turnos(); ?>
                 </div> <!--Fin del nombre cajero-->
                 <div class="col-md-3"></div>
@@ -35,11 +41,11 @@
                     <div class="row">
                         <div class="col-6">
                             <h5>Hora entrada:</h5>
-                            <input type="time" name="" required>
+                            <input type="time" name="horaInicio" required>
                         </div>
                         <div class="col-6">
                             <h5>Hora salida:</h5>
-                            <input type="time" name="" required>
+                            <input type="time" name="horaSalida" required>
                         </div>
                     </div><!--Fin del row-->
                 </div> <!--Fin de las horas-->
@@ -67,39 +73,39 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <h5>Folio emisor</h5>
-                                    <input type="text" name="" maxlength="7" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
+                                    <input type="text" name="folioEmisor" maxlength="7" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
                                 </div>
                                 <div class="col-lg-6">
                                     <h5>Folio rojo</h5>
-                                    <input type="text" name="" maxlength="6" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
+                                    <input type="text" name="folioRojo" maxlength="6" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
                                 </div>
                             </div><!--Fin del row Folios-->
 
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Contador</h5>
-                                    <input type="text" name="" maxlength="8" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
+                                    <input type="text" name="contador" maxlength="8" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
                                 </div>
                             </div> <!--Fin del row Contador-->
 
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Coches dentro</h5>
-                                    <input type="text" name="" maxlength="3" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
+                                    <input type="text" name="cochesDentro" maxlength="3" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
                                 </div>
                             </div> <!--Fin del row Coches dentro -->
 
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Entradas con tarjeta</h5>
-                                    <input type="text" name="" maxlength="3" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
+                                    <input type="text" name="entradaTarjeta" maxlength="3" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
                                 </div>
                             </div> <!--Fin del row Entr. Tarjeta-->
                             
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Salidas con tarjeta</h5>
-                                    <input type="text" name="" maxlength="3" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
+                                    <input type="text" name="salidaTarjeta" maxlength="3" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
                                 </div>
                             </div> <!--Fin del row Sal. Tarjeta-->
 
@@ -111,35 +117,35 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Boletos cobrados</h5>
-                                    <input type="text" name="" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
+                                    <input type="text" name="boletosCobrados" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
                                 </div>
                             </div> <!--Fin del row Boletos cobrados-->
 
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Boletos tolerancia</h5>
-                                    <input type="text" name="" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
+                                    <input type="text" name="boletosTolerancia" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
                                 </div>
                             </div> <!--Fin del row Boletos tolerancia -->
 
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Boletos cortesía</h5>
-                                    <input type="text" name="" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
+                                    <input type="text" name="boletosCortesia" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
                                 </div>
                             </div> <!--Fin del row Boletos cortesía-->
                             
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Boletos GUADA</h5>
-                                    <input type="text" name="" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
+                                    <input type="text" name="boletosGuada" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
                                 </div>
                             </div> <!--Fin del row Boletos GUADA-->
 
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Boletos perdidos</h5>
-                                    <input type="text" name="" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
+                                    <input type="text" name="boletosPerdidos" maxlength="3" onkeypress="return just_numbers(event)" required class="form-control form-control-sm">
                                 </div>
                             </div> <!--Fin del row Boletos perdidos-->
 
@@ -158,14 +164,14 @@
                 <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#cambioBoletos">
                     Cambio de boletos
                 </button>
-                <button type="submit" class="btn btn-dark btn-block">Generar reporte</button>
-                <button type="submit" class="btn btn-block bg-warning">Cerrar sesión</button>
+                <button type="submit" name='generarReporte' class="btn btn-dark btn-block">Generar reporte</button>
+                <button type="submit" name="cerrarSesion" class="btn btn-block bg-warning">Cerrar sesión</button>
                 <br>
             </div> <!--Fin de columna main 2 (botones)-->
         
         </div> <!--Fin del row mega principal-->
     </div> <!--Fin de cuerpo-->
-
+    </form>
     <!-- Footer -->
     <footer class="foot">
         <div class="container">
@@ -180,7 +186,7 @@
             
         </div>
     </footer>
-
+       
     <!-- Fin del footer -->
    
     <!-- MODAL CAMBIO BOLETOS -->
@@ -217,3 +223,4 @@
 
 </body>
 </html>
+    <?php }?>
