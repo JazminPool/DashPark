@@ -23,7 +23,7 @@ class consultas{
         $select_turno="SELECT * from turnos_caje";
         $resultado_turno=$cone->ExecuteQuery($select_turno) or die("Error al consultar cajeros");
         
-        echo "<select name='turno_cajero'>";
+        echo "<select name='turno_cajero' required>";
             echo "<option value='' disabled selected>Seleccione un turno</option>";
             
             while($columna_turno=$resultado_turno->fetch_array()){
@@ -53,7 +53,7 @@ class consultas{
         VALUES ($folio_rojo, $fecha,$idCajero,$folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo,$salidasTotales,NULL,NULL,'$horaEntrada','$horaSalida')");
         $resultadoCajero=$conexion->ExecuteQuery($query5) or die ("Error en al ingresar reportes cortes");   
          $conexion->Cerrar();     
-        // print_r($query5);
+        //print_r($query5);
 
     }
 

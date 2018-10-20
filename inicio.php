@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!isset($_SESSION['Admin'])){
+	header('Location:index.php');}
+	else{
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,9 +44,6 @@
 
        </div><!--Fin container-->
    </div><!--Fin main-->
-
-
-    
-
 </body>
 </html>
+    <?php }?>

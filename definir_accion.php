@@ -83,11 +83,15 @@ else if(isset($_POST['guardar_admin']))
                 $cobradosNuevo=$_POST['cobradosNuevo'];
                 $toleranciaNuevo=$_POST['toleranciaNuevo'];
                 $guadaNuevo=$_POST['guadaNuevo'];
+                $cochesAnterior=$_POST['cochesAnterior'];
                 $cortesiaNuevo=$_POST['cortesiaNuevo'];
                 $perdidosNuevo=$_POST['perdidosNuevo'];
                 $observacionNuevo=$_POST['observacionNuevo'];
                 $fecha=$_POST['fechaCorte'];
                 $idFolio=$_POST['idFolio'];
-                editar_bd::actualizarNuevoCorte($cochesNuevo,$entradasNuevo,$saltarjeNuevo,$cobradosNuevo,$toleranciaNuevo,$guadaNuevo,$cortesiaNuevo,$perdidosNuevo,$fecha,$idFolio,$observacionNuevo);
+                $inicioCorte=$_POST['inicioCorte'];
+                $finCorte=$_POST['finCorte'];
+                editar_bd::actualizarNuevoCorte($cochesNuevo,$entradasNuevo,$saltarjeNuevo,$cobradosNuevo,$toleranciaNuevo,$guadaNuevo,$cortesiaNuevo,$perdidosNuevo,$fecha,$idFolio,$observacionNuevo,
+            $inicioCorte.":00",$finCorte.":00",$cochesAnterior);
             }
 ?>

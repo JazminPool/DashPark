@@ -199,7 +199,8 @@ Class editar_bd {
     echo"<div class='row'>  
         <div class='col-6'>
             <small> Nombre(s): </small>
-            <input name='nomAdmin' maxlength='35' class='form-control text-dark' type='text' value=".$colAdmin['nombre_admin'].">                            
+            <input name='nomAdmin' maxlength='35' class='form-control text-dark' type='text' value=".$colAdmin['nombre_admin'].">
+            <input name='idAmin' maxlength='35' class='form-control text-dark' type='hidden' value=".$colAdmin['idadministrados_caje'].">                              
         </div>
     </div>
     
@@ -247,21 +248,22 @@ Class editar_bd {
             <div class='row'>  
                 <div class='col-6'>
                     <small> Nombre(s): </small>
-                     <input  maxlength='35' class='form-control text-dark' type='text' name='nombreAdmin'>                            
+                     <input  maxlength='35' class='form-control text-dark' type='text' name='nomAdmin'>        
+                     <input  maxlength='35' class='form-control text-dark' type='hidden' name='idAmin'>                            
                 </div>
             </div>
     
     <div class='row'> 
         <div class='col-md-6'>
             <small> Apellidos: </small>
-            <input  maxlength='35' class='form-control text-dark' type='text' name='apellidosAdmin'>
+            <input  maxlength='35' class='form-control text-dark' type='text' name='ApeAdmin'>
         </div>
     </div>
 
     <div class='row'>  
         <div class='col-md-6'>
             <small> Nombre de usuario de administrador: </small>
-            <input  maxlength='35'  class='form-control text-dark' type='text' name='usuarioAdmin'>     
+            <input  maxlength='35'  class='form-control text-dark' type='text' name='usuAdmin'>     
         </div>
     </div> 
     
@@ -270,7 +272,7 @@ Class editar_bd {
             <small> Contraseña de administrador: </small>
             <div class='row'>
                 <div class='col-10'>
-                    <input maxlength='35' id='showpass' class='form-control text-dark' type='password' name='passwordAdmin'> 
+                    <input maxlength='35' id='showpass' class='form-control text-dark' type='password' name='passAdmin'> 
                 </div>
                 <div class='col-1'>
                     <i class='al_left far fa-eye see_pwd' onclick='showPass()'></i>
@@ -317,14 +319,15 @@ Class editar_bd {
         $cone->Cerrar();
     }
 
-    public function actualizarNuevoCorte($cochesNuvo,$entradasNuevo,$saltarjeNuevo,$cobradosNuevo,$toleranciaNuevo,$guadaNuevo,$cortesiaNuevo,$perdidosNuevo,$fecha,$idFolio,$observacionNuevo)
+    public function actualizarNuevoCorte($cochesNuvo,$entradasNuevo,$saltarjeNuevo,$cobradosNuevo,$toleranciaNuevo,$guadaNuevo,$cortesiaNuevo,$perdidosNuevo,$fecha,$idFolio,$observacionNuevo,
+    $inicioCorte,$finCorte,$cochesAnterior)
     {
         $resultadoBoletos=$cobradosNuevo+$toleranciaNuevo+$guadaNuevo+$cortesiaNuevo+$perdidosNuevo;
         $resultadoTotales=$resultadoBoletos+$saltarjeNuevo;
         $cone=new Conneciones();
         $cone->Conectar();
 
-        $actualizarCoches="UPDATE coches_dentro SET coches_incio=".$cochesNuvo." WHERE idcoches_dentro=".$idFolio."";
+        $actualizarCoches="UPDATE coches_dentro SET coches_incio=".$cochesNuvo.", diferencia_coches=".$cochesAnterior." WHERE idcoches_dentro=".$idFolio."";
         $resultadoCoches=$cone->ExecuteQuery($actualizarCoches) or die ("ERROR EN COCHES");
 
         $actualizarTarjetas="UPDATE tarjetas_control SET entrada_tarjeta=".$entradasNuevo.", salidas_tarjeta=".$saltarjeNuevo."
@@ -336,7 +339,8 @@ Class editar_bd {
         WHERE idboletos_tipos=".$idFolio."";
         $resultadoBoletos=$cone->ExecuteQuery($actualizarBoletos) or die ("Error boletos");
         
-        $actualizarSalidas="UPDATE reportes_cortes SET total_salidas=".$resultadoTotales.", observacion_cajero='".$observacionNuevo."' WHERE idreportes_cortes=".$idFolio."";
+        $actualizarSalidas="UPDATE reportes_cortes SET total_salidas=".$resultadoTotales.", observacion_cajero='".$observacionNuevo."',
+        inicio_corte='".$inicioCorte."', fin_corte='".$finCorte."' WHERE idreportes_cortes=".$idFolio."";
         $resultadoSalidas=$cone->ExecuteQuery($actualizarSalidas) or die ("ERROR salidas reportes");
         header('Location:cortefinal.php');
     }

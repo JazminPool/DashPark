@@ -1,11 +1,11 @@
 <?php
+date_default_timezone_set('America/Lima');
 session_start();
 require("BDconexiones.php");
 if(isset($_POST['generarReporte']))
 {
     $id=$_SESSION['usuario'];
-    $time = time();
-    $fecha=date("Ymd", $time);
+    $fecha=date("Ymd");
     $idCajero=consultas::VerificaCajeros($id);
     $horaInicio=$_POST['horaInicio'];
     $horaSalida=$_POST['horaSalida'];
@@ -23,8 +23,18 @@ if(isset($_POST['generarReporte']))
 
     consultas::insertar_datos($folioRojo, $folioEmisor, $contador, $cochesDentro, $entradasTarjeta, $salidaTarjetas, $boletosCobrados,
     $boletosTolerancia, $boletosCortesia, $boletosGuada, $boletosPerdidos,$fecha,$horaInicio.":00",$horaSalida.":00",$idCajero);
-    echo "Si se pudo chingao";
-    echo $idCajero;
+    unset($_SESSION['usuario']);
+    session_destroy();
+    echo'<script type="text/javascript">
+    alert("Tarea Guardada");
+    window.location.href="index.php";
+    </script>';
+    
+}else if(isset($_POST['cerrarSesion']))
+{
+    unset($_SESSION['usuario']);
+    session_destroy();
+    header('Location:index.php');
 }
 
 

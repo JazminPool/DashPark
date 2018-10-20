@@ -60,7 +60,7 @@ Class BD{
        
         $consulta_datos="SELECT folios_rojos.folio_entrada,folios_rojos.diferencia_folio ,folio_emisor.emisor_entrada,coches_dentro.coches_incio,
         contador_est.inicio_contador,tarjetas_control.entrada_tarjeta,reportes_cortes.total_salidas,contador_est.diferencia_contador,
-        boletos_tipos.boletos_perdidos, coches_dentro.coches_salida, boletos_tipos.boletos_fisicos from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        boletos_tipos.boletos_perdidos, coches_dentro.coches_salida, boletos_tipos.boletos_fisicos,coches_dentro.diferencia_coches from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
         inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos INNER JOIN contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
         Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
         INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
@@ -68,6 +68,7 @@ Class BD{
         INNER JOIN turnos_caje ON empledos_cajeros.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje WHERE reportes_cortes.fecha_corte=".$fecha."";
         $resultado_corteFinal=$cone->ExecuteQuery($consulta_datos) or die ("Error al consultar corte final1");
 
+        $array_turno1=null;
         while($columna_datos=$resultado_corteFinal->fetch_array())
         {
             $array_turno1[]=array(
@@ -82,11 +83,15 @@ Class BD{
                 $columna_datos['diferencia_folio'], //7
                 $columna_datos['boletos_perdidos'], //8
                 $columna_datos['coches_salida'], //9
-                $columna_datos['boletos_fisicos'] //10
+                $columna_datos['boletos_fisicos'], //10
+                $columna_datos['diferencia_coches'] //11
                 
         );
             self::ArrayTotales($array_turno1);
         }
+        if(count($array_turno1)==null){
+            echo "No hay nada para mistrar";
+        }else{
         $consulta_diasig="SELECT * from dia_siguiente WHERE fecha_siguiente='$fecha'";
         $resultado_corte=$cone->ExecuteQuery($consulta_diasig) or die("Error al consultar datos siguientes");
         while($columna_sig=$resultado_corte->fetch_array())
@@ -200,7 +205,7 @@ Class BD{
         END, 
                 diferencia_coches=
                     CASE
-                        WHEN idcoches_dentro=".$array_turno1[0][0]." then  0
+                        WHEN idcoches_dentro=".$array_turno1[0][0]." then  ".$array_turno1[0][11]."
                         WHEN idcoches_dentro=".$array_turno1[1][0]." then  ".$array_turno1[0][9]."
                         WHEN idcoches_dentro=".$array_turno1[2][0]." then  ".$array_turno1[1][9]."
                     END
@@ -211,6 +216,7 @@ Class BD{
             {
             echo "ERROR AL INSERTAR";}
             self::mostrar_cortefinal($fecha);
+            }
             }  
 
     /**
@@ -350,8 +356,8 @@ Class BD{
                 <tr class='table-active'>
                     <th scope='row'>".$columna_corteFina['descripcion']."</th>
                         <td>".$columna_corteFina['Nombre_cajero']."</td>
-                        <td>00:00 am</td>
-                        <td>08:00 am</td>
+                        <td>".$columna_corteFina['inicio_corte']."</td>
+                        <td>".$columna_corteFina['fin_corte']."</td>
                 </tr>
                 <tr>
                     <th scope='row'>Folio emisor</th>
@@ -459,7 +465,7 @@ Class BD{
         coches_dentro.diferencia_coches, tarjetas_control.entrada_tarjeta, tarjetas_control.salidas_tarjeta,
         boletos_tipos.boletos_cobrados,boletos_tipos.boletos_tolerancia, boletos_tipos.boletos_guada,boletos_tipos.boletos_cortesia,
         boletos_tipos.boletos_perdidos,boletos_tipos.boletos_totales,reportes_cortes.total_salidas, empledos_cajeros.Nombre_cajero,
-        reportes_cortes.observacion_cajero from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        reportes_cortes.observacion_cajero,reportes_cortes.inicio_corte,reportes_cortes.fin_corte from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
         inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos inner join contador_est ON 
         reportes_cortes.id_contador=contador_est.idcontador_est Inner join folio_emisor ON 
         reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
@@ -493,7 +499,9 @@ Class BD{
                 $columnaRes['boletos_totales'], //19
                 $columnaRes['total_salidas'], //20
                 $columnaRes['Nombre_cajero'], //21
-                $columnaRes['observacion_cajero'] //22
+                $columnaRes['observacion_cajero'], //22
+                $columnaRes['inicio_corte'], //23
+                $columnaRes['fin_corte'] //24
             );
 
             self::ModalEditarTurnos($id,$arrayDatos,$fecha);
@@ -536,12 +544,12 @@ Class BD{
                                         <tr class='table-active'>
                                             <th scope='row'>turno</th>
                                                 <td>".$array[0][21]."</td>
-                                                <td><input type='text' name='' value='' class='inp_editTurn font500'></td>
-                                                <td><input type='text' name='' value='' class='inp_editTurn font500'></td>
+                                                <td><input type='time' name='inicioCorte' value='".$array[0][23]."' class='inp_editTurn font500'></td>
+                                                <td><input type='time' name='finCorte' value='".$array[0][24]."' class='inp_editTurn font500'></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Folio emisor</th>
-                                                <td class='inp_textCenter'>".$array[0][3]."</td>
+                                                <td class='inp_textCenter' >".$array[0][3]."</td>
                                                 <td>".$array[0][4]."</td>
                                                 <td>".$array[0][5]."</td>
                                         </tr>
@@ -559,42 +567,42 @@ Class BD{
                                         </tr>
                                         <tr>
                                             <th scope='row'>Coches dentro</th>
-                                                <td><input type='text' name='cochesNuevo' class='inp_editTurn font500' value=".$array[0][9]."></td>
+                                                <td><input type='text' name='cochesNuevo' class='inp_editTurn font500' value=".$array[0][9]." onkeypress='return just_numbers(event)'></td>
                                                 <td>".$array[0][10]."</td>
-                                                <td>".$array[0][11]."</td>
+                                                <td><input type='text' name='cochesAnterior' class='inp_editTurn font500' value=".$array[0][11]." onkeypress='return just_numbers(event)'></td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Entradas con tarjeta</th>
-                                                <td><input type='text' name='entradasNuevo' class='inp_editTurn font500' value=".$array[0][12]."></td>
+                                                <td><input type='text' name='entradasNuevo' class='inp_editTurn font500' value=".$array[0][12]." onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos cobrados</th>
-                                                <td><input type='text' name='cobradosNuevo' value='".$array[0][14]."' class='inp_editTurn font500'></td>
+                                                <td><input type='text' name='cobradosNuevo' value='".$array[0][14]."' class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos tolerancia</th>
-                                                <td><input type='text' name='toleranciaNuevo' value=".$array[0][15]." class='inp_editTurn font500'></td>
+                                                <td><input type='text' name='toleranciaNuevo' value=".$array[0][15]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Cortesías</th>
-                                                <td><input type='text' name='cortesiaNuevo' value=".$array[0][17]." class='inp_editTurn font500'></td>
+                                                <td><input type='text' name='cortesiaNuevo' value=".$array[0][17]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>  
                                         </tr>
                                         <tr>
                                             <th scope='row'>GUADA</th>
-                                                <td><input type='text' name='guadaNuevo' value=".$array[0][16]." class='inp_editTurn font500'></td>
+                                                <td><input type='text' name='guadaNuevo' value=".$array[0][16]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos perdidos</th>
-                                                <td><input type='text' name='perdidosNuevo' value=".$array[0][18]." class='inp_editTurn font500'></td>
+                                                <td><input type='text' name='perdidosNuevo' value=".$array[0][18]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
@@ -606,7 +614,7 @@ Class BD{
                                         </tr>
                                         <tr>
                                             <th scope='row'>Salidas con tarjeta</th>
-                                                <td><input type='text' name='saltarjeNuevo' value=".$array[0][13]." class='inp_editTurn font500'></td>
+                                                <td><input type='text' name='saltarjeNuevo' value=".$array[0][13]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
@@ -637,6 +645,9 @@ Class BD{
  
     public function MostrarTablaTotales()
     {
+        if(count(self::$arraytotales)!=3){
+            echo "No hay datos para mostrar";
+        }else{
         $TotalSalidas=self::$arraytotales[0][5]+self::$arraytotales[1][5]+self::$arraytotales[2][5];
         $TotalContador=self::$arraytotales[0][6]+self::$arraytotales[1][6]+self::$arraytotales[2][6];
     
@@ -659,15 +670,19 @@ Class BD{
             
         </tbody>
     </table>";
-    
+        }
     }
 
     public function MostrarDatosCuentas()
     {
+        if(count(self::$arraytotales)!=3)
+        {
+            echo "No hay nada para mostrar";
+        }else{
         $BoletosTotales=self::$arraytotales[0][7]+self::$arraytotales[1][7]+self::$arraytotales[2][7];
         $TotalTarjetas=self::$arraytotales[0][4]+self::$arraytotales[1][4]+self::$arraytotales[2][4];
         $TotalSalidas=self::$arraytotales[0][5]+self::$arraytotales[1][5]+self::$arraytotales[2][5];
-        $TotalFinal=$BoletosTotales+$TotalTarjetas;
+        $TotalFinal=$BoletosTotales+$TotalTarjetas+self::$arraytotales[0][11];
         $CarrosDiaSiguiente=$TotalFinal-$TotalTarjetas;
         echo "
         <table class='table  table-bordered table-hover text_table_pq'>
@@ -679,7 +694,7 @@ Class BD{
         <tbody>
             <tr>
                 <th scope='row'>Coches dentro</th>
-                    <td>0</td>
+                    <td>".self::$arraytotales[0][11]."</td>
             </tr>
             <tr>
                 <th scope='row'>Boletos totales</th>
@@ -705,9 +720,10 @@ Class BD{
         </tbody>
     </table>";
     }
+}
 
     public function MostrarDiaSiguiente()
-    {
+    {    
         echo "
         <table class='table table-hover text_table_pq'>
         <thead class='thead-dark'>
@@ -746,7 +762,11 @@ Class BD{
     }
 
     public function boletos_fisico()
-    {              
+    { 
+        if(count(self::$arraytotales)!=3)
+        {
+            echo "No hay nada para mostrar";
+        }else {
             $nuevo_array=self::$arraytotales[0][10];
             $BoletosTotales=self::$arraytotales[0][7]+self::$arraytotales[1][7]+self::$arraytotales[2][7];
             $BoletosPerdidos=self::$arraytotales[0][8]+self::$arraytotales[1][8]+self::$arraytotales[2][8];
@@ -788,6 +808,7 @@ Class BD{
         </div>";
         self::ModalTotalCobrados();
     }
+}
 
     public function ModalTotalCobrados()
     {
@@ -804,8 +825,8 @@ Class BD{
               <div class='row'>
                   <div class='col-md-12'>
                       <h5>Boletos físicos:</h5>
-                      <input type='text' name='boletosTotales' value='".self::$arraytotales[0][10]  ."' class='form-control'><br>
-                      <input type='hidden' name='fechaCorte' value='".self::$fecha."'>
+                      <input type='text' name='boletosTotales' value='".self::$arraytotales[0][10]  ."' class='form-control' onkeypress='return just_numbers(event)'><br>
+                      <input type='hidden' name='fechaCorte' value='".self::$fecha."' >
                   </div>
               </div>
             </div>
@@ -822,6 +843,10 @@ Class BD{
     
     public function dinero_turnos()
     {
+        if(count(self::$array_dinero)!=3)
+        {
+            echo "No hay nada para mostrar";
+        }else{
         $dinero_tarjetas=self::$array_dinero;
         $Fecha=self::$fecha;
         echo "       
@@ -853,6 +878,7 @@ Class BD{
         </div>";
         self::ModalEfectivoyTarjeta();
     }
+}
 
     public function ModalEfectivoyTarjeta()
     {
@@ -869,19 +895,19 @@ Class BD{
               <div class='row'>
                   <div class='col-md-12'>
                       <h5>Total 1:</h5>
-                      <input type='text' name='turno1_efectivo' value='".self::$array_dinero[0]."' class='form-control'><br>
+                      <input type='text' name='turno1_efectivo' value='".self::$array_dinero[0]."' class='form-control' onkeypress='return just_numbers(event)'><br>
                   </div>
               </div>
               <div class='row'>
                   <div class='col-md-12'>
                       <h5>Total 2:</h5>
-                      <input type='text' name='turno2_efectivo' value='".self::$array_dinero[1]."' class='form-control'><br>
+                      <input type='text' name='turno2_efectivo' value='".self::$array_dinero[1]."' class='form-control' onkeypress='return just_numbers(event)'><br>
                   </div>
               </div>
               <div class='row'>
                   <div class='col-md-12'>
                       <h5>Total 3:</h5>
-                      <input type='text' name='turno3_efectivo' class='form-control' value='".self::$array_dinero[2]."'><br>
+                      <input type='text' name='turno3_efectivo' class='form-control' value='".self::$array_dinero[2]."' onkeypress='return just_numbers(event)'><br>
                       <input type='hidden' name='fechaCorte' value='".self::$fecha."'>
                   </div>
               </div>
@@ -895,6 +921,11 @@ Class BD{
       </div>
     </form>";
     }
+    /**
+    *Última modificación: 13/10/2018
+    *Modal para mostrar el formulario del dia siguiente e ingresar los datos
+    *Gloria Aguilar
+    **/
     public function modal_DiaSig(){
         echo "
     <form action='definir_accion.php' method='POST'>
@@ -908,25 +939,25 @@ Class BD{
                   <div class='row'>
                       <div class='col-md-12'>
                           <h5>Folio emisor: </h5>
-                          <input type='text' name='emisor_siguiente' class='form-control'><br>
+                          <input type='text' name='emisor_siguiente' class='form-control' onkeypress='return just_numbers(event)'><br>
                       </div>
                   </div>
                   <div class='row'>
                       <div class='col-md-12'>
                           <h5>Folios rojos: </h5>
-                          <input type='text' name='rojos_siguiente' class='form-control'><br>
+                          <input type='text' name='rojos_siguiente' class='form-control' onkeypress='return just_numbers(event)'><br>
                       </div>
                   </div>
                   <div class='row'>
                       <div class='col-md-12'>
                           <h5>Contador: </h5>
-                          <input type='text' name='contador_siguiente' class='form-control' value=''><br>
+                          <input type='text' name='contador_siguiente' class='form-control' onkeypress='return just_numbers(event)'><br>
                       </div>
                   </div>
                   <div class='row'>
                     <div class='col-md-12'>
                         <h5>Coches dentro: </h5>
-                        <input type='text' name='coches_siguiente' class='form-control' value=''><br>
+                        <input type='text' name='coches_siguiente' class='form-control' value='' onkeypress='return just_numbers(event)'><br>
                         <input type='hidden' name='fechaCorte' value='".self::$fecha."'>
                     </div>
                   </div>  
@@ -943,6 +974,10 @@ Class BD{
     }
     public function total_cobrados()
     {
+        if(count(self::$boletos_totales)!=3)
+        {
+            echo "NO hay nada para mostrar";
+        }else{
         $boletos_cobrados=self::$boletos_totales;
         $turno=self::$array_turnos;
 
@@ -973,6 +1008,7 @@ Class BD{
         </table>
     </div>";
     }
+}
 
     public function MostrarFormulario()
     {
@@ -1020,6 +1056,7 @@ Class BD{
     </form>
     ";
     }
+    
 
     public function MostrarDatosCajeros($idCajero)
     {

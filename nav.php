@@ -19,4 +19,6 @@
         <a class="nav-link" href="administradores.php">
             <i class="fas fa-users-cog icon_nav"></i> SuperSU
         </a>
+
+        <button type="submit" class="nav-link btn_logout btn btn-danger btn-sm">Cerrar sesión</button>
     </div><!--Fin sidenav-->
