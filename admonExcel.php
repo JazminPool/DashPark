@@ -10,7 +10,6 @@
     <?php include('DatosBd.php'); ?>
 </head>
 <body class="bg_content">
-    <?php include('header.php')?>
     <form action="definir_accion.php" method="POST">
     <div class="side_card">
         <div class="card card_bg_side w-100 mb-2 padcar">
@@ -22,7 +21,7 @@
                 <button type="submit" name="guardar_admin" class="btn btn-info btn-block shadows">Guardar</button>
             </div><!--Fin de btn guardar-->
             <div class="row padcar">
-                <buttont type="submit" name="cancelar_admin" class="btn btn-dark btn-block shadows">Cancelar</button>
+                <button type="submit" name="cancelar_admin" class="btn btn-dark btn-block shadows">Cancelar</button>
             </div><!--Fin de btn cancelar-->
              
         </div> <!--Fin card-->

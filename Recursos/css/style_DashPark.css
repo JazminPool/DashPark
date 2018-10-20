@@ -7,17 +7,18 @@
 /*Fuente principal*/
 body {
     /*font-family: 'Raleway', sans-serif;*/
-    font-family: 'Quicksand', sans-serif;
+	font-family: 'Poppins', sans-serif;
+    /* font-family: 'Quicksand', sans-serif; */
 }
 
 /*Color principal del body*/
 .bg_content{
-	background-color: #e6e6e6;
+	background-color: #f3f8fb;
 }
 
 /*Contenedor principal de todas las paginas*/
 .main {
-	margin-top: 40px; /*40 es el total*/
+	/* margin-top: 40px; 40 es el total */
     margin-left: 165px; 
     font-size: 28px; 
     padding: 0px 10px;

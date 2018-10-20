@@ -49,6 +49,7 @@ class consultas{
         $resultadoCajero=$conexion->ExecuteQuery($query3) or die ("Error en al ingresar tarjetas control");
         $query4=("INSERT INTO boletos_tipos (idboletos_tipos, boletos_cobrados, boletos_tolerancia, boletos_guada, boletos_cortesia, boletos_perdidos, boletos_totales) VALUES ($folio_rojo, $b_cobr, $b_tol, $b_guada, $b_cort, $b_perd, $resultadoBoletos)");
         $resultadoCajero=$conexion->ExecuteQuery($query4) or die ("Error en al ingresar boletos tipos");
+        
         $query5=("INSERT INTO reportes_cortes (idreportes_cortes, fecha_corte, idcajeros, idrojos, id_contador,emisor_idfolio,coches_idcoches,boletos_idboletos,tarjetas_idtarjetas,total_salidas,observacion_cajero,efectivo_tarjeta, inicio_corte,fin_corte) 
         VALUES ($folio_rojo, $fecha,$idCajero,$folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo,$salidasTotales,NULL,NULL,'$horaEntrada','$horaSalida')");
         $resultadoCajero=$conexion->ExecuteQuery($query5) or die ("Error en al ingresar reportes cortes");   

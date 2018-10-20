@@ -18,7 +18,7 @@
 }
 /*Sombras de los objetos*/
 .shadows{
-	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 8px 200px 0 rgba(0, 0, 0, 0.19);
+	/* box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 8px 200px 0 rgba(0, 0, 0, 0.19); */
 }
 /*input del login*/
 .inp_login{

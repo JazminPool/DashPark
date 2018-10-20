@@ -10,7 +10,6 @@
 </head>
 
 <body class="bg_content">    
-    <?php include('header.php')?>
     <?php include('nav.php')?>
    <div class="main">
        <div class="content">

@@ -1,8 +1,13 @@
     
     <!-- Barra lateral (nav)-->
     <div id="sidebarnav" class="sidenav">
+        <div class="sidebar-header">
+            <a class="nav-link logo_nav" href="inicio.php">
+                DashPark
+            </a>
+        </div>
         <a class="nav-link" href="reportes.php">
-        <i class=" fa fa-file-o icon_nav"></i> Reportes
+            <i class=" fa fa-file-o icon_nav"></i> Reportes
         </a>
         <a class="nav-link" href="cortefinal.php">
             <i class=" fa fa-file-text-o icon_nav"></i> Corte final
@@ -19,4 +24,10 @@
         <a class="nav-link" href="administradores.php">
             <i class="fas fa-users-cog icon_nav"></i> SuperSU
         </a>
+
+    <!-- Cerrar sesión -->
+        <button class="btn_logout btn btn-sm">
+            Cerrar Sesión <i class="fas fa-sign-out-alt"></i>
+        </button>
+
     </div><!--Fin sidenav-->

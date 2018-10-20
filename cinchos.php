@@ -9,7 +9,6 @@
     <?php include('links.php')?>
 </head>
 <body class="bg_content">
-    <?php include('header.php')?>
     <?php include('nav.php')?>
     <?php include("Editar_datos.php"); ?>
    <div class="main">

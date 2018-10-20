@@ -9,7 +9,6 @@
 </head>
 <body class="bg_content" onload="mueveReloj()">
     
-    <?php include('header.php')?>
     <?php include('nav.php')?>
     <?php  include("DatosBd.php"); ?>
    
