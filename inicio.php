@@ -15,7 +15,6 @@ if(!isset($_SESSION['Admin'])){
 </head>
 <body class="bg_content" onload="mueveReloj()">
     
-    <?php include('header.php')?>
     <?php include('nav.php')?>
     <?php  include("DatosBd.php"); ?>
    
@@ -37,10 +36,16 @@ if(!isset($_SESSION['Admin'])){
                         </form>
                     </div> <!--Fin del card body-->
                     <div class="card-footer text-center">
-                        <p class="text_table_md">Desarrollado por </p>
+                        <p class="text_table_md">Desarrollado por Gloria Aguilar y Jazmín Pool</p>
                     </div><!--Fin del card footer-->
                 </div> <!--Fin card-->
             </div><!--Fin row encabezado-->
+
+            <footer class="page-footer footer footer-copyright">
+                <div class="container">
+                    <h5 class="contacto">Contacto: <strong>gloriaac98@gmail.com</strong></h5>                        
+                </div>
+            </footer>
 
        </div><!--Fin container-->
    </div><!--Fin main-->

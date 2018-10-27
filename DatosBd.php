@@ -205,9 +205,9 @@ Class BD{
         END, 
                 diferencia_coches=
                     CASE
-                        WHEN idcoches_dentro=".$array_turno1[0][0]." then  ".$array_turno1[0][11]."
-                        WHEN idcoches_dentro=".$array_turno1[1][0]." then  ".$array_turno1[0][9]."
-                        WHEN idcoches_dentro=".$array_turno1[2][0]." then  ".$array_turno1[1][9]."
+                        WHEN idcoches_dentro=".$array_turno1[0][0]." then ".$array_turno1[0][11]."
+                        WHEN idcoches_dentro=".$array_turno1[1][0]." then  ".$array_resultados[0][6]."
+                        WHEN idcoches_dentro=".$array_turno1[2][0]." then  ".$array_resultados[1][6]."
                     END
             WHERE idcoches_dentro IN (".$array_turno1[0][0].",".$array_turno1[1][0].",".$array_turno1[2][0].")";
             $resultado_coches=$cone->ExecuteQuery($actualizar_cochesdentro) or die ("ERROR EN EL UPDATE coches");
@@ -324,7 +324,6 @@ Class BD{
         INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
         reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
         INNER JOIN turnos_caje ON empledos_cajeros.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje 
-        
         WHERE reportes_cortes.fecha_corte=".$fecha."";
         $resultado_corteFinal=$cone->ExecuteQuery($consulta_corteFinal) or die ("Error al consultar corte final");
 
@@ -680,10 +679,10 @@ Class BD{
             echo "No hay nada para mostrar";
         }else{
         $BoletosTotales=self::$arraytotales[0][7]+self::$arraytotales[1][7]+self::$arraytotales[2][7];
-        $TotalTarjetas=self::$arraytotales[0][4]+self::$arraytotales[1][4]+self::$arraytotales[2][4];
+        $TotalTarjetas=self::$arraytotales[0][4]+self::$arraytotales[1][4]+self::$arraytotales[2][4]; //ENTRADA TARJETAS
         $TotalSalidas=self::$arraytotales[0][5]+self::$arraytotales[1][5]+self::$arraytotales[2][5];
         $TotalFinal=$BoletosTotales+$TotalTarjetas+self::$arraytotales[0][11];
-        $CarrosDiaSiguiente=$TotalFinal-$TotalTarjetas;
+        $CarrosDiaSiguiente=$TotalFinal-$TotalSalidas;
         echo "
         <table class='table  table-bordered table-hover text_table_pq'>
         <thead class='thead-dark'>
@@ -754,7 +753,7 @@ Class BD{
             <tr>
                 <th scope='row'>Coches dentro</th>
                     <td>".self::$arraySiguiente[0][5]."</td>
-                    <td>".self::$arraytotales[1][9]."</td>
+                    <td>".self::$arraytotales[2][9]."</td>
             </tr>
         </tbody>
     </table>";

@@ -15,8 +15,7 @@ if(!isset($_SESSION['Admin'])){
     <?php include('links.php')?>
 </head>
 
-<body class="bg_content">    
-    <?php include('header.php')?>
+<body class="bg_content"> 
     <?php include('nav.php')?>
     <?php include('Editar_datos.php'); ?>
 
@@ -25,7 +24,7 @@ if(!isset($_SESSION['Admin'])){
        <h4>Información de los administradores</h4>
         <form action="" method="POST">
             <div class="row">
-                <div class="card w-100 mb-2 padcar shadows">
+                <div class="card w-100 mb-2 padcar">
                     <div class="row">
                         <div class="col-md-6">
                             <p class="p_card">Seleccionar administrador para visualizar sus datos</p>
@@ -43,8 +42,8 @@ if(!isset($_SESSION['Admin'])){
                         </div><!--fin col-md-4-->
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card header -->
-        </form>  
-                <div class="card w-100 mb-2 padcar shadows"> <!--Card del formulario-->
+
+                <div class="card w-100 mb-2 padcar"> <!--Card del formulario-->
                     <div class="">
                         <?php
                         if(isset($_POST['verAdmin']))
