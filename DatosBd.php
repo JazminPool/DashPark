@@ -543,8 +543,8 @@ Class BD{
                                         <tr class='table-active'>
                                             <th scope='row'>turno</th>
                                                 <td>".$array[0][21]."</td>
-                                                <td><input type='time' name='inicioCorte' value='".$array[0][23]."' class='inp_editTurn font500'></td>
-                                                <td><input type='time' name='finCorte' value='".$array[0][24]."' class='inp_editTurn font500'></td>
+                                                <td><input type='time' name='inicioCorte' value='".$array[0][23]."' required class='inp_editTurn font500'></td>
+                                                <td><input type='time' name='finCorte' value='".$array[0][24]."' required class='inp_editTurn font500'></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Folio emisor</th>
@@ -566,42 +566,42 @@ Class BD{
                                         </tr>
                                         <tr>
                                             <th scope='row'>Coches dentro</th>
-                                                <td><input type='text' name='cochesNuevo' class='inp_editTurn font500' value=".$array[0][9]." onkeypress='return just_numbers(event)'></td>
+                                                <td><input type='text' name='cochesNuevo' class='inp_editTurn font500' value=".$array[0][9]." maxlength='3'required onkeypress='return just_numbers(event)'></td>
                                                 <td>".$array[0][10]."</td>
-                                                <td><input type='text' name='cochesAnterior' class='inp_editTurn font500' value=".$array[0][11]." onkeypress='return just_numbers(event)'></td></td>
+                                                <td><input type='text' name='cochesAnterior' class='inp_editTurn font500' value=".$array[0][11]." maxlength='3' required onkeypress='return just_numbers(event)'></td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Entradas con tarjeta</th>
-                                                <td><input type='text' name='entradasNuevo' class='inp_editTurn font500' value=".$array[0][12]." onkeypress='return just_numbers(event)'></td>
+                                                <td><input type='text' name='entradasNuevo' class='inp_editTurn font500' value=".$array[0][12]." maxlength='3' required onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos cobrados</th>
-                                                <td><input type='text' name='cobradosNuevo' value='".$array[0][14]."' class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
+                                                <td><input type='text' name='cobradosNuevo' value='".$array[0][14]."' class='inp_editTurn font500' required maxlength='3' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos tolerancia</th>
-                                                <td><input type='text' name='toleranciaNuevo' value=".$array[0][15]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
+                                                <td><input type='text' name='toleranciaNuevo' value=".$array[0][15]." class='inp_editTurn font500' required maxlength='3' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Cortesías</th>
-                                                <td><input type='text' name='cortesiaNuevo' value=".$array[0][17]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
+                                                <td><input type='text' name='cortesiaNuevo' value=".$array[0][17]." class='inp_editTurn font500' maxlength='3' required onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>  
                                         </tr>
                                         <tr>
                                             <th scope='row'>GUADA</th>
-                                                <td><input type='text' name='guadaNuevo' value=".$array[0][16]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
+                                                <td><input type='text' name='guadaNuevo' value=".$array[0][16]." class='inp_editTurn font500' maxlength='3' required onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos perdidos</th>
-                                                <td><input type='text' name='perdidosNuevo' value=".$array[0][18]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
+                                                <td><input type='text' name='perdidosNuevo' value=".$array[0][18]." class='inp_editTurn font500' maxlength='3' required onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
@@ -613,7 +613,7 @@ Class BD{
                                         </tr>
                                         <tr>
                                             <th scope='row'>Salidas con tarjeta</th>
-                                                <td><input type='text' name='saltarjeNuevo' value=".$array[0][13]." class='inp_editTurn font500' onkeypress='return just_numbers(event)'></td>
+                                                <td><input type='text' name='saltarjeNuevo' maxlength='3' value=".$array[0][13]." class='inp_editTurn font500' required onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
@@ -824,7 +824,7 @@ Class BD{
               <div class='row'>
                   <div class='col-md-12'>
                       <h5>Boletos físicos:</h5>
-                      <input type='text' name='boletosTotales' value='".self::$arraytotales[0][10]  ."' class='form-control' onkeypress='return just_numbers(event)'><br>
+                      <input type='text' name='boletosTotales' value='".self::$arraytotales[0][10]  ."' class='form-control' maxlength='3' required onkeypress='return just_numbers(event)'><br>
                       <input type='hidden' name='fechaCorte' value='".self::$fecha."' >
                   </div>
               </div>
@@ -894,19 +894,19 @@ Class BD{
               <div class='row'>
                   <div class='col-md-12'>
                       <h5>Total 1:</h5>
-                      <input type='text' name='turno1_efectivo' value='".self::$array_dinero[0]."' class='form-control' onkeypress='return just_numbers(event)'><br>
+                      <input type='text' name='turno1_efectivo' value='".self::$array_dinero[0]."' class='form-control' maxlength='5' required onkeypress='return just_numbers(event)'><br>
                   </div>
               </div>
               <div class='row'>
                   <div class='col-md-12'>
                       <h5>Total 2:</h5>
-                      <input type='text' name='turno2_efectivo' value='".self::$array_dinero[1]."' class='form-control' onkeypress='return just_numbers(event)'><br>
+                      <input type='text' name='turno2_efectivo' value='".self::$array_dinero[1]."' class='form-control' maxlength='5' required onkeypress='return just_numbers(event)'><br>
                   </div>
               </div>
               <div class='row'>
                   <div class='col-md-12'>
                       <h5>Total 3:</h5>
-                      <input type='text' name='turno3_efectivo' class='form-control' value='".self::$array_dinero[2]."' onkeypress='return just_numbers(event)'><br>
+                      <input type='text' name='turno3_efectivo' class='form-control' value='".self::$array_dinero[2]."' maxlength='5' required onkeypress='return just_numbers(event)'><br>
                       <input type='hidden' name='fechaCorte' value='".self::$fecha."'>
                   </div>
               </div>
@@ -938,25 +938,25 @@ Class BD{
                   <div class='row'>
                       <div class='col-md-12'>
                           <h5>Folio emisor: </h5>
-                          <input type='text' name='emisor_siguiente' class='form-control' onkeypress='return just_numbers(event)'><br>
+                          <input type='text' name='emisor_siguiente' class='form-control' minlength='7' maxlength='7' value='".self::$arraySiguiente[0][2]."' required onkeypress='return just_numbers(event)'><br>
                       </div>
                   </div>
                   <div class='row'>
                       <div class='col-md-12'>
                           <h5>Folios rojos: </h5>
-                          <input type='text' name='rojos_siguiente' class='form-control' onkeypress='return just_numbers(event)'><br>
+                          <input type='text' name='rojos_siguiente' class='form-control' minlength='6' maxlength='6' value='".self::$arraySiguiente[0][3]."' required onkeypress='return just_numbers(event)'><br>
                       </div>
                   </div>
                   <div class='row'>
                       <div class='col-md-12'>
                           <h5>Contador: </h5>
-                          <input type='text' name='contador_siguiente' class='form-control' onkeypress='return just_numbers(event)'><br>
+                          <input type='text' name='contador_siguiente' value='".self::$arraySiguiente[0][4]."' minlength='8' maxlength='8' class='form-control' required onkeypress='return just_numbers(event)'><br>
                       </div>
                   </div>
                   <div class='row'>
                     <div class='col-md-12'>
                         <h5>Coches dentro: </h5>
-                        <input type='text' name='coches_siguiente' class='form-control' value='' onkeypress='return just_numbers(event)'><br>
+                        <input type='text' name='coches_siguiente' class='form-control' value='".self::$arraySiguiente[0][5]."' minlength='1' maxlength='3' required onkeypress='return just_numbers(event)'><br>
                         <input type='hidden' name='fechaCorte' value='".self::$fecha."'>
                     </div>
                   </div>  
