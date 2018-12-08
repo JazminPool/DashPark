@@ -8,8 +8,7 @@
     <?php include('links.php')?>
 </head>
 <body class="bg_content" onload="mueveReloj()">
-    
-    <?php include('nav.php')?>
+
     <?php  include("DatosBd.php"); ?>
    
    <div class="main">
@@ -68,17 +67,6 @@
 
                         </div><!--fin col-md-8-->
                     </div><!--fin row de radios-->
-
-                    <div class="">
-                        
-                        <div id="container">
-                            <canvas id="canvas"></canvas>
-                        </div>
-                    
-                        
-
-                    </div> <!--Fin de class vacio-->
-
                 </div> <!--Fin card-->
             </div><!--Fin row encabezado-->
 

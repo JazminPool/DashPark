@@ -1,0 +1,61 @@
+body{
+    font-family: 'Poppins', sans-serif !important;
+    background-color: #222831 ;
+    color: #eeb934;
+}
+.bg-dark_{
+    background-color: #1a1d24;
+}
+/* 
+    colores:
+        a5dfdf
+
+*/
+.colores{
+    /*Anuales:*/
+    color: #ff638556; /*barra*/
+    color: #97bbcdcc; /*borde*/
+    color: #ff567a69; /*hover barra*/
+    color: #97bbcd;/*hover borde*/
+
+    /*Mensuales:*/
+    color: #97bbcd80; /*barra*/
+    color: #97bbcdcc; /*borde*/
+    color: #97bbcdbf; /*hover barra*/
+    color: #97bbcd;/*hover borde*/
+
+    /*Diario:*/
+    color: #d89e6f80; /*barra*/
+    color: #d4844280; /*borde*/
+    color: #d67a2e80; /*hover barra*/
+    color: #d4844280;/*hover borde*/
+    
+
+    color: #a5dfdf;
+    color: #ffe6aa;
+}
+.nav_chart_logo{
+    color: #efbb35 !important;
+    font-size: 20px !important;
+	text-align: center;
+	font-weight: 600 !important;
+}
+.itemnav{
+    text-decoration: none !important;
+    color: #f59bac;
+}
+.itemnav:hover{
+    color: #f9ffee;
+}
+.options{
+    /* left: 50%; */
+    background-color: #efba353d;
+    margin-top: 0px;
+    /* width: 80%; */
+}
+.left{
+    float: left !important;
+}
+.right{
+    float: right !important;
+}

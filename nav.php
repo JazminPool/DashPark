@@ -12,7 +12,7 @@
         <a class="nav-link" href="cortefinal.php">
             <i class=" fa fa-file-text-o icon_nav"></i> Corte final
         </a>
-        <a class="nav-link" href="charts.php">
+        <a class="nav-link" href="Estadisticas/BoletosTotales.php">
             <i class="fa fa-bar-chart icon_nav"></i> Estadisticas
         </a>
         <a class="nav-link" href="cinchos.php">
