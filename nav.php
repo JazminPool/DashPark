@@ -26,8 +26,9 @@
         </a>
 
     <!-- Cerrar sesión -->
+    <form action="acions.php" method="POST">
         <button class="btn_logout btn btn-sm">
             Cerrar Sesión <i class="fas fa-sign-out-alt"></i>
         </button>
-
+        </form>
     </div><!--Fin sidenav-->

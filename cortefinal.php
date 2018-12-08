@@ -1,4 +1,8 @@
-<?php ob_start(); ?>
+<?php ob_start(); 
+session_start();
+if(!isset($_SESSION['Admin'])){
+	header('Location:index.php');}
+	else{?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,20 +23,17 @@
             <div class="row"> <!--Row del ecabezado de opciones-->
                 <div class="card w-100 mb-2 padcar shadows">
                     <div class="row">
-
+                       
                         <div class="col-md-6">
                             <p class="p_card">Seleccionar la fecha del reporte que desea ver. </p>
                             <input id="date" class="form-control form-control-sm" name="date" type="date">                         
                         </div><!--fin cardbody-->
                         
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <p class="p_card">Seleccionar fecha</p>
                             <button type="submit" name="consultar_cortes" class="btn btn-warning btn-block btn-sm">Consultar</button>                        
                         </div><!--fin cardbody-->
-                        <div class="col-md-2">
-                            <p class="p_card">Editar valores</p>
-                            <button type="submit" name="ver_admin" class="btn btn-dark btn-block btn-sm">Administrar</button>                        
-                        </div><!--fin cardbody-->
+                       
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card-->
             </div><!--Fin row de seccion:opciones-->
@@ -114,4 +115,4 @@
    </div><!--Fin main-->
 </body>
 </html>
-<?php ob_end_flush(); ?>
+                        <?php }ob_end_flush(); ?>

@@ -73,18 +73,18 @@ if(!isset($_SESSION['usuario'])){
                             <div class="row">
                                 <div class="col-lg-6">
                                     <h5>Folio emisor</h5>
-                                    <input type="text" name="folioEmisor" maxlength="7" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
+                                    <input type="text" name="folioEmisor" minlength="7" maxlength="7" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
                                 </div>
                                 <div class="col-lg-6">
                                     <h5>Folio rojo</h5>
-                                    <input type="text" name="folioRojo" maxlength="6" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
+                                    <input type="text" name="folioRojo"  minlength="6" maxlength="6" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
                                 </div>
                             </div><!--Fin del row Folios-->
 
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h5>Contador</h5>
-                                    <input type="text" name="contador" maxlength="8" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
+                                    <input type="text" name="contador" minlength="8" maxlength="8" required class="form-control form-control-sm" onkeypress="return just_numbers(event)">
                                 </div>
                             </div> <!--Fin del row Contador-->
 
@@ -165,13 +165,15 @@ if(!isset($_SESSION['usuario'])){
                     Cambio de boletos
                 </button>
                 <button type="submit" name='generarReporte' class="btn btn-dark btn-block">Generar reporte</button>
+            </form> <br>
+            <form action="acciones.php" Method="POST">
                 <button type="submit" name="cerrarSesion" class="btn btn-block bg-warning">Cerrar sesión</button>
                 <br>
             </div> <!--Fin de columna main 2 (botones)-->
-        
+            </form><br>
         </div> <!--Fin del row mega principal-->
     </div> <!--Fin de cuerpo-->
-    </form>
+    
     <!-- Footer -->
     <footer class="foot">
         <div class="container">

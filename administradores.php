@@ -1,4 +1,10 @@
-<?php ob_start(); ?>
+<?php ob_start();
+
+session_start();
+if(!isset($_SESSION['Admin'])){
+	header('Location:index.php');}
+	else{
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,16 +58,17 @@
                         {
                             if(empty($_POST['idAmin']))
                             {
-                               $nomb=$_POST['nombreAdmin'];
-                               $apellidos=$_POST['apellidosAdmin'];
-                               $usuario=$_POST['usuarioAdmin'];
-                               $password=$_POST['passwordAdmin'];
+                                echo "Paso a nuevo";
+                               $nomb=$_POST['nomAdmin'];
+                               $apellidos=$_POST['ApeAdmin'];
+                               $usuario=$_POST['usuAdmin'];
+                               $password=$_POST['passAdmin'];
                                editar_bd::InsertarNuevoAdmin($nomb,$apellidos,$usuario,$password);
                             }else {
                                 
                                 $id=$_POST['idAmin'];
                                 $nomb=$_POST['nomAdmin'];
-                                $apellidos=$_POST['apeAdmin'];
+                                $apellidos=$_POST['ApeAdmin'];
                                 $usuario=$_POST['usuAdmin'];
                                 $password=$_POST['passAdmin'];
                                 editar_bd::ModificarAdmin($id,$nomb,$apellidos,$usuario,$password);
@@ -77,9 +84,9 @@
 
 
             </div><!--Fin row-->
-        </form>   
+        
        </div><!--Fin container-->
    </div><!--Fin main-->
 </body>
 </html>
-<?php ob_end_flush(); ?>
+ <?php }ob_end_flush(); ?>

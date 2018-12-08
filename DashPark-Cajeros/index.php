@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(isset($_SESSION['usuario'])){
+	header('Location:inicio.php');}
+	else{
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,3 +63,4 @@
 
 </body>
 </html>
+    <?php } ?>

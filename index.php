@@ -1,3 +1,7 @@
+<?php session_start();
+if(isset($_SESSION['Admin'])){
+	header('Location:inicio.php');}
+	else{?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,25 +24,25 @@
                         <div class="card shadows">
                             <article class="card-body">
                                 <p class="card-title text-center mb-4 mt-1 text-secondary lead">Bienvenid@</p>
-                                
+                        <form action="accions.php" method="POST">  
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="icon_"> <i class="material-icons text-secondary">person</i> </span>
-                                        <input name="" class="inp_login text-dark" placeholder="Nombre de usuario" type="text">
+                                        <input name="usuAdmin" class="inp_login text-dark" placeholder="Nombre de usuario" type="text">
                                     </div> <!--fin del input-group -->
                                 </div> <!--fin del form-group -->
                                 
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="icon_"> <i class="material-icons text-secondary">lock</i> </span>
-                                        <input name="" class="inp_login text-dark" placeholder="Contraseña" type="password">
+                                        <input name="passAdmin" class="inp_login text-dark" placeholder="Contraseña" type="password">
                                     </div> <!--fin del input-group -->
                                 </div> <!--fin del form-group -->
                                 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn_Login shadows">Iniciar</button>
                                 </div> <!-- fin de form-group -->
-        
+                        </form> 
                             </article> <!--Fin del article-->
                         </div> <!-- Fin del card -->
                     <!-- </form> -->
@@ -50,3 +54,4 @@
 
 </body>
 </html>
+    <?php }?>
