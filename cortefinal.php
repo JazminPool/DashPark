@@ -26,12 +26,12 @@ if(!isset($_SESSION['Admin'])){
                        
                         <div class="col-md-6">
                             <p class="p_card">Seleccionar la fecha del reporte que desea ver. </p>
-                            <input id="date" class="form-control form-control-sm" name="date" type="date">                         
+                            <input id="date" class="form-control form-control-sm" name="date" type="date" required>                         
                         </div><!--fin cardbody-->
                         
                         <div class="col-md-6">
                             <p class="p_card">Seleccionar fecha</p>
-                            <button type="submit" name="consultar_cortes" class="btn btn-warning btn-block btn-sm">Consultar</button>                        
+                            <button type="submit" name="consultar_cortes" class="btn btn_main btn-block btn-sm">Consultar</button>                        
                         </div><!--fin cardbody-->
                        
                     </div><!--fin row de select y date-->

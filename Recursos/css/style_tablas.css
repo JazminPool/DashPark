@@ -1,7 +1,6 @@
 /*
-*
 * Aqui se define las propiedades de todas las tablas
-*
+* Autor: Jazmin Pool
 */
 
 /*Tabla corte final*/
@@ -18,8 +17,4 @@ table{
 }
 .text_table_md{
 	font-size: 15px;
-}
-/*padding de la tabla*/
-.table th{
-	/* padding: .25rem; */
 }

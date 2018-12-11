@@ -43,7 +43,7 @@ if(!isset($_SESSION['Admin'])){
 
             <footer class="page-footer footer footer-copyright">
                 <div class="container">
-                    <h5 class="contacto">Contacto: <strong>gloriaac98@gmail.com</strong></h5>                        
+                    <h5 class="contacto">Contacto: <strong>gloriaac98@gmail.com / jgpoolpech@gmail.com</strong></h5>                        
                 </div>
             </footer>
 

@@ -1,7 +1,6 @@
 /*
-*
 * Aqui se definen propiedades mas generales a usar
-*
+* Autor: Jazmin Pool
 */
 
 /*Fuente principal*/
@@ -13,7 +12,7 @@ body {
 
 /*Color principal del body*/
 .bg_content{
-	background-color: #f3f8fb;
+	background-color: #e8e8e8; /*f3f8fb*/
 }
 
 /*Contenedor principal de todas las paginas*/
@@ -46,3 +45,104 @@ body {
     font-size: 16px !important;
     font-weight: 500;
 }
+
+/******************
+***** Botones*****
+******************/
+
+/*Boton principal*/
+.btn_main{
+    background: #00303f !important;
+    color: white;
+}
+.btn_main:hover{
+    background: #233237!important;
+}
+.btn_delete{
+    background: #943345 !important;
+    color: white;
+}
+.btn_delete:hover{
+    background: #941717 !important;
+    color: white;
+}
+.btn_add{
+    background: #8eaebd !important;
+}
+.btn_add:hover{
+    background: #799baa !important;
+}
+.btn_save{
+    background: #93c178 !important;
+}
+.btn_save:hover{
+    background: #83af69 !important;
+}
+
+.colores{
+    background: #caebf2;
+    background: #ff3b3f;
+    background: #efefef;
+    background: #a9a9a9;
+    background: #76323f;
+    background: #c09f80;
+    background: #565656;
+    background: #1e392a;
+    background: #3cc47c;
+    background: #e9c893;
+    background: #18121e;
+    background: #233237;
+    background: #984b43;
+    background: #dcb239;
+    background: #df744a;
+    background: #062f4f;
+    background: #49274a;
+    background: #0b3c5d;
+    background: #1d2731;
+    background: #30415d;
+    background: #8eaebd;
+    background: #b56357;
+    background: #494e6b;
+    background: #985e6d;
+    background: #e8e8e8;
+    background: #00303f;
+    background: #943345;
+    background: #941717;
+    background: #7a9d96;
+    background: #a7d2cb;
+    background: #f2d388;
+    background: #c97490;
+    background: #c98474;
+    background: #874c62;
+    background: #93c178;
+    background: #e14658;
+    background: #eeb6b7;
+}
+
+/*Colores:
+azulito:    caebf2
+rosa:       ff3b3f
+neutral:    efefef
+carbon:     a9a9a9
+vino:       76323f    
+mostaza:    c09f80
+grisaseo:   565656
+forest:     1e392a
+electric:   3cc47c
+light:      e9c893
+navy:       18121e
+gunmetal:   233237
+rusty:      984b43
+lemon:      dcb239
+warm:       df744a
+ink:        062f4f
+eggplant:   49274a
+elegantb:   0b3c5d
+ivory:      1d2731
+indigo:     30415d
+bluelight:  8eaebd
+rust:       b56357
+stormy:     494e6b
+sunset:     985e6d
+clean:      e8e8e8
+*/

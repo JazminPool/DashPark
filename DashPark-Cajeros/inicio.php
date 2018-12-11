@@ -21,6 +21,8 @@ if(!isset($_SESSION['usuario'])){
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <!-- Alerts sweetalert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body onload="mueveReloj()" class="bg_main">
     <?php include('BDconexiones.php'); ?>
@@ -161,9 +163,6 @@ if(!isset($_SESSION['usuario'])){
             
         <!-- CONTENEDOR DOS (botones) -->
             <div class="col-lg-2">
-                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#cambioBoletos">
-                    Cambio de boletos
-                </button>
                 <button type="submit" name='generarReporte' class="btn btn-dark btn-block">Generar reporte</button>
             </form> <br>
             <form action="acciones.php" Method="POST">

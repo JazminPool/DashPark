@@ -33,12 +33,12 @@ if(!isset($_SESSION['Admin'])){
 
                         <div class="col-md-3">
                             <p class="p_card">Ver información del administrador</p>
-                            <button type="submit" name="verAdmin" class="btn btn-success btn-sm shadows btn-block">Ver</button>                      
+                            <button type="submit" name="verAdmin" class="btn btn_main btn-sm shadows btn-block">Ver</button>                      
                         </div><!--fin col-md-4-->
 
                         <div class="col-md-3">
                             <p class="p_card">Dar de alta a un nuevo administrador</p>
-                            <button type="submit" name="anadirAdmin" class="btn btn-dark btn-sm shadows btn-block">Añadir nuevo</button>                      
+                            <button type="submit" name="anadirAdmin" class="btn btn_add btn-sm shadows btn-block">Añadir nuevo</button>                      
                         </div><!--fin col-md-4-->
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card header -->

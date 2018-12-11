@@ -22,23 +22,52 @@ if(!isset($_SESSION['Admin'])){
                 <div class="card w-100 mb-2 padcar shadows">
                     <div class="row">
                         <div class="col-md-3">
-                            <p class="p_card">Número de paquete de cinchos</p>
-                            <input type="text" class="form-control form-control-sm text-center text-danger" maxlength="7" name="NumPaquete" onkeypress="return just_numbers(event)" required>
+                            <!-- Numero de paquete de cincho -->
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"># Paquete</span>
+                                </div>
+                                <input type="text" class="form-control form-control-sm text-center text-danger" maxlength="7" name="NumPaquete" onkeypress="return just_numbers(event)" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-ticket icon_nav" style="color: #c97490;"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div><!--fin col-md-8-->
 
                         <div class="col-md-3">
-                            <p class="p_card">Desde:</p>
-                            <input type="text" class="form-control form-control-sm text-center text-danger" maxlength="7" name="desdeCinchos" onkeypress="return just_numbers(event)" required>
+                            <!-- Desde: -->
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Desde</span>
+                                </div>
+                                <input type="text" class="form-control form-control-sm text-center text-danger" maxlength="7" name="desdeCinchos" onkeypress="return just_numbers(event)" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-ticket icon_nav" style="color: #c97490;"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div><!--fin col-md-8-->
 
                         <div class="col-md-3">
-                            <p class="p_card">Hasta:</p>
-                            <input type="text" class="form-control form-control-sm text-center text-danger" maxlength="7" name="hastaCinchos" onkeypress="return just_numbers(event)" required>
+                            <!-- Hasta: -->
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Hasta</span>
+                                </div>
+                                <input type="text" class="form-control form-control-sm text-center text-danger" maxlength="7" name="hastaCinchos" onkeypress="return just_numbers(event)" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-ticket icon_nav" style="color: #c97490;"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div><!--fin col-md-8-->
 
                         <div class="col-md-3">
-                            <p class="p_card">Agregar nuevo paquete de cinchos</p>
-                            <button type="submit" name="AgregarCincho" class="btn btn-dark btn-sm shadows btn-block">Añadir</button>                      
+                            <button type="submit" name="AgregarCincho" class="btn btn_main btn-sm shadows btn-block">Añadir</button>                      
                         </div><!--fin col-md-4-->
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card-->
@@ -47,7 +76,7 @@ if(!isset($_SESSION['Admin'])){
             <div class="row">
                 <div class="card w-100 mb-2 padcar shadows">
                     <div class="row">
-                        <div class="col contenedor">
+                        <div class="col text-center align-self-center">
                            <?php 
                             editar_bd::MostrarCinchos();
                            ?>

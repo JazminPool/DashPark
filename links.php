@@ -1,16 +1,6 @@
 <!-- Nav -->
     <link href="Recursos/css/nav/style.min.css" rel="stylesheet">
     <link href="Recursos/css/nav/style_nav.css" rel="stylesheet">
-    <script src="Recursos/js/resume.min.js"></script>
-
- <!-- Chartjs -->
-    <link rel="stylesheet" href="Recursos/css/Chartcss/styleChart.css"/>
-    <script src="Recursos/js/Chartjs/Chart.bundle.js"></script>
-    <script src="Recursos/js/Chartjs/utils.js"></script>
-    <script src="Recursos/js/Chartjs/analyser.js"></script>
-    <script src="Recursos/js/Chartjs/meses.js"></script>
-    <script src="Recursos/js/Chartjs/dias.js"></script>
-    <script src="Recursos/js/Chartjs/turnos.js"></script>
 
 
 <!-- Descargado Bootstrap CSS y Propio css -->
@@ -35,6 +25,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
  <!-- Reloj magic-manu -->
     <script src="Recursos/js/js.js"></script>
 
@@ -45,9 +36,13 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
-    <!-- Archivo descargado js -->
-    <script src="Recursos/js/bootstrap.min.js"></script>
-    <script src="Recursos/js/nav.js"></script>
+ <!-- Archivo descargado js -->
     <script src="Recursos/js/bootstrap/bootstrap.min.js"></script>
-
+    <script src="Recursos/js/bootstrap/bootstrap.min.js"></script>
+    <script src="Recursos/js/resume.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<!-- Alerts sweetalert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+   

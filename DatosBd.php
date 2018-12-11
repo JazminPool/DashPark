@@ -372,68 +372,69 @@ Class BD{
                 </tr>
                 <tr>
                     <th scope='row'>Contador</th>
-                        <td>".$columna_corteFina['inicio_contador']."</td>
-                        <td>".$columna_corteFina['salida_contador']."</td>
-                        <td>".$columna_corteFina['diferencia_contador']."</td>
+                        <td  class='text-center'>".$columna_corteFina['inicio_contador']."</td>
+                        <td  class='text-center'>".$columna_corteFina['salida_contador']."</td>
+                        <td  class='text-center'>".$columna_corteFina['diferencia_contador']."</td>
                 </tr>
                 <tr>
                     <th scope='row'>Coches dentro</th>
-                        <td>".$columna_corteFina['coches_incio']."</td>
-                        <td>".$columna_corteFina['coches_salida']."</td>
-                        <td>".$columna_corteFina['diferencia_coches']."</td>
+                        <td  class='text-center'>".$columna_corteFina['coches_incio']."</td>
+                        <td  class='text-center'>".$columna_corteFina['coches_salida']."</td>
+                        <td  class='text-center'>".$columna_corteFina['diferencia_coches']."</td>
                 </tr>
                 <tr>
                     <th scope='row'>Entradas con tarjeta</th>
-                        <td>".$columna_corteFina['entrada_tarjeta']."</td>
-                        <td></td>
+                        <td  class='text-center'>".$columna_corteFina['entrada_tarjeta']."</td>
+                        <td  class='text-center'></td>
+                        <td  class='text-center'></td>
                 </tr>
                 <tr>
                     <th scope='row'>Boletos cobrados</th>
-                        <td>".$columna_corteFina['boletos_cobrados']."</td>
-                        <td></td>
-                        <td></td>
+                        <td  class='text-center'>".$columna_corteFina['boletos_cobrados']."</td>
+                        <td  class='text-center'></td>
+                        <td  class='text-center'></td>
                 </tr>
                 <tr>
                     <th scope='row'>Boletos tolerancia</th>
-                        <td>".$columna_corteFina['boletos_tolerancia']."</td>
-                        <td></td>
-                        <td></td>
+                        <td  class='text-center'>".$columna_corteFina['boletos_tolerancia']."</td>
+                        <td  class='text-center'></td>
+                        <td  class='text-center'></td>
                 </tr>
                 <tr>
                     <th scope='row'>Cortesías</th>
-                        <td>".$columna_corteFina['boletos_cortesia']."</td>
-                        <td></td>
-                        <td></td>  
+                        <td  class='text-center'>".$columna_corteFina['boletos_cortesia']."</td>
+                        <td  class='text-center'></td>
+                        <td  class='text-center'></td>  
                 </tr>
                 <tr>
                     <th scope='row'>GUADA</th>
-                        <td>".$columna_corteFina['boletos_guada']."</td>
-                        <td></td>
-                        <td></td>
+                        <td  class='text-center'>".$columna_corteFina['boletos_guada']."</td>
+                        <td  class='text-center'></td>
+                        <td  class='text-center'></td>
                 </tr>
                 <tr>
                     <th scope='row'>Boletos perdidos</th>
-                        <td>".$columna_corteFina['boletos_perdidos']."</td>
-                        <td></td>
-                        <td></td>
+                        <td   class='text-center'>".$columna_corteFina['boletos_perdidos']."</td>
+                        <td   class='text-center'></td>
+                        <td   class='text-center'></td>
                 </tr>
                 <tr>
                     <th scope='row'>Boletos totales</th>
-                        <td>".$columna_corteFina['boletos_totales']."</td>
-                        <td></td>
-                        <td></td>
+                        <td   class='text-center'>".$columna_corteFina['boletos_totales']."</td>
+                        <td   class='text-center'></td>
+                        <td   class='text-center'></td>
                 </tr>
                 <tr>
                     <th scope='row'>Salidas con tarjeta</th>
-                        <td>".$columna_corteFina['salidas_tarjeta']."</td>
-                        <td></td>
-                        <td></td>
+                        <td   class='text-center'>".$columna_corteFina['salidas_tarjeta']."</td>
+                        <td   class='text-center'></td>
+                        <td   class='text-center'></td>
                 </tr>
                 <tr>
                     <th scope='row'>Salidas totales</th>
-                        <td>".$columna_corteFina['total_salidas']."</td>
-                        <td></td>
-                        <td></td>
+                        <td   class='text-center'>".$columna_corteFina['total_salidas']."</td>
+                        <td   class='text-center'></td>
+                        <td   class='text-center'></td>
                 </tr>
             </tbody>
         </table>
@@ -535,91 +536,92 @@ Class BD{
                                             <th scope='col' colspan=2>
                                                 <center>Reporte final </center>
                                             </th>  
-                                            <th scope='col'>Entrada</th>
-                                            <th scope='col'>Salida</th>
+                                            <th scope='col' class='inp_textCenter'>Entrada</th>
+                                            <th scope='col' class='inp_textCenter'>Salida</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr class='table-active'>
-                                            <th scope='row'>turno</th>
-                                                <td>".$array[0][21]."</td>
+                                            <th scope='row'>Turno</th>
+                                                <td class='inp_textCenter'>".$array[0][21]."</td>
                                                 <td><input type='time' name='inicioCorte' value='".$array[0][23]."' required class='inp_editTurn font500'></td>
                                                 <td><input type='time' name='finCorte' value='".$array[0][24]."' required class='inp_editTurn font500'></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Folio emisor</th>
                                                 <td class='inp_textCenter' >".$array[0][3]."</td>
-                                                <td>".$array[0][4]."</td>
-                                                <td>".$array[0][5]."</td>
+                                                <td class='inp_textCenter'>".$array[0][4]."</td>
+                                                <td class='inp_textCenter'>".$array[0][5]."</td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Folios rojos</th>
-                                                <td>".$array[0][0]."</td>
-                                                <td>".$array[0][1]."</td>
-                                                <td>".$array[0][2]."</td>
+                                                <td class='inp_textCenter'>".$array[0][0]."</td>
+                                                <td class='inp_textCenter'>".$array[0][1]."</td>
+                                                <td class='inp_textCenter'>".$array[0][2]."</td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Contador</th>
-                                                <td>".$array[0][6]."</td>
-                                                <td>".$array[0][7]."</td>
-                                                <td>".$array[0][8]."</td>
+                                                <td class='inp_textCenter'>".$array[0][6]."</td>
+                                                <td class='inp_textCenter'>".$array[0][7]."</td>
+                                                <td class='inp_textCenter'>".$array[0][8]."</td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Coches dentro</th>
-                                                <td><input type='text' name='cochesNuevo' class='inp_editTurn font500' value=".$array[0][9]." maxlength='3'required onkeypress='return just_numbers(event)'></td>
-                                                <td>".$array[0][10]."</td>
-                                                <td><input type='text' name='cochesAnterior' class='inp_editTurn font500' value=".$array[0][11]." maxlength='3' required onkeypress='return just_numbers(event)'></td></td>
+                                                <td class='inp_textCenter'><input type='text' name='cochesNuevo' class='inp_editTurn font500' value=".$array[0][9]." maxlength='3'required onkeypress='return just_numbers(event)'></td>
+                                                <td class='inp_textCenter'>".$array[0][10]."</td>
+                                                <td class='inp_textCenter'><input type='text' name='cochesAnterior' class='inp_editTurn font500' value=".$array[0][11]." maxlength='3' required onkeypress='return just_numbers(event)'></td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Entradas con tarjeta</th>
-                                                <td><input type='text' name='entradasNuevo' class='inp_editTurn font500' value=".$array[0][12]." maxlength='3' required onkeypress='return just_numbers(event)'></td>
+                                                <td class='inp_textCenter'><input type='text' name='entradasNuevo' class='inp_editTurn font500' value=".$array[0][12]." maxlength='3' required onkeypress='return just_numbers(event)'></td>
+                                                <td class='inp_textCenter'></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos cobrados</th>
-                                                <td><input type='text' name='cobradosNuevo' value='".$array[0][14]."' class='inp_editTurn font500' required maxlength='3' onkeypress='return just_numbers(event)'></td>
+                                                <td class='inp_textCenter'><input type='text' name='cobradosNuevo' value='".$array[0][14]."' class='inp_editTurn font500' required maxlength='3' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos tolerancia</th>
-                                                <td><input type='text' name='toleranciaNuevo' value=".$array[0][15]." class='inp_editTurn font500' required maxlength='3' onkeypress='return just_numbers(event)'></td>
+                                                <td class='inp_textCenter'><input type='text' name='toleranciaNuevo' value=".$array[0][15]." class='inp_editTurn font500' required maxlength='3' onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Cortesías</th>
-                                                <td><input type='text' name='cortesiaNuevo' value=".$array[0][17]." class='inp_editTurn font500' maxlength='3' required onkeypress='return just_numbers(event)'></td>
+                                                <td class='inp_textCenter'><input type='text' name='cortesiaNuevo' value=".$array[0][17]." class='inp_editTurn font500' maxlength='3' required onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>  
                                         </tr>
                                         <tr>
                                             <th scope='row'>GUADA</th>
-                                                <td><input type='text' name='guadaNuevo' value=".$array[0][16]." class='inp_editTurn font500' maxlength='3' required onkeypress='return just_numbers(event)'></td>
+                                                <td class='inp_textCenter'><input type='text' name='guadaNuevo' value=".$array[0][16]." class='inp_editTurn font500' maxlength='3' required onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos perdidos</th>
-                                                <td><input type='text' name='perdidosNuevo' value=".$array[0][18]." class='inp_editTurn font500' maxlength='3' required onkeypress='return just_numbers(event)'></td>
+                                                <td class='inp_textCenter'><input type='text' name='perdidosNuevo' value=".$array[0][18]." class='inp_editTurn font500' maxlength='3' required onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Boletos totales</th>
-                                                <td>".$array[0][19]."</td>
+                                                <td class='inp_textCenter'>".$array[0][19]."</td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Salidas con tarjeta</th>
-                                                <td><input type='text' name='saltarjeNuevo' maxlength='3' value=".$array[0][13]." class='inp_editTurn font500' required onkeypress='return just_numbers(event)'></td>
+                                                <td class='inp_textCenter'><input type='text' name='saltarjeNuevo' maxlength='3' value=".$array[0][13]." class='inp_editTurn font500' required onkeypress='return just_numbers(event)'></td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
                                         <tr>
                                             <th scope='row'>Salidas totales</th>
-                                                <td>".$array[0][20]."</td>
+                                                <td class='inp_textCenter'>".$array[0][20]."</td>
                                                 <td></td>
                                                 <td></td>
                                         </tr>
@@ -631,8 +633,8 @@ Class BD{
                         </div>
                     </div>
                     <div class='modal-footer bg-light'>
-                        <button type='button' class='btn btn-danger btn-sm' data-dismiss='modal'>Cancelar</button> 
-                        <button type='submit' class='btn btn-info btn-sm' name='nuevoCorte'>Guardar</button>
+                        <button type='button' class='btn btn_delete btn-sm' data-dismiss='modal'>Cancelar</button> 
+                        <button type='submit' class='btn btn_save btn-sm' name='nuevoCorte'>Guardar</button>
                     </div> 
                 </div>
             </div>
@@ -660,11 +662,11 @@ Class BD{
         <tbody>
             <tr>
                 <th scope='row'>Total salidas</th>
-                    <td>".$TotalSalidas."</td>
+                    <td class='text-center'>".$TotalSalidas."</td>
             </tr>
             <tr>
                 <th scope='row'>Total contador</th>
-                    <td>".$TotalContador."</td>
+                    <td class='text-center'>".$TotalContador."</td>
             </tr>
             
         </tbody>
@@ -693,27 +695,27 @@ Class BD{
         <tbody>
             <tr>
                 <th scope='row'>Coches dentro</th>
-                    <td>".self::$arraytotales[0][11]."</td>
+                    <td class='text-center'>".self::$arraytotales[0][11]."</td>
             </tr>
             <tr>
                 <th scope='row'>Boletos totales</th>
-                    <td>".$BoletosTotales."</td>
+                    <td class='text-center'>".$BoletosTotales."</td>
             </tr>
             <tr>
                 <th scope='row'>Tarjetas totales</th>
-                    <td>".$TotalTarjetas."</td>
+                    <td class='text-center'>".$TotalTarjetas."</td>
             </tr>
             <tr class='table-info'>
                 <th scope='row'>Total</th>
-                    <td>".$TotalFinal."</td>
+                    <td class='text-center'>".$TotalFinal."</td>
             </tr>
             <tr class='table-success'>
                 <th scope='row'>Salidas totales</th>
-                    <td>".$TotalSalidas."</td>
+                    <td class='text-center'>".$TotalSalidas."</td>
             </tr>
             <tr class='table-active'>
                 <th scope='row'>Coches dentro día siguiente</th>
-                <th scope='row'>".$CarrosDiaSiguiente."</th>
+                <th scope='row' class='text-center'>".$CarrosDiaSiguiente."</th>
             </tr>
             
         </tbody>
@@ -783,23 +785,23 @@ Class BD{
                 <tr>
                  <th scope='row'>TOTAL ENTRADA BOLETOS</th>
               
-                        <td>".$BoletosTotales."</td>
+                        <td class='text-center'>".$BoletosTotales."</td>
                 </tr>
                 <tr>
                 <th scope='row'>BOLETOS PERDIDOS</th>
              
-                       <td>".$BoletosPerdidos."</td>
+                       <td class='text-center'>".$BoletosPerdidos."</td>
                </tr>
                <tr>
                <th scope='row'>BOLETOS FISICOS</th>
             
-                      <td>".$nuevo_array. "</td>
+                      <td class='text-center'>".$nuevo_array. "</td>
               </tr>
                 ";   
         echo "
         <tr class='table-active'>
             <th scope='row'>TOTAL FALTANTE</th>";
-            echo "<th scope='row'>".$TotalFinal. "</th>";
+            echo "<th scope='row' class='text-center'>".$TotalFinal. "</th>";
       echo "
         </tr>
     </tbody>
@@ -830,8 +832,8 @@ Class BD{
               </div>
             </div>
             <div class='modal-footer bg-light'>
-              <button type='button' class='btn btn-danger btn-sm' data-dismiss='modal'>Cancelar</button> 
-              <button type='submit' class='btn btn-info btn-sm' name='ingresarCobrados'>Guardar</button>
+              <button type='button' class='btn btn_delete btn-sm' data-dismiss='modal'>Cancelar</button> 
+              <button type='submit' class='btn btn_save btn-sm' name='ingresarCobrados'>Guardar</button>
             </div> 
           </div>
         </div>
@@ -863,13 +865,13 @@ Class BD{
        echo "
                 <tr>
                     <th scope='row'>".self::$array_turnos[$turno]." </th>
-                        <td>$".$valor_dinero."</td>
+                        <td class='text-center'>$".$valor_dinero."</td>
                 </tr>";
         }
         echo "
                 <tr class='table-active'>
                     <th scope='row'>Total</th>
-                    <th scope='row'>$".self::sumar_valores($dinero_tarjetas);"</th>";
+                    <th scope='row' class='text-center'>$".self::sumar_valores($dinero_tarjetas);"</th>";
             echo "   </tr>
                 
             </tbody>
@@ -912,8 +914,8 @@ Class BD{
               </div>
             </div>
             <div class='modal-footer bg-light'>
-              <button type='button' class='btn btn-danger btn-sm' data-dismiss='modal'>Cancelar</button> 
-              <button type='submit' class='btn btn-info btn-sm' name='guardarFisicos'>Guardar</button>
+              <button type='button' class='btn btn_delete btn-sm' data-dismiss='modal'>Cancelar</button> 
+              <button type='submit' class='btn btn_save btn-sm' name='guardarFisicos'>Guardar</button>
           </div>
           </div>
         </div>
@@ -962,8 +964,8 @@ Class BD{
                   </div>  
                 </div>
                 <div class='modal-footer bg-light'>
-                  <button type='button' class='btn btn-danger btn-sm' data-dismiss='modal'>Cancelar</button> 
-                  <button type='submit' class='btn btn-info btn-sm' name='guardarDiaSig'>Guardar</button>
+                  <button type='button' class='btn btn_delete btn-sm' data-dismiss='modal'>Cancelar</button> 
+                  <button type='submit' class='btn btn_save btn-sm' name='guardarDiaSig'>Guardar</button>
               </div>
               </div>
             </div>
@@ -994,13 +996,13 @@ Class BD{
             echo "    
                 <tr>
                     <th scope='row'>".$turno[$num]."</th>
-                        <td>".$total_cobra."</td>
+                        <td class='text-center'>".$total_cobra."</td>
                 </tr>";
             }
             echo "
                 <tr class='table-active'>
                     <th scope='row'>Total</th>
-                    <th scope='row'>".self::sumar_valores($boletos_cobrados)."</th>
+                    <th scope='row' class='text-center'>".self::sumar_valores($boletos_cobrados)."</th>
                 </tr>
                 
             </tbody>
@@ -1016,21 +1018,21 @@ Class BD{
             <div class='row'>  
                 <div class='col-6'>
                     <small> Nombre(s): </small>
-                     <input  maxlength='35' class='form-control text-dark' type='text' name='nombreCajero'>                            
+                     <input  maxlength='35' class='form-control text-dark' type='text' name='nombreCajero' required>                            
                 </div>
             </div>
     
     <div class='row'> 
         <div class='col-md-6'>
             <small> Apellidos: </small>
-            <input  maxlength='35' class='form-control text-dark' type='text' name='apellidosCajero'>
+            <input  maxlength='35' class='form-control text-dark' type='text' name='apellidosCajero' required>
         </div>
     </div>
 
     <div class='row'>  
         <div class='col-md-6'>
             <small> Nombre de usuario: </small>
-            <input  maxlength='35'  class='form-control text-dark' type='text' name='usuarioCajero'>     
+            <input  maxlength='35'  class='form-control text-dark' type='text' name='usuarioCajero' required>     
         </div>
     </div> 
     
@@ -1039,7 +1041,7 @@ Class BD{
             <small> Contraseña: </small>
             <div class='row'>
                 <div class='col-10'>
-                    <input maxlength='35' id='showpass' class='form-control text-dark' type='password' name='passwordCajero'> 
+                    <input maxlength='35' id='showpass' class='form-control text-dark' type='password' name='passwordCajero' required> 
                 </div>
                 <div class='col-1'>
                     <i class='al_left far fa-eye see_pwd' onclick='showPass()'></i>
@@ -1049,7 +1051,7 @@ Class BD{
     </div> 
     <div class='row'>
             <div class='card-body al_left'>
-                <button type='submit' class='btn btn-info shadows' name='guardarCajero'>Guardar</button>    
+                <button type='submit' class='btn btn_save shadows' name='guardarCajero'>Guardar</button>    
             </div>
     </div> 
     </form>
@@ -1104,8 +1106,8 @@ Class BD{
     </div> 
     <div class='row'>
             <div class='card-body al_left'>
-                <button type='submit' class='btn btn-info shadows' name='guardarCajero'>Guardar</button>    
-                <button type='submit' class='btn btn-danger shadows' name='eliminarUsuario'>Eliminar usuario</button>  
+                <button type='submit' class='btn btn_save shadows' name='guardarCajero'>Guardar</button>    
+                <button type='submit' class='btn btn_delete shadows' name='eliminarUsuario'>Eliminar usuario</button>  
             </div>
     </div> ";
         }

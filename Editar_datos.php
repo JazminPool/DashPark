@@ -117,7 +117,7 @@ Class editar_bd {
                     <td>".$columnaCinchos['numero_fin']."</td>
                     <td class='text-center'>
                         <button type='submit'  data-toggle='modal' 
-                        data-target='#".$eliminar.$columnaCinchos['idtablas_cinchos']."' class='btn btn-danger btn-sm'>Eliminar</button>                      
+                        data-target='#".$eliminar.$columnaCinchos['idtablas_cinchos']."' class='btn btn_delete btn-sm'>Eliminar</button>                      
                     </td>
             </tr>
         </tbody>";
@@ -234,8 +234,8 @@ Class editar_bd {
 
     <div class='row'>
         <div class='card-body al_left'>
-            <button type='submit' name='guardarAdmin' class='btn btn-info shadows'>Guardar</button>    
-            <button type='submit' name='eliminarAdmin' class='btn btn-danger shadows'>Eliminar usuario</button>  
+            <button type='submit' name='guardarAdmin' class='btn btn_save shadows'>Guardar</button>    
+            <button type='submit' name='eliminarAdmin' class='btn btn_delete shadows'>Eliminar usuario</button>  
         </div>
     </div>";
     }
@@ -248,7 +248,7 @@ Class editar_bd {
             <div class='row'>  
                 <div class='col-6'>
                     <small> Nombre(s): </small>
-                     <input  maxlength='35' class='form-control text-dark' type='text' name='nomAdmin'>        
+                     <input  maxlength='35' class='form-control text-dark' type='text' name='nomAdmin' required>        
                      <input  maxlength='35' class='form-control text-dark' type='hidden' name='idAmin'>                            
                 </div>
             </div>
@@ -256,14 +256,14 @@ Class editar_bd {
     <div class='row'> 
         <div class='col-md-6'>
             <small> Apellidos: </small>
-            <input  maxlength='35' class='form-control text-dark' type='text' name='ApeAdmin'>
+            <input  maxlength='35' class='form-control text-dark' type='text' name='ApeAdmin' required>
         </div>
     </div>
 
     <div class='row'>  
         <div class='col-md-6'>
             <small> Nombre de usuario de administrador: </small>
-            <input  maxlength='35'  class='form-control text-dark' type='text' name='usuAdmin'>     
+            <input  maxlength='35'  class='form-control text-dark' type='text' name='usuAdmin' required>     
         </div>
     </div> 
     
@@ -272,7 +272,7 @@ Class editar_bd {
             <small> Contraseña de administrador: </small>
             <div class='row'>
                 <div class='col-10'>
-                    <input maxlength='35' id='showpass' class='form-control text-dark' type='password' name='passAdmin'> 
+                    <input maxlength='35' id='showpass' class='form-control text-dark' type='password' name='passAdmin' required> 
                 </div>
                 <div class='col-1'>
                     <i class='al_left far fa-eye see_pwd' onclick='showPass()'></i>
@@ -282,7 +282,7 @@ Class editar_bd {
     </div> 
     <div class='row'>
             <div class='card-body al_left'>
-                <button type='submit' class='btn btn-info shadows' name='guardarAdmin'>Guardar</button>    
+                <button type='submit' class='btn btn_save shadows' name='guardarAdmin'>Guardar</button>    
             </div>
     </div> 
     </form>

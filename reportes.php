@@ -30,11 +30,11 @@ if(!isset($_SESSION['Admin'])){
                         </div><!--fin cardbody-->
                         <div class="col-md-4">
                             <p class="p_card">Seleccionar fecha</p>
-                            <input id="date" class="form-control form-control-sm text-center" name="date" type="date">                         
+                            <input id="date" class="form-control form-control-sm text-center" name="date" type="date" required>                         
                         </div><!--fin cardbody-->
                         <div class="col-md-4">
                             <p class="p_card">Ver corte del cajero seleccionado</p>
-                            <button type="submit" name="ver_empleado" class="btn btn-sm shadows btn-info btn-block">Corte</button>
+                            <button type="submit" name="ver_empleado" class="btn btn-sm shadows btn_main btn-block">Corte</button>
                         </div><!--fin cardbody-->
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card-->

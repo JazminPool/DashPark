@@ -1,7 +1,6 @@
 /*
-*
 * Funcion de hora y fecha
-*
+* Autor: Jazmin Pool
 */ 
 function mueveReloj(){
     momentoActual = new Date();
@@ -38,9 +37,8 @@ function mueveReloj(){
 }
 
 /*
-*
 * Funcion de ver contraseña
-*
+* Autor: Jazmin Pool
 */
 function showPass(){
     var x = document.getElementById("showpass");
@@ -54,7 +52,7 @@ function showPass(){
 /*
 *
 * Funcion para solo numeros
-*
+* Autor: Jazmin Pool
 */
 function just_numbers(e){
     tecla = (document.all) ? e.keyCode : e.which;

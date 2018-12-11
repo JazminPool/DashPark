@@ -28,11 +28,11 @@ if(!isset($_SESSION['Admin'])){
                         </div><!--fin col-md-8-->
                         <div class="col-md-3">
                             <p class="p_card">Visualizar información del cajero</p>
-                            <button type="submit" class="btn btn-success btn-sm shadows btn-block" name="verCajero">Ver</button>                      
+                            <button type="submit" class="btn btn_main btn-sm shadows btn-block" name="verCajero">Ver</button>                      
                         </div><!--fin col-md-4-->
                         <div class="col-md-3">
                             <p class="p_card">Dar de alta a un nuevo cajero</p>
-                            <button type="submit" class="btn btn-dark btn-sm shadows btn-block" name="anadirCajero">Añadir nuevo</button>                      
+                            <button type="submit" class="btn btn_add btn-sm shadows btn-block" name="anadirCajero">Añadir nuevo</button>                      
                         </div><!--fin col-md-4-->
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card header -->     

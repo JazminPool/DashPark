@@ -8,6 +8,7 @@
     <?php include('links.php');?>
 </head>
 <body>
+    
     <?php include('nav.php'); ?>
 
     <div class="container-fluid"><br>
@@ -16,6 +17,10 @@
         <div class="row">
             <div class="col-md-4 text-center">
                 <h4>Boletos totales por año</h4>
+                <button class="btn" onclick="tareabien();">Tarea hecha</button>
+                <button class="btn" onclick="borrar();">Advertencia</button>
+                <button class="btn" onclick="errorlogin();">Login</button>
+                <button class="btn" onclick="nofound();">No se encontró</button>
             </div><!--Fin col-->
         </div><!--Fin row title anual-->
         <br>
@@ -26,6 +31,8 @@
                 </div>
             </div>
         </div><!--Fin del row grafico anual-->
+
+    
 
         <br><hr>
     <!-- Chart Mensual -->
@@ -107,6 +114,65 @@
     </div> <!--Fin container-->
 </body>
     <script>
+
+    /**Prueba alert */
+    function tareabien(){
+        //tarea guardada
+        swal({
+            title: "Tarea realizada", //titulo 
+            text: "Se realizó correctamente la tarea!", //texto del alert
+            icon: "success", //tipo de icono: success, info, error, warning
+            button: "Continuar", //nombre del boton
+            //className: "success",  //no sé como se usa
+            //closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+            //timer: 3000, //tiempo para que desaparezca
+            });
+    }
+    function errorlogin(){
+        swal({
+            title: "Usuario/Contraseña incorrecto", //titulo 
+            text: "Ingrese correctamente su nombre de usuario y/o contraseña.", //texto del alert
+            icon: "error", //tipo de icono: success, info, error, warning
+            button: "Continuar", //nombre del boton
+            //className: "success",  //no sé como se usa
+            closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+            timer: 4000, //tiempo para que desaparezca
+            });
+    }
+    function borrar(){
+        swal({
+            title: "¿Está seguro?", //titulo 
+            text: "Estás a punto de borrar el registro, esta accion no podrá revertirse.", //texto del alert
+            icon: "warning", //tipo de icono: success, info, error, warning
+            buttons: true,
+            dangerMode: true,
+            //button: "Continuar", //nombre del boton
+            //className: "success",  //no sé como se usa
+            closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+            //timer: 3000, //tiempo para que desaparezca
+        })
+        .then((willDelete) => { 
+            if (willDelete) {//si se borra
+                swal("Borrado con éxito.", {
+                icon: "success",
+                });
+            } else {//si no se borra
+                swal("Has cancelado la acción.");
+            }
+        });
+    }
+    function nofound(){
+        swal({
+            title: "Sin registros", //titulo 
+            text: "No se encontraron reportes en esa fecha, selecciona otra fecha.", //texto del alert
+            icon: "warning", //tipo de icono: success, info, error, warning
+            button: "Aceptar", //nombre del boton
+            //className: "success",  //no sé como se usa
+            //closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+            //timer: 3000, //tiempo para que desaparezca
+            });
+    }
+
  /*203101*/
     /*Estadisticas Anuales */
         $(document).ready(anuales(2018));
