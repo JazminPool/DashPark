@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-12-2018 a las 17:40:02
+-- Tiempo de generación: 27-12-2018 a las 19:56:23
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -39,11 +39,9 @@ CREATE TABLE `administrados_caje` (
 --
 
 INSERT INTO `administrados_caje` (`idadministrados_caje`, `nombre_admin`, `apellido_pat_admin`, `usuario_admin`, `password_admin`) VALUES
+(1, 'Javier', 'Sabella', 'JavSa', '123'),
 (2, 'Jazmin', 'Pool', 'japool', '456'),
-(5, 'Gloria', 'xczx', 'Lagloria', '123'),
-(7, 'Juana', '', '4543', '4534534'),
-(8, 'Elba', '', 'elba', '123'),
-(9, 'Esteban', 'Qui to', 'est', '123');
+(10, 'Juana', 'La Buba', 'Buba', 'gump');
 
 -- --------------------------------------------------------
 
@@ -80,9 +78,21 @@ CREATE TABLE `boletos_tipos` (
 --
 
 INSERT INTO `boletos_tipos` (`idboletos_tipos`, `boletos_cobrados`, `boletos_tolerancia`, `boletos_guada`, `boletos_cortesia`, `boletos_perdidos`, `boletos_totales`, `boletos_fisicos`) VALUES
-(6047, 16, 0, 0, 5, 0, 21, 176),
-(6054, 37, 27, 0, 2, 0, 66, 176),
-(6148, 66, 21, 3, 0, 0, 90, 176),
+(3669, 99, 18, 0, 0, 3, 120, 301),
+(3735, 29, 32, 0, 0, 0, 61, 301),
+(3833, 108, 34, 1, 0, 3, 146, 301),
+(4162, 31, 6, 0, 0, 0, 37, 182),
+(4180, 31, 30, 0, 0, 0, 61, 182),
+(4264, 75, 14, 1, 3, 0, 93, 182),
+(4345, 21, 3, 1, 0, 1, 26, 193),
+(4360, 23, 37, 0, 0, 0, 60, 193),
+(4445, 77, 34, 2, 1, 0, 114, 193),
+(4539, 9, 7, 0, 0, 1, 17, 205),
+(4553, 34, 36, 0, 0, 0, 70, 205),
+(4651, 63, 31, 1, 0, 1, 96, 205),
+(6047, 16, 0, 0, 5, 0, 21, 174),
+(6054, 37, 27, 0, 2, 0, 66, 174),
+(6148, 66, 21, 3, 0, 0, 90, 174),
 (7920, 64, 0, 0, 1, 2, 67, 5),
 (7958, 48, 33, 0, 2, 1, 84, 5),
 (8090, 132, 45, 3, 2, 1, 183, 5),
@@ -92,6 +102,7 @@ INSERT INTO `boletos_tipos` (`idboletos_tipos`, `boletos_cobrados`, `boletos_tol
 (8760, 27, 4, 0, 0, 0, 30, 111),
 (111111, 55, 353, 3, 3, 67, 481, NULL),
 (111112, 564, 565, 66, 654, 65, 1914, NULL),
+(122222, 333, 233, 432, 323, 234, 1555, NULL),
 (217283, 85, 5, 0, 1, 0, 91, 175),
 (217355, 47, 15, 0, 0, 0, 62, 175),
 (217425, 27, 12, 0, 0, 0, 39, 175),
@@ -99,16 +110,26 @@ INSERT INTO `boletos_tipos` (`idboletos_tipos`, `boletos_cobrados`, `boletos_tol
 (219296, 29, 33, 1, 3, 0, 66, 208),
 (219390, 72, 30, 0, 1, 0, 103, 208),
 (222222, 4, 4, 24, 45, 656, 733, NULL),
+(222786, 34, 11, 2, 0, 0, 47, 175),
+(222808, 34, 29, 0, 1, 0, 64, 175),
+(222886, 37, 25, 3, 1, 0, 66, 175),
+(227834, 77, 9, 0, 0, 1, 87, NULL),
 (323232, 454, 545, 4, 454, 454, 1911, NULL),
 (333333, 333, 3, 3, 3, 3, 345, NULL),
+(345345, 345, 453, 453, 543, 435, 2229, 123),
 (444444, 444, 444, 444, 444, 444, 2220, NULL),
+(456045, 10, 6, 6, 6, 25, 53, 123),
 (543534, 453, 453, 453, 454, 545, 2358, NULL),
+(568888, 666, 666, 565, 665, 767, 3329, NULL),
 (666666, 666, 6, 6, 6, 66, 750, NULL),
 (747474, 555, 555, 555, 555, 555, 2775, NULL),
 (769999, 3, 2, 6, 5, 5, 21, 222),
 (770520, 10, 15, 0, 36, 0, 61, 333),
 (777777, 67, 87, 67, 67, 76, 364, NULL),
+(779879, 898, 879, 987, 879, 987, 4630, NULL),
 (798988, 666, 666, 666, 666, 666, 3330, NULL),
+(868688, 686, 669, 575, 64, 757, 2751, NULL),
+(887737, 777, 777, 87, 777, 789, 3207, 123),
 (888888, 888, 88, 88, 8, 8, 1080, NULL),
 (898989, 12, 32, 95, 15, 8, 162, NULL),
 (989898, 898, 989, 988, 898, 898, 4671, NULL);
@@ -145,9 +166,21 @@ CREATE TABLE `coches_dentro` (
 --
 
 INSERT INTO `coches_dentro` (`idcoches_dentro`, `coches_incio`, `coches_salida`, `diferencia_coches`) VALUES
+(3669, 69, 14, 68),
+(3735, 14, 52, 14),
+(3833, 51, 47, 52),
+(4162, 25, 10, 24),
+(4180, 8, 39, 10),
+(4264, 39, 17, 39),
+(4345, 16, 8, 17),
+(4360, 10, 45, 8),
+(4445, 45, 5, 45),
+(4539, 5, 4, 5),
+(4553, 9, 49, 4),
+(4651, 48, 37, 49),
 (6047, 584, 570, 354),
 (6054, 6, 43, 570),
-(6148, 37, 14, 43),
+(6148, 37, 246013, 43),
 (7920, 48, 20, 0),
 (7958, 0, 56, 20),
 (8090, 66, 547337, 56),
@@ -156,7 +189,8 @@ INSERT INTO `coches_dentro` (`idcoches_dentro`, `coches_incio`, `coches_salida`,
 (8442, 35, 28, 35),
 (8760, 18, 761228, 0),
 (111111, 55, 1415, 689749),
-(111112, 554, -112972, -111840),
+(111112, 554, 109250, -111840),
+(122222, 333, 0, 0),
 (217283, 8, -12, 0),
 (217355, 8, 13, -12),
 (217425, 14, 9, 13),
@@ -164,20 +198,30 @@ INSERT INTO `coches_dentro` (`idcoches_dentro`, `coches_incio`, `coches_salida`,
 (219296, 6, 42, 6),
 (219390, 41, 43, 42),
 (219500, 44, NULL, NULL),
-(222222, 6, -111840, -555921),
+(222222, 6, 554825, 109250),
+(222786, 32, 6, 34),
+(222808, 7, 26, 6),
+(222886, 24, 34, 26),
+(227834, 55, 0, 0),
 (323232, 875, 219265, 222),
 (333333, 333, 555543, -112887),
+(345345, 545, 108516, 5),
 (444444, 444, -112887, 87),
+(456045, 565, 432161, 108516),
 (543534, 435, 444441, 219265),
+(568888, 666, 0, 0),
 (666666, 666, 0, 0),
 (747474, 555, NULL, NULL),
 (769999, 15, 510, 761228),
 (770520, 11, -770579, 510),
-(777777, 7, -555921, 65),
+(777777, 7, -778143, 554825),
+(779879, 987, 0, 0),
 (798988, 666, 0, 0),
+(868688, 344, 0, 0),
+(887737, 25, -11029, 432161),
 (888888, 888, -889080, 555543),
 (898989, 565, 0, 0),
-(989898, 989, -993489, 444441);
+(989898, 989, -649045, 444441);
 
 -- --------------------------------------------------------
 
@@ -197,9 +241,21 @@ CREATE TABLE `contador_est` (
 --
 
 INSERT INTO `contador_est` (`idcontador_est`, `inicio_contador`, `salida_contador`, `diferencia_contador`) VALUES
+(3669, 8907, 9034, 128),
+(3735, 9035, 9118, 84),
+(3833, 9119, 9266, 148),
+(4162, 9488, 9526, 39),
+(4180, 9527, 9616, 90),
+(4264, 9617, 9731, 115),
+(4345, 9732, 9759, 28),
+(4360, 9760, 9852, 93),
+(4445, 9853, 9932, 80),
+(4539, 9933, 9944, 12),
+(4553, 9945, 10040, 96),
+(4651, 10041, 10160, 120),
 (6047, 11401, 11422, 22),
 (6054, 11423, 11526, 104),
-(6148, 11527, 11631, 105),
+(6148, 11527, 89999998, 89988472),
 (7920, 2094, 2276, 183),
 (7958, 2277, 2288, 12),
 (8090, 2289, 54, -2234),
@@ -208,7 +264,8 @@ INSERT INTO `contador_est` (`idcontador_est`, `inicio_contador`, `salida_contado
 (8442, 2707, 2835, 129),
 (8760, 3065, 25659998, 25656934),
 (111111, 54654645, 455, -54654189),
-(111112, 456, -1, -456),
+(111112, 456, 4, -451),
+(122222, 12122222, NULL, NULL),
 (217283, 12847, 12947, 101),
 (217355, 12948, 13022, 75),
 (217425, 13023, 13063, 41),
@@ -216,20 +273,30 @@ INSERT INTO `contador_est` (`idcontador_est`, `inicio_contador`, `salida_contado
 (219296, 15259, 15350, 92),
 (219390, 15351, 15467, 117),
 (219500, 15468, NULL, NULL),
-(222222, 5, 455, 451),
+(222222, 5, 75, 71),
+(222786, 19333, 19383, 51),
+(222808, 19384, 19478, 95),
+(222886, 19479, 19557, 79),
+(227834, 25394, NULL, NULL),
 (323232, 78749849, 45435453, -33314395),
 (333333, 33333333, 88888887, 55555555),
+(345345, 44534545, 65566565, 21032021),
 (444444, 44444444, 33333332, -11111111),
+(456045, 65566566, 77877776, 12311211),
 (543534, 45435454, 98989898, 53554445),
+(568888, 88888888, NULL, NULL),
 (666666, 66666666, NULL, NULL),
 (747474, 96431055, -1, -96431055),
 (769999, 25659999, 96325457, 70665459),
 (770520, 96325458, -1, -96325458),
-(777777, 76, 4, -71),
+(777777, 76, -1, -76),
+(779879, 98799998, NULL, NULL),
 (798988, 67766666, NULL, NULL),
+(868688, 66688686, NULL, NULL),
+(887737, 77877777, 98798797, 20921021),
 (888888, 88888888, -1, -88888888),
 (898989, 5445, NULL, NULL),
-(989898, 98989899, -1, -98989899);
+(989898, 98989899, 44444443, -54545455);
 
 -- --------------------------------------------------------
 
@@ -252,11 +319,19 @@ CREATE TABLE `dia_siguiente` (
 --
 
 INSERT INTO `dia_siguiente` (`iddia_siguiente`, `fecha_siguiente`, `folio_emisor`, `folios_rojos`, `contador`, `coches_dentro`, `resumen_dia`) VALUES
-(6223, '2018-10-27', 0, 6223, 11632, 20, NULL),
+(3976, '2018-11-10', 1034611, 3976, 9267, 48, NULL),
+(4345, '2018-11-13', 1034973, 4345, 9732, 16, NULL),
+(4539, '2018-11-14', 1035167, 4539, 9933, 5, NULL),
+(4748, '2018-11-15', 1035374, 4748, 10161, 36, NULL),
 (8558, '2018-09-13', 9277, 8558, 2836, 37, 'No estuvo mal'),
 (217458, '2018-09-18', 1037992, 217458, 13064, 9, 'todo bien'),
 (219500, '2018-10-02', 1040030, 219500, 15468, 44, NULL),
-(555555, '2018-08-22', 555555, 555555, 55, 55, NULL);
+(222962, '2018-11-12', 1043440, 222962, 19558, 35, NULL),
+(252222, '2018-10-27', 8888888, 252222, 89999999, 555, NULL),
+(333333, '2018-10-20', 8888888, 344444, 21799999, 999, NULL),
+(555555, '2018-08-22', 555555, 555555, 55, 55, NULL),
+(622388, '2018-10-27', 8888888, 252222, 89999999, 555, NULL),
+(879879, '2018-12-27', 8979879, 879879, 98798798, 978, NULL);
 
 -- --------------------------------------------------------
 
@@ -270,17 +345,24 @@ CREATE TABLE `empledos_cajeros` (
   `apellido_patCaje` varchar(45) NOT NULL,
   `usuario_caje` varchar(45) NOT NULL,
   `password_caje` varchar(45) NOT NULL,
-  `turnos_caje_idturnos_caje` int(11) NOT NULL
+  `estatus_cajero` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `empledos_cajeros`
 --
 
-INSERT INTO `empledos_cajeros` (`idempledos_cajeros`, `Nombre_cajero`, `apellido_patCaje`, `usuario_caje`, `password_caje`, `turnos_caje_idturnos_caje`) VALUES
+INSERT INTO `empledos_cajeros` (`idempledos_cajeros`, `Nombre_cajero`, `apellido_patCaje`, `usuario_caje`, `password_caje`, `estatus_cajero`) VALUES
 (1, 'Juanito', 'Ramirez', 'juan123', '1234', 1),
-(8, 'Elba', 'Cin ito', 'elba', '123', 2),
-(12, 'Dolores', 'Deb Arriga', 'doli', '123', 3);
+(8, 'Elba', 'Cin ito', 'elba', '123', 0),
+(12, 'Dolores', 'Deb Arriga', 'doli', '123', 1),
+(14, 'Hilario', 'Sanchez', 'hilario.sanchez', '1234', 1),
+(15, 'Diana', 'Chavez', 'diana.chavez', '123', 0),
+(16, 'Danitza', 'Rojas', 'danitza.rojas', '123', 1),
+(17, 'Javier', 'Sabella', 'javier.sabella', '1217', 1),
+(18, 'Isaac', 'Romero', 'isaac.romero', '123', 0),
+(19, 'Cajero', 'Cajero', 'cajero.cajero', '123', 1),
+(20, 'Francisco', 'Horta', 'franh', '123', 0);
 
 -- --------------------------------------------------------
 
@@ -300,9 +382,21 @@ CREATE TABLE `folios_rojos` (
 --
 
 INSERT INTO `folios_rojos` (`idfolios_rojos`, `folio_entrada`, `folio_salida`, `diferencia_folio`) VALUES
+(3669, 3669, 3734, 66),
+(3735, 3735, 3832, 98),
+(3833, 3833, 3975, 143),
+(4162, 4162, 4179, 18),
+(4180, 4180, 4263, 84),
+(4264, 4264, 4344, 81),
+(4345, 4345, 4359, 15),
+(4360, 4360, 4444, 85),
+(4445, 4445, 4538, 94),
+(4539, 4539, 4552, 14),
+(4553, 4553, 4650, 98),
+(4651, 4651, 4747, 97),
 (6047, 6047, 6053, 7),
 (6054, 6054, 6147, 94),
-(6148, 6148, 6222, 75),
+(6148, 6148, 252221, 246074),
 (7920, 7920, 7957, 38),
 (7958, 7958, 8089, 132),
 (8090, 8090, 555554, 547465),
@@ -311,7 +405,8 @@ INSERT INTO `folios_rojos` (`idfolios_rojos`, `folio_entrada`, `folio_salida`, `
 (8442, 8442, 8557, 116),
 (8760, 8760, 769998, 761239),
 (111111, 111111, 111111, 1),
-(111112, 111112, -1, -111112),
+(111112, 111112, 222221, 111110),
+(122222, 122222, NULL, NULL),
 (217283, 217283, 217354, 72),
 (217355, 217355, 217424, 70),
 (217425, 217425, 217457, 33),
@@ -319,20 +414,30 @@ INSERT INTO `folios_rojos` (`idfolios_rojos`, `folio_entrada`, `folio_salida`, `
 (219296, 219296, 219389, 94),
 (219390, 219390, 219499, 110),
 (219500, 219500, NULL, NULL),
-(222222, 222222, 111111, -111110),
+(222222, 222222, 777776, 555555),
+(222786, 222786, 222807, 22),
+(222808, 222808, 222885, 78),
+(222886, 222886, 222961, 76),
+(227834, 227834, NULL, NULL),
 (323232, 323232, 543533, 220302),
 (333333, 333333, 888887, 555555),
+(345345, 345345, 456044, 110700),
 (444444, 444444, 333332, -111111),
+(456045, 456045, 887736, 431692),
 (543534, 543534, 989897, 446364),
+(568888, 568888, NULL, NULL),
 (666666, 666666, NULL, NULL),
 (747474, 747474, -1, -747474),
 (769999, 769999, 770519, 521),
 (770520, 770520, -1, -770520),
-(777777, 777777, 222221, -555555),
+(777777, 777777, -1, -777777),
+(779879, 779879, NULL, NULL),
 (798988, 798988, NULL, NULL),
+(868688, 868688, NULL, NULL),
+(887737, 887737, 879878, -7858),
 (888888, 888888, -1, -888888),
 (898989, 898989, NULL, NULL),
-(989898, 989898, -1, -989898);
+(989898, 989898, 344443, -645454);
 
 -- --------------------------------------------------------
 
@@ -352,9 +457,21 @@ CREATE TABLE `folio_emisor` (
 --
 
 INSERT INTO `folio_emisor` (`idfolio_emisor`, `emisor_entrada`, `emisor_salida`, `diferencia_emisor`) VALUES
+(3669, 1034304, 1034369, 66),
+(3735, 1034370, 1034467, 98),
+(3833, 1034468, 1034610, 143),
+(4162, 1034790, 1034807, 18),
+(4180, 1034808, 1034891, 84),
+(4264, 1034892, 1034972, 81),
+(4345, 1034973, 1034987, 15),
+(4360, 1034988, 1035072, 85),
+(4445, 1035073, 1035166, 94),
+(4539, 1035167, 1035178, 12),
+(4553, 1035179, 1035276, 98),
+(4651, 1035277, 1035373, 97),
 (6047, 1036583, 1036589, 7),
 (6054, 1036590, 1036683, 94),
-(6148, 1036684, -1, -1036684),
+(6148, 1036684, 8888887, 7852204),
 (7920, 8655, 8690, 36),
 (7958, 8691, 8822, 132),
 (8090, 8823, 555554, 546732),
@@ -363,7 +480,8 @@ INSERT INTO `folio_emisor` (`idfolio_emisor`, `emisor_entrada`, `emisor_salida`,
 (8442, 9175, 9276, 9242),
 (8760, 23265, 23279, 15),
 (111111, 1111111, 1111111, 1),
-(111112, 1111112, -1, -1111112),
+(111112, 1111112, 2222221, 1111110),
+(122222, 1111111, NULL, NULL),
 (217283, 1037817, 1037888, 72),
 (217355, 1037889, 1037958, 70),
 (217425, 1037959, 1037991, 33),
@@ -371,20 +489,30 @@ INSERT INTO `folio_emisor` (`idfolio_emisor`, `emisor_entrada`, `emisor_salida`,
 (219296, 1039826, 1039919, 94),
 (219390, 1039920, 1040029, 110),
 (219500, 140030, NULL, NULL),
-(222222, 2222222, 1111111, -1111110),
+(222222, 2222222, 6666665, 4444444),
+(222786, 1043264, 1043285, 22),
+(222808, 1043286, 1043363, 78),
+(222886, 1043364, 1043439, 76),
+(227834, 1048226, NULL, NULL),
 (323232, 2332323, 3534542, 1202220),
 (333333, 3333333, 8888887, 5555555),
+(345345, 9754654, 3041244, -6713409),
 (444444, 4444444, 3333332, -1111111),
+(456045, 3041245, 6666665, 3625421),
 (543534, 3534543, 8898988, 5364446),
+(568888, 1111111, NULL, NULL),
 (666666, 6666666, NULL, NULL),
 (747474, 7474747, -1, -7474747),
 (769999, 23280, 23289, 10),
 (770520, 23290, -1, -23290),
-(777777, 6666666, 2222221, -4444444),
+(777777, 6666666, -1, -6666666),
+(779879, 9897777, NULL, NULL),
 (798988, 8768899, NULL, NULL),
+(868688, 6868575, NULL, NULL),
+(887737, 6666666, 8979878, 2313213),
 (888888, 8888888, -1, -8888888),
 (898989, 0, NULL, NULL),
-(989898, 8898989, -1, -8898989);
+(989898, 8898989, 8888887, -10101);
 
 -- --------------------------------------------------------
 
@@ -406,38 +534,44 @@ CREATE TABLE `reportes_cortes` (
   `observacion_cajero` varchar(200) DEFAULT NULL,
   `efectivo_tarjeta` int(6) DEFAULT NULL,
   `inicio_corte` time DEFAULT NULL,
-  `fin_corte` time DEFAULT NULL
+  `fin_corte` time DEFAULT NULL,
+  `turnos_caje_idturnos_caje` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `reportes_cortes`
 --
 
-INSERT INTO `reportes_cortes` (`idreportes_cortes`, `idcajeros`, `fecha_corte`, `idrojos`, `id_contador`, `emisor_idfolio`, `coches_idcoches`, `boletos_idboletos`, `tarjetas_idtarjetas`, `total_salidas`, `observacion_cajero`, `efectivo_tarjeta`, `inicio_corte`, `fin_corte`) VALUES
-(6047, 1, '2018-10-27', 6047, 6047, 6047, 6047, 6047, 6047, 24, '', 15, '08:08:00', '06:06:00'),
-(6054, 1, '2018-10-27', 6054, 6054, 6054, 6054, 6054, 6054, 100, '', 15, '08:08:00', '06:03:00'),
-(6148, 1, '2018-10-27', 6148, 6148, 6148, 6148, 6148, 6148, 106, NULL, 15, '05:05:00', '06:06:00'),
-(7920, 1, '2018-08-22', 7920, 7920, 7920, 7920, 7920, 7920, 74, 'Muy bien todo', 6, '01:08:08', NULL),
-(7958, 8, '2018-08-22', 7958, 7958, 7958, 7958, 7958, 7958, 110, 'Todo tranquilo por aquí', 6, NULL, NULL),
-(8289, 0, '2018-09-13', 8289, 8289, 8289, 8289, 8289, 8289, 121, 'todo bien', 22459, NULL, NULL),
-(8349, 0, '2018-09-13', 8349, 8349, 8349, 8349, 8349, 8349, 87, 'Jenny tiene diferencia de 1 coche', 5576, NULL, NULL),
-(8442, 0, '2018-09-13', 8442, 8442, 8442, 8442, 8442, 8442, 131, 'Tommy tiene diferencia de 2 Salidas', 1305, NULL, NULL),
-(8760, 0, '2018-08-18', 8760, 8760, 8760, 8760, 8760, 8760, 34, 'sds', 999, NULL, NULL),
-(111112, 12, '2018-10-13', 111112, 111112, 111112, 111112, 111112, 111112, 2479, NULL, 777, '23:04:00', '23:58:00'),
-(217283, 0, '2018-09-18', 217283, 217283, 217283, 217283, 217283, 217283, 99, 'turno 1', 20, NULL, NULL),
-(217355, 0, '2018-09-18', 217355, 217355, 217355, 217355, 217355, 217355, 76, 'comentarios', 30, NULL, NULL),
-(217425, 0, '2018-09-18', 217425, 217425, 217425, 217425, 217425, 217425, 42, 'comentarios turno 3 ', 40, NULL, NULL),
-(219292, 0, '2018-10-02', 219292, 219292, 219292, 219292, 219292, 219292, 19, 'pruebas 1 ', 343, NULL, NULL),
-(219296, 0, '2018-10-02', 219296, 219296, 219296, 219296, 219296, 219296, 92, 'prueba de comentarios al turno numero 2', 427, NULL, NULL),
-(219390, 0, '2018-10-02', 219390, 219390, 219390, 219390, 219390, 219390, 117, 'no hay comentarios para este turno, todo salio bien c:', 1567, NULL, NULL),
-(222222, 8, '2018-10-13', 222222, 222222, 222222, 222222, 222222, 222222, 737, '', 777, '08:08:00', '08:09:00'),
-(323232, 1, '2018-10-20', 323232, 323232, 323232, 323232, 323232, 323232, 2456, '', NULL, '04:58:00', '07:08:00'),
-(543534, 1, '2018-10-20', 543534, 543534, 543534, 543534, 543534, 543534, 2811, NULL, NULL, '04:05:00', '05:45:00'),
-(769999, 0, '2018-08-18', 769999, 769999, 769999, 769999, 769999, 769999, 41, 'fdf', 66, NULL, NULL),
-(770520, 0, '2018-08-18', 770520, 770520, 770520, 770520, 770520, 770520, 93, 'dfdf', 688, NULL, NULL),
-(777777, 1, '2018-10-13', 777777, 777777, 777777, 777777, 777777, 777777, 440, 'hola', 777, '23:55:00', '00:05:00'),
-(898989, 1, '2018-10-19', 898989, 898989, 898989, 898989, 898989, 898989, 207, NULL, NULL, '02:06:00', '23:12:00'),
-(989898, 1, '2018-10-20', 989898, 989898, 989898, 989898, 989898, 989898, 5569, NULL, NULL, '05:57:00', '07:08:00');
+INSERT INTO `reportes_cortes` (`idreportes_cortes`, `idcajeros`, `fecha_corte`, `idrojos`, `id_contador`, `emisor_idfolio`, `coches_idcoches`, `boletos_idboletos`, `tarjetas_idtarjetas`, `total_salidas`, `observacion_cajero`, `efectivo_tarjeta`, `inicio_corte`, `fin_corte`, `turnos_caje_idturnos_caje`) VALUES
+(6047, 1, '2018-10-27', 6047, 6047, 6047, 6047, 6047, 6047, 24, '', 15, '08:08:00', '06:06:00', 1),
+(6054, 1, '2018-10-27', 6054, 6054, 6054, 6054, 6054, 6054, 100, '', 15, '08:08:00', '06:03:00', 2),
+(6148, 1, '2018-10-27', 6148, 6148, 6148, 6148, 6148, 6148, 106, NULL, 15, '05:05:00', '06:06:00', 3),
+(7920, 1, '2018-08-22', 7920, 7920, 7920, 7920, 7920, 7920, 74, 'Muy bien todo', 6, '01:08:08', NULL, 0),
+(7958, 8, '2018-08-22', 7958, 7958, 7958, 7958, 7958, 7958, 110, 'Todo tranquilo por aquí', 6, NULL, NULL, 0),
+(8289, 0, '2018-09-13', 8289, 8289, 8289, 8289, 8289, 8289, 121, 'todo bien', 22459, NULL, NULL, 0),
+(8349, 0, '2018-09-13', 8349, 8349, 8349, 8349, 8349, 8349, 87, 'Jenny tiene diferencia de 1 coche', 5576, NULL, NULL, 0),
+(8442, 0, '2018-09-13', 8442, 8442, 8442, 8442, 8442, 8442, 131, 'Tommy tiene diferencia de 2 Salidas', 1305, NULL, NULL, 0),
+(8760, 0, '2018-08-18', 8760, 8760, 8760, 8760, 8760, 8760, 34, 'sds', 999, NULL, NULL, 0),
+(111112, 12, '2018-10-13', 111112, 111112, 111112, 111112, 111112, 111112, 2479, NULL, 777, '23:04:00', '23:58:00', 0),
+(217283, 0, '2018-09-18', 217283, 217283, 217283, 217283, 217283, 217283, 99, 'turno 1', 20, NULL, NULL, 0),
+(217355, 0, '2018-09-18', 217355, 217355, 217355, 217355, 217355, 217355, 76, 'comentarios', 30, NULL, NULL, 0),
+(217425, 0, '2018-09-18', 217425, 217425, 217425, 217425, 217425, 217425, 42, 'comentarios turno 3 ', 40, NULL, NULL, 0),
+(219292, 0, '2018-10-02', 219292, 219292, 219292, 219292, 219292, 219292, 19, 'pruebas 1 ', 343, NULL, NULL, 0),
+(219296, 0, '2018-10-02', 219296, 219296, 219296, 219296, 219296, 219296, 92, 'prueba de comentarios al turno numero 2', 427, NULL, NULL, 0),
+(219390, 0, '2018-10-02', 219390, 219390, 219390, 219390, 219390, 219390, 117, 'no hay comentarios para este turno, todo salio bien c:', 1567, NULL, NULL, 0),
+(222222, 8, '2018-10-13', 222222, 222222, 222222, 222222, 222222, 222222, 737, '', 777, '08:08:00', '08:09:00', 0),
+(323232, 1, '2018-10-20', 323232, 323232, 323232, 323232, 323232, 323232, 2456, '', NULL, '04:58:00', '07:08:00', 2),
+(345345, 1, '2018-12-27', 345345, 345345, 345345, 345345, 345345, 345345, 2774, '', 546, '05:34:00', '05:45:00', 1),
+(456045, 1, '2018-12-27', 456045, 456045, 456045, 456045, 456045, 456045, 109, '', 65, '05:06:00', '05:06:00', 3),
+(543534, 1, '2018-10-20', 543534, 543534, 543534, 543534, 543534, 543534, 2811, NULL, NULL, '04:05:00', '05:45:00', 1),
+(568888, 1, '2018-12-18', 568888, 568888, 568888, 568888, 568888, 568888, 3995, NULL, NULL, '06:56:00', '07:05:00', 1),
+(769999, 0, '2018-08-18', 769999, 769999, 769999, 769999, 769999, 769999, 41, 'fdf', 66, NULL, NULL, 0),
+(770520, 0, '2018-08-18', 770520, 770520, 770520, 770520, 770520, 770520, 93, 'dfdf', 688, NULL, NULL, 0),
+(777777, 1, '2018-10-13', 777777, 777777, 777777, 777777, 777777, 777777, 440, 'hola', 777, '23:55:00', '00:05:00', 0),
+(779879, 1, '2018-12-18', 779879, 779879, 779879, 779879, 779879, 779879, 5527, NULL, NULL, '07:08:00', '07:07:00', 2),
+(887737, 1, '2018-12-27', 887737, 887737, 887737, 887737, 887737, 887737, 4084, 'Cuca', 56456, '07:08:00', '09:09:00', 2),
+(898989, 1, '2018-10-19', 898989, 898989, 898989, 898989, 898989, 898989, 207, NULL, NULL, '02:06:00', '23:12:00', 0),
+(989898, 1, '2018-10-20', 989898, 989898, 989898, 989898, 989898, 989898, 5569, NULL, NULL, '05:57:00', '07:08:00', 3);
 
 -- --------------------------------------------------------
 
@@ -475,6 +609,18 @@ CREATE TABLE `tarjetas_control` (
 --
 
 INSERT INTO `tarjetas_control` (`idtarjetas_control`, `entrada_tarjeta`, `salidas_tarjeta`) VALUES
+(3669, 7, 8),
+(3735, 19, 18),
+(3833, 6, 7),
+(4162, 6, 2),
+(4180, 37, 29),
+(4264, 12, 22),
+(4345, 5, 2),
+(4360, 43, 33),
+(4445, 16, 36),
+(4539, 6, 4),
+(4553, 57, 45),
+(4651, 10, 22),
 (6047, 3, 3),
 (6054, 43, 34),
 (6148, 8, 16),
@@ -487,6 +633,7 @@ INSERT INTO `tarjetas_control` (`idtarjetas_control`, `entrada_tarjeta`, `salida
 (8760, 5, 4),
 (111111, 35, 55),
 (111112, 65, 565),
+(122222, 444, 444),
 (217283, 7, 8),
 (217355, 11, 14),
 (217425, 4, 3),
@@ -494,16 +641,26 @@ INSERT INTO `tarjetas_control` (`idtarjetas_control`, `entrada_tarjeta`, `salida
 (219296, 34, 26),
 (219390, 9, 14),
 (222222, 1, 4),
+(222786, 2, 3),
+(222808, 37, 32),
+(222886, 12, 12),
+(227834, 0, 0),
 (323232, 544, 545),
 (333333, 3, 3),
+(345345, 45, 545),
 (444444, 444, 444),
+(456045, 13, 56),
 (543534, 453, 453),
+(568888, 666, 666),
 (666666, 666, 666),
 (747474, 555, 555),
 (769999, 15, 20),
 (770520, 23, 32),
 (777777, 67, 76),
+(779879, 898, 897),
 (798988, 666, 666),
+(868688, 755, 575),
+(887737, 888, 877),
 (888888, 888, 888),
 (898989, 25, 45),
 (989898, 989, 898);
@@ -580,8 +737,7 @@ ALTER TABLE `dia_siguiente`
 -- Indices de la tabla `empledos_cajeros`
 --
 ALTER TABLE `empledos_cajeros`
-  ADD PRIMARY KEY (`idempledos_cajeros`),
-  ADD KEY `fk_empledos_cajeros_turnos_caje1_idx` (`turnos_caje_idturnos_caje`);
+  ADD PRIMARY KEY (`idempledos_cajeros`);
 
 --
 -- Indices de la tabla `folios_rojos`
@@ -599,14 +755,15 @@ ALTER TABLE `folio_emisor`
 -- Indices de la tabla `reportes_cortes`
 --
 ALTER TABLE `reportes_cortes`
-  ADD PRIMARY KEY (`idreportes_cortes`,`idrojos`,`id_contador`,`coches_idcoches`,`boletos_idboletos`,`tarjetas_idtarjetas`),
+  ADD PRIMARY KEY (`idreportes_cortes`,`idrojos`,`id_contador`,`coches_idcoches`,`boletos_idboletos`,`tarjetas_idtarjetas`,`turnos_caje_idturnos_caje`),
   ADD KEY `fk_reportes_cortes_folios_rojos1_idx` (`idrojos`),
   ADD KEY `fk_reportes_cortes_contador_est1_idx` (`id_contador`),
   ADD KEY `fk_reportes_cortes_folio_emisor1_idx` (`emisor_idfolio`),
   ADD KEY `fk_reportes_cortes_coches_dentro1_idx` (`coches_idcoches`),
   ADD KEY `fk_reportes_cortes_boletos_tipos1_idx` (`boletos_idboletos`),
   ADD KEY `fk_reportes_cortes_tarjetas_control1_idx` (`tarjetas_idtarjetas`),
-  ADD KEY `fk_reportes_cortes_empledos_cajeros1_idx` (`idcajeros`);
+  ADD KEY `fk_reportes_cortes_empledos_cajeros1_idx` (`idcajeros`),
+  ADD KEY `fk_reportes_cortes_turnos_caje1_idx` (`turnos_caje_idturnos_caje`);
 
 --
 -- Indices de la tabla `tabla_cinchos`
@@ -634,7 +791,7 @@ ALTER TABLE `turnos_caje`
 -- AUTO_INCREMENT de la tabla `administrados_caje`
 --
 ALTER TABLE `administrados_caje`
-  MODIFY `idadministrados_caje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idadministrados_caje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `boletos_tipos`
 --
@@ -654,7 +811,7 @@ ALTER TABLE `contador_est`
 -- AUTO_INCREMENT de la tabla `empledos_cajeros`
 --
 ALTER TABLE `empledos_cajeros`
-  MODIFY `idempledos_cajeros` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idempledos_cajeros` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `folios_rojos`
 --
@@ -698,12 +855,6 @@ ALTER TABLE `cambio_boletos`
   ADD CONSTRAINT `fk_cambio_boletos_tabla_cinchos1` FOREIGN KEY (`cinchos_idtabla`) REFERENCES `tabla_cinchos` (`idtablas_cinchos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `empledos_cajeros`
---
-ALTER TABLE `empledos_cajeros`
-  ADD CONSTRAINT `fk_empledos_cajeros_turnos_caje1` FOREIGN KEY (`turnos_caje_idturnos_caje`) REFERENCES `turnos_caje` (`idturnos_caje`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Filtros para la tabla `reportes_cortes`
 --
 ALTER TABLE `reportes_cortes`
@@ -713,7 +864,8 @@ ALTER TABLE `reportes_cortes`
   ADD CONSTRAINT `fk_reportes_cortes_empledos_cajeros1` FOREIGN KEY (`idcajeros`) REFERENCES `empledos_cajeros` (`idempledos_cajeros`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_reportes_cortes_folio_emisor1` FOREIGN KEY (`emisor_idfolio`) REFERENCES `folio_emisor` (`idfolio_emisor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_reportes_cortes_folios_rojos1` FOREIGN KEY (`idrojos`) REFERENCES `folios_rojos` (`idfolios_rojos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_reportes_cortes_tarjetas_control1` FOREIGN KEY (`tarjetas_idtarjetas`) REFERENCES `tarjetas_control` (`idtarjetas_control`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_reportes_cortes_tarjetas_control1` FOREIGN KEY (`tarjetas_idtarjetas`) REFERENCES `tarjetas_control` (`idtarjetas_control`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_reportes_cortes_turnos_caje1` FOREIGN KEY (`turnos_caje_idturnos_caje`) REFERENCES `turnos_caje` (`idturnos_caje`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
