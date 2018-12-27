@@ -7,6 +7,7 @@ if(isset($_POST['generarReporte']))
     $id=$_SESSION['usuario'];
     $fecha=date("Ymd");
     $idCajero=consultas::VerificaCajeros($id);
+    $turnoCajero=consultas::VerificaTurno($_POST['turno_cajero']);
     $horaInicio=$_POST['horaInicio'];
     $horaSalida=$_POST['horaSalida'];
     $folioEmisor=$_POST['folioEmisor'];
@@ -22,7 +23,7 @@ if(isset($_POST['generarReporte']))
     $boletosPerdidos=$_POST['boletosPerdidos'];
 
     consultas::insertar_datos($folioRojo, $folioEmisor, $contador, $cochesDentro, $entradasTarjeta, $salidaTarjetas, $boletosCobrados,
-    $boletosTolerancia, $boletosCortesia, $boletosGuada, $boletosPerdidos,$fecha,$horaInicio.":00",$horaSalida.":00",$idCajero);
+    $boletosTolerancia, $boletosCortesia, $boletosGuada, $boletosPerdidos,$fecha,$horaInicio.":00",$horaSalida.":00",$idCajero,$turnoCajero);
     unset($_SESSION['usuario']);
     session_destroy();
     echo'<script type="text/javascript">

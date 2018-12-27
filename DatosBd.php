@@ -7,8 +7,10 @@ Class BD{
     public static $boletos_totales=null;
     public static $arraytotales=null;
     public static $arraySiguiente=null;
+    public static $arrayTodo=null;
     public static $fecha=null;
     public static $Datos=null;
+    public static $datosFinal=null;
 
     public function Obtener_boletos(&$array_boletos,&$array_dinero,&$array_turnos,&$boletos_totales)
      {   //global $array_boletos;
@@ -18,6 +20,10 @@ Class BD{
         self::$boletos_totales=$boletos_totales;
     } /*Metodo para obtener boeletos*/
 
+    public function DatosFinal(&$datosFinal)
+    {
+        self::$datosFinal=$datosFinal;
+    }
     public function ArrayTotales(&$arraytotales)
     {
         self::$arraytotales=$arraytotales;
@@ -25,6 +31,10 @@ Class BD{
     public function DiaSiguiente(&$arraySiguiente)
     {
         self::$arraySiguiente=$arraySiguiente;
+    }
+    public function ArrayTodo(&$arrayTodo)
+    {
+        self::$arrayTodo=$arrayTodo;
     }
     public function FechaCorte($fecha)
     {
@@ -41,10 +51,12 @@ Class BD{
         $cone=new Conneciones();
         $cone->Conectar();
 
-        $consulta_cajeros="SELECT * from empledos_cajeros";
+        $consulta_cajeros="SELECT * from empledos_cajeros WHERE estatus_cajero=1";
         $resultado_cajeros=$cone->ExecuteQuery($consulta_cajeros) or die("Error al consultar cajeros");
 
-        echo "<select class='form-control form-control-sm text-center' name='id_empleado'>";
+        echo "<select class='form-control form-control-sm text-center' name='id_empleado' onchange='showUser(this.value)'>";
+        echo "<option value=''>Selecciona un cajero</option>";          
+        
         while($columna_cajeros=$resultado_cajeros->fetch_array())
         {
            
@@ -58,14 +70,22 @@ Class BD{
         $cone=new Conneciones();
         $cone->Conectar();
        
-        $consulta_datos="SELECT folios_rojos.folio_entrada,folios_rojos.diferencia_folio ,folio_emisor.emisor_entrada,coches_dentro.coches_incio,
-        contador_est.inicio_contador,tarjetas_control.entrada_tarjeta,reportes_cortes.total_salidas,contador_est.diferencia_contador,
-        boletos_tipos.boletos_perdidos, coches_dentro.coches_salida, boletos_tipos.boletos_fisicos,coches_dentro.diferencia_coches from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
-        inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos INNER JOIN contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
-        Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
-        INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
-        reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
-        INNER JOIN turnos_caje ON empledos_cajeros.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje WHERE reportes_cortes.fecha_corte=".$fecha."";
+        /**Inicia consulta para traer los datos de los 3 turnos*/
+        $consulta_datos=
+        "SELECT folios_rojos.folio_entrada,folios_rojos.diferencia_folio ,
+        folio_emisor.emisor_entrada,coches_dentro.coches_incio,
+        contador_est.inicio_contador,tarjetas_control.entrada_tarjeta,
+        reportes_cortes.total_salidas,contador_est.diferencia_contador,
+        boletos_tipos.boletos_perdidos, coches_dentro.coches_salida, 
+        boletos_tipos.boletos_fisicos,coches_dentro.diferencia_coches 
+        from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos 
+        INNER JOIN contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
+        Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor 
+        INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
+        INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos 
+        INNER JOIN tarjetas_control ON reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
+        WHERE reportes_cortes.fecha_corte=".$fecha."";
         $resultado_corteFinal=$cone->ExecuteQuery($consulta_datos) or die ("Error al consultar corte final1");
 
         $array_turno1=null;
@@ -87,11 +107,23 @@ Class BD{
                 $columna_datos['diferencia_coches'] //11
                 
         );
+        /**Método que tiene variable global**/
             self::ArrayTotales($array_turno1);
         }
-        if(count($array_turno1)==null){
-            echo "No hay nada para mistrar";
+        if(count($array_turno1)<3){
+            echo "<script>
+            swal({
+               title: 'Sin registros', 
+               text: 'No se encontraron reportes en esa fecha, selecciona otra fecha.', 
+               icon: 'warning', 
+               button: 'Aceptar', 
+               //className: 'success',  
+               //closeOnClickOutside: false,
+               //timer: 3000, 
+               });
+            </script>";
         }else{
+           
         $consulta_diasig="SELECT * from dia_siguiente WHERE fecha_siguiente='$fecha'";
         $resultado_corte=$cone->ExecuteQuery($consulta_diasig) or die("Error al consultar datos siguientes");
         while($columna_sig=$resultado_corte->fetch_array())
@@ -112,13 +144,13 @@ Class BD{
         $array_resultados=       
             array(
                 array( //turno 1, operaciones [0]
-                $array_turno1[1][0]-1, //entrada rojos
-                $array_turno1[1][0]-$array_turno1[0][0], // diferencia folio rojos
-                $array_turno1[1][1]-1, // entrada emisor
-                $array_turno1[1][1]-$array_turno1[0][1], //diferencia emisor
-                $array_turno1[1][3]-1, //entrada contador
-                $array_turno1[1][3]-$array_turno1[0][3], //Diferencia contador
-                $array_turno1[0][2]+$array_turno1[0][4]+($array_turno1[1][0]-$array_turno1[0][0])-$array_turno1[0][5] //coches suma
+                $array_turno1[1][0]-1, //entrada rojos //0
+                $array_turno1[1][0]-$array_turno1[0][0], // diferencia folio rojos //1
+                $array_turno1[1][1]-1, // entrada emisor //2
+                $array_turno1[1][1]-$array_turno1[0][1], //diferencia emisor //3
+                $array_turno1[1][3]-1, //entrada contador //4
+                $array_turno1[1][3]-$array_turno1[0][3], //Diferencia contador //5
+                $array_turno1[0][2]+$array_turno1[0][4]+($array_turno1[1][0]-$array_turno1[0][0])-$array_turno1[0][5] //coches suma //6
                 //2 coches inicio, 4 tarjetas, 0 entradas, 5 salidas totales
                 ),
 
@@ -143,7 +175,7 @@ Class BD{
                     $array_turno1[2][2]+$array_turno1[2][4]+($array_siguiente[0][3]-$array_turno1[2][0])-$array_turno1[2][5]
                 )
                 );
- 
+
                 
             //folios rojoooooooooooooooooooooooooooooooooooooos
             try {
@@ -228,7 +260,6 @@ Class BD{
         $cone=new Conneciones();
         $cone->Conectar();
 
-
         $consulta_reporte="SELECT * from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
         inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos inner join contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
         Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
@@ -236,14 +267,15 @@ Class BD{
         reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control WHERE reportes_cortes.idcajeros=".$id_empleado." AND reportes_cortes.fecha_corte=".$fecha."";
         $resultado_reporte=$cone->ExecuteQuery($consulta_reporte) or die ("Error al consultar reporte");
 
-        echo "
-        <div class='col contenedor'>
-        <table class='table table-responsive table-sm table-hover text_table_pq'>
-        <thead class='thead-dark'>";
+       
         while($columna_reporte=$resultado_reporte->fetch_array()){
            
         echo 
-        " <tr>
+        "
+        <div class='col contenedor'>
+        <table class='table table-responsive table-sm table-hover text_table_pq'>
+        <thead class='thead-dark'>
+         <tr>
             <th scope='col' colspan=2>Reporte de cajero: ".$columna_reporte['Nombre_cajero']." ".$columna_reporte['apellido_patCaje']."</th>
         </tr>
         </thead>
@@ -300,14 +332,48 @@ Class BD{
                 <th scope='row'>Salidas totales</th>
                     <td>".$columna_reporte['total_salidas']."</td>
             </tr>
-        </tbody>";
-        }
-        echo " 
+        </tbody>
         </table>
-         </div> <!--Fin de columna-->";
+        </div> ";
+        }
         $cone->Cerrar();
     }
-
+    public function Reporte1($array_uno)
+    {
+        if($array_uno[0][2]!=$array_uno[0][4])
+        {
+            $stringOb="Diferencia en emisor:".self::$array_uno[0][2]. "y Folio rojo".self::$array_uno[0][4];
+            if($array_uno[0][07]!=$array_uno[0][6])
+            {
+                $stringOb="Diferencia en salidas".self::$array_uno[0][7]."y salidas contador".self::$array_uno[0][6]."<br>".$stringOb;
+            }
+            return $stringOb;
+        }
+    }
+    public function Reporte2($array)
+    {
+        if($array[1][2]!=$array[1][4])
+        {
+            $stringOb="Diferencia en emisor:".self::$array[1][2]. "y Folio rojo".self::$array[1][4];
+            if($array[1][07]!=$array[1][6])
+            {
+                $stringOb="Diferencia en salidas".self::$array[0][7]."y salidas contador".self::$array[0][6]."<br>".$stringOb;
+            }
+            return $stringOb;
+        }
+    }
+    public function Reporte3($array)
+    {
+        if($array[2][2]!=$array[0][2])
+        {
+            $stringOb="Diferencia en emisor:".self::$array[2][2]. "y Folio rojo".self::$array[2][4];
+            if($array[2][07]!=$array[2][6])
+            {
+                $stringOb="Diferencia en salidas".self::$array[2][7]."y salidas contador".self::$array[2][6]."<br>".$stringOb;
+            }
+            return $stringOb;
+        }
+    }
     /*
     * Método con modal ya quedó
     *Última modificación: Gloria Aguilar 27/09/18
@@ -318,16 +384,18 @@ Class BD{
         $editar_turno="editar";
         $cone=new Conneciones();
         $cone->Conectar();
-        $consulta_corteFinal="SELECT * from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
-        inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos inner join contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
-        Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
-        INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
-        reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
-        INNER JOIN turnos_caje ON empledos_cajeros.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje 
+        $consulta_corteFinal="SELECT * from reportes_cortes inner join empledos_cajeros ON 
+        reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos 
+        inner join contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est
+        Inner join folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor 
+        INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
+        INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos 
+        INNER JOIN tarjetas_control ON reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
+        INNER JOIN turnos_caje ON reportes_cortes.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje
         WHERE reportes_cortes.fecha_corte=".$fecha."";
         $resultado_corteFinal=$cone->ExecuteQuery($consulta_corteFinal) or die ("Error al consultar corte final");
-
-        $verificador=mysqli_num_rows($resultado_corteFinal) or die("NO HAY NADA PARA MOSTRAR");
+        $verificador=mysqli_num_rows($resultado_corteFinal);
 
         if($verificador>0){
         while($columna_corteFina=$resultado_corteFinal->fetch_array())
@@ -335,9 +403,6 @@ Class BD{
         echo "
         <div class='col-4'>
         <table class='table table-hover table-responsive table-sm text_table'>
-            <caption> <strong>Observaciones:</strong> 
-                ".$columna_corteFina['observacion_cajero']."
-            </caption>
             <thead class='thead-dark'>
             <tr>
                 <th scope='col' colspan=2>
@@ -447,7 +512,12 @@ Class BD{
         }
         self::Obtener_Boletos($nuevo,$efec_tarje,$turnos,$boletos);     
         $cone->Cerrar();   
-    }else {echo "No hay nada para mostrar";}
+    }
+    }
+
+    public function ObservacionCajero()
+    {
+
     }
 
     /**
@@ -455,24 +525,33 @@ Class BD{
     *se manda a llamar los datos conforme fecha y el idfoliorojo
     *Última modificación: Gloria Aguilar 27/09/18
     */
+
     public function Swithc($id,$fecha)
     {
+        self::verResultados($fecha);
         $cone=new Conneciones();
         $cone->Conectar();
-        $consulta_datosFinal="SELECT folios_rojos.folio_entrada,folios_rojos.folio_salida, folios_rojos.diferencia_folio,
-        folio_emisor.emisor_entrada,folio_emisor.emisor_salida,folio_emisor.diferencia_emisor,contador_est.inicio_contador,
-        contador_est.salida_contador,contador_est.diferencia_contador, coches_dentro.coches_incio,coches_dentro.coches_salida,
+        $consulta_datosFinal=
+        "SELECT folios_rojos.folio_entrada,folios_rojos.folio_salida, 
+        folios_rojos.diferencia_folio,folio_emisor.emisor_entrada,folio_emisor.emisor_salida,
+        folio_emisor.diferencia_emisor,contador_est.inicio_contador,contador_est.salida_contador,
+        contador_est.diferencia_contador, coches_dentro.coches_incio,coches_dentro.coches_salida,
         coches_dentro.diferencia_coches, tarjetas_control.entrada_tarjeta, tarjetas_control.salidas_tarjeta,
-        boletos_tipos.boletos_cobrados,boletos_tipos.boletos_tolerancia, boletos_tipos.boletos_guada,boletos_tipos.boletos_cortesia,
-        boletos_tipos.boletos_perdidos,boletos_tipos.boletos_totales,reportes_cortes.total_salidas, empledos_cajeros.Nombre_cajero,
-        reportes_cortes.observacion_cajero,reportes_cortes.inicio_corte,reportes_cortes.fin_corte from reportes_cortes inner join empledos_cajeros ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
-        inner join folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos inner join contador_est ON 
-        reportes_cortes.id_contador=contador_est.idcontador_est Inner join folio_emisor ON 
-        reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
-        INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos INNER JOIN tarjetas_control ON
-        reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
-        INNER JOIN turnos_caje ON empledos_cajeros.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje    
+        boletos_tipos.boletos_cobrados,boletos_tipos.boletos_tolerancia, boletos_tipos.boletos_guada,
+        boletos_tipos.boletos_cortesia,boletos_tipos.boletos_perdidos,boletos_tipos.boletos_totales,
+        reportes_cortes.total_salidas, empledos_cajeros.Nombre_cajero,reportes_cortes.observacion_cajero,
+        reportes_cortes.inicio_corte,reportes_cortes.fin_corte 
+        FROM reportes_cortes INNER JOIN empledos_cajeros 
+        ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        INNER JOIN folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos 
+        INNER JOIN contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est 
+        INNER JOIN folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor 
+        INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
+        INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos 
+        INNER JOIN tarjetas_control ON reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
+        INNER JOIN turnos_caje ON reportes_cortes.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje    
         WHERE reportes_cortes.fecha_corte=".$fecha." AND reportes_cortes.idreportes_cortes=".$id."";
+
         $resultadoDatos=$cone->ExecuteQuery($consulta_datosFinal) or die ("Error en Datos Final");
         while($columnaRes=$resultadoDatos->fetch_array())
         {
@@ -502,11 +581,115 @@ Class BD{
                 $columnaRes['observacion_cajero'], //22
                 $columnaRes['inicio_corte'], //23
                 $columnaRes['fin_corte'] //24
+                
             );
-
+            self::ArrayTodo($arrayDatos);
             self::ModalEditarTurnos($id,$arrayDatos,$fecha);
+            
         }
+       
         $cone->Cerrar();   
+    }
+
+    public function verResultados($fecha)
+    {
+        $cone=new Conneciones();
+        $cone->Conectar();
+        $consulta_datosFinal=
+        "SELECT folios_rojos.folio_entrada,folios_rojos.folio_salida, 
+        folios_rojos.diferencia_folio,folio_emisor.emisor_entrada,folio_emisor.emisor_salida,
+        folio_emisor.diferencia_emisor,contador_est.inicio_contador,contador_est.salida_contador,
+        contador_est.diferencia_contador, coches_dentro.coches_incio,coches_dentro.coches_salida,
+        coches_dentro.diferencia_coches, tarjetas_control.entrada_tarjeta, tarjetas_control.salidas_tarjeta,
+        boletos_tipos.boletos_cobrados,boletos_tipos.boletos_tolerancia, boletos_tipos.boletos_guada,
+        boletos_tipos.boletos_cortesia,boletos_tipos.boletos_perdidos,boletos_tipos.boletos_totales,
+        reportes_cortes.total_salidas, empledos_cajeros.Nombre_cajero,reportes_cortes.observacion_cajero,
+        reportes_cortes.inicio_corte,reportes_cortes.fin_corte 
+        FROM reportes_cortes INNER JOIN empledos_cajeros 
+        ON reportes_cortes.idcajeros=empledos_cajeros.idempledos_cajeros
+        INNER JOIN folios_rojos ON reportes_cortes.idrojos=folios_rojos.idfolios_rojos 
+        INNER JOIN contador_est ON reportes_cortes.id_contador=contador_est.idcontador_est 
+        INNER JOIN folio_emisor ON reportes_cortes.emisor_idfolio=folio_emisor.idfolio_emisor 
+        INNER JOIN coches_dentro ON reportes_cortes.coches_idcoches=coches_dentro.idcoches_dentro
+        INNER JOIN boletos_tipos ON reportes_cortes.boletos_idboletos=boletos_tipos.idboletos_tipos 
+        INNER JOIN tarjetas_control ON reportes_cortes.tarjetas_idtarjetas=tarjetas_control.idtarjetas_control
+        INNER JOIN turnos_caje ON reportes_cortes.turnos_caje_idturnos_caje=turnos_caje.idturnos_caje    
+        WHERE reportes_cortes.fecha_corte=".$fecha."";
+
+        $resultadoDatos=$cone->ExecuteQuery($consulta_datosFinal) or die ("Error en Datos Final");
+        while($columnaRes=$resultadoDatos->fetch_array())
+        {
+            $arraydatos[]=array(
+                $columnaRes['folio_entrada'], //0
+                $columnaRes['folio_salida'], //1
+                $columnaRes['diferencia_folio'], //2
+                $columnaRes['emisor_entrada'], //3
+                $columnaRes['emisor_salida'], //4
+                $columnaRes['diferencia_emisor'], //5
+                $columnaRes['inicio_contador'], //6
+                $columnaRes['salida_contador'], //7
+                $columnaRes['diferencia_contador'], //8
+                $columnaRes['coches_incio'], //9
+                $columnaRes['coches_salida'], //10
+                $columnaRes['diferencia_coches'], //11
+                $columnaRes['entrada_tarjeta'], //12
+                $columnaRes['salidas_tarjeta'], //13
+                $columnaRes['boletos_cobrados'], //14
+                $columnaRes['boletos_tolerancia'], //15
+                $columnaRes['boletos_guada'], //16
+                $columnaRes['boletos_cortesia'], //17
+                $columnaRes['boletos_perdidos'], //18
+                $columnaRes['boletos_totales'], //19
+                $columnaRes['total_salidas'], //20
+                $columnaRes['Nombre_cajero'], //21
+                $columnaRes['observacion_cajero'], //22
+                $columnaRes['inicio_corte'], //23
+                $columnaRes['fin_corte'] //24
+                
+            );
+           
+            
+        }
+        self::DatosFinal($arraydatos);
+        $cone->Cerrar();   
+    }
+    public function MandarResultado()
+    {
+        if(isset(self::$datosFinal)){
+            //print_r(self::$datosFinal);
+        
+            for($i=0 ; $i<3 ; $i++)
+            {
+                if(self::$datosFinal[$i][2]!=self::$datosFinal[$i][5]||self::$datosFinal[$i][8]!=self::$datosFinal[$i][20]){
+                    echo "<script>
+                    swal({
+                       title: 'ALGO NO CUADRO', 
+                       text: 'Por favor, revisa en Resumen del día, las observaciones.', 
+                       icon: 'warning', 
+                       button: 'Aceptar', 
+                       //className: 'success',  
+                       //closeOnClickOutside: false,
+                       //timer: 3000, 
+                       });
+                    </script>";
+                if(self::$datosFinal[$i][2]!=self::$datosFinal[$i][5])
+                { 
+                    echo "---------------NO CUADRO FOLIO ROJO CON EMISOR-------------<BR>";
+                    echo "Cajero:".self::$datosFinal[$i][21]."\tHorario de\t".self::$datosFinal[$i][23]."<br>";;
+                    echo "Folios rojos:\t".self::$datosFinal[$i][2]."<br>Folio Emisor:\t".self::$datosFinal[$i][5]."<br>";
+                   
+                }
+                if(self::$datosFinal[$i][8]!=self::$datosFinal[$i][20])
+                {
+                    echo "---------------NO CUADRO CONTADOR CON SALIDAS TOTALES-------------<BR>";
+                    echo "Cajero:".self::$datosFinal[$i][21]."\tHorario de\t".self::$datosFinal[$i][23]."<br>";;
+                    echo "Contador:\t".self::$datosFinal[$i][8]."<br>Salidas Totales:\t".self::$datosFinal[$i][20]."<br>";;    
+                }
+        
+            }
+            }       
+    }
+        
     }
 
     /**
@@ -647,7 +830,7 @@ Class BD{
     public function MostrarTablaTotales()
     {
         if(count(self::$arraytotales)!=3){
-            echo "No hay datos para mostrar";
+        
         }else{
         $TotalSalidas=self::$arraytotales[0][5]+self::$arraytotales[1][5]+self::$arraytotales[2][5];
         $TotalContador=self::$arraytotales[0][6]+self::$arraytotales[1][6]+self::$arraytotales[2][6];
@@ -655,8 +838,11 @@ Class BD{
         echo "
         <table class='table  table-bordered table-hover text_table_pq'>
                 <thead class='thead-dark'>
-                    <tr>
-                        <th scope='col' colspan=3></th>
+                    <tr>";
+                    if($TotalSalidas!=$TotalContador){
+                        echo "<th scope='col' colspan=3>NO CUADRARON SALIDAS Y CONTADOR</th>";
+                    }else{ echo "<th scope='col' colspan=3></th>";}
+                    echo"
                     </tr>
                 </thead>
         <tbody>
@@ -678,7 +864,7 @@ Class BD{
     {
         if(count(self::$arraytotales)!=3)
         {
-            echo "No hay nada para mostrar";
+            
         }else{
         $BoletosTotales=self::$arraytotales[0][7]+self::$arraytotales[1][7]+self::$arraytotales[2][7];
         $TotalTarjetas=self::$arraytotales[0][4]+self::$arraytotales[1][4]+self::$arraytotales[2][4]; //ENTRADA TARJETAS
@@ -724,7 +910,8 @@ Class BD{
 }
 
     public function MostrarDiaSiguiente()
-    {    
+    {    if(isset(self::$fecha))
+        {
         echo "
         <table class='table table-hover text_table_pq'>
         <thead class='thead-dark'>
@@ -759,14 +946,15 @@ Class BD{
             </tr>
         </tbody>
     </table>";
-    self::modal_DiaSig();
+    self::modal_DiaSig();}
+    
     }
 
     public function boletos_fisico()
     { 
         if(count(self::$arraytotales)!=3)
         {
-            echo "No hay nada para mostrar";
+            
         }else {
             $nuevo_array=self::$arraytotales[0][10];
             $BoletosTotales=self::$arraytotales[0][7]+self::$arraytotales[1][7]+self::$arraytotales[2][7];
@@ -846,7 +1034,7 @@ Class BD{
     {
         if(count(self::$array_dinero)!=3)
         {
-            echo "No hay nada para mostrar";
+         
         }else{
         $dinero_tarjetas=self::$array_dinero;
         $Fecha=self::$fecha;
@@ -977,7 +1165,7 @@ Class BD{
     {
         if(count(self::$boletos_totales)!=3)
         {
-            echo "NO hay nada para mostrar";
+      
         }else{
         $boletos_cobrados=self::$boletos_totales;
         $turno=self::$array_turnos;
@@ -1118,9 +1306,21 @@ Class BD{
     {
         $cone=new Conneciones();
         $cone->Conectar();
-        $eliminarEmpleado="DELETE From empledos_cajeros WHERE idempledos_cajeros=$idEmpleado";
+        $eliminarEmpleado="UPDATE empledos_cajeros SET estatus_cajero=0 WHERE idempledos_cajeros=$idEmpleado";
         $resultadoEliminar=$cone->ExecuteQuery($eliminarEmpleado) or die ("Error en eliminar empleados");
-        header('Location: cajeros.php');
+        echo "<script>
+        swal({
+            title: 'Has eliminado usuario', //titulo 
+            text: 'Se elimino un administrador.', //texto del alert
+            icon: 'error', //tipo de icono: success, info, error, warning
+            button: 'Continuar', //nombre del boton
+            //className: 'success',  //no sé como se usa
+            closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+            //timer: 4000, //tiempo para que desaparezca
+            }).then((value)=>{
+                window.location.href='cajeros.php';
+            });
+        </script>";
         $cone->Cerrar();
     }
     public function ModificarEmpleado($idEmpleado,$Nombre,$Apellido,$Usuario,$contrasena)
@@ -1131,7 +1331,19 @@ Class BD{
         usuario_caje='$Usuario', password_caje='$contrasena' WHERE idempledos_cajeros=$idEmpleado";
        // print_r($modificarEmpleado);
         $resultadoModif=$cone->ExecuteQuery($modificarEmpleado) or die ("Error al modificar");
-        header('Location:cajeros.php');
+        echo "<script>
+        swal({
+            title: 'Tarea realizada', //titulo 
+            text: 'Se modificó correctamente el Cajero!', //texto del alert
+            icon: 'success', //tipo de icono: success, info, error, warning
+            button: 'Continuar', //nombre del boton
+            //className: 'success',  //no sé como se usa
+            //closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+            //timer: 3000, //tiempo para que desaparezca
+            }).then((value)=>{
+                window.location.href='cajeros.php';
+            });
+            </script>";
         $cone->Cerrar();
     }
     public function InsertarNuevoCajero($Nombre,$Apellido,$Usuario,$contrasena){
@@ -1140,9 +1352,21 @@ Class BD{
         $cone->Conectar();
 
         $insertarNuevoCajero="INSERT INTO empledos_cajeros (idempledos_cajeros,Nombre_cajero,apellido_patCaje,usuario_caje,password_caje,
-        turnos_caje_idturnos_caje) VALUES (null,'$Nombre','$Apellido','$Usuario','$contrasena',1)";
+        estatus_cajero) VALUES (null,'$Nombre','$Apellido','$Usuario','$contrasena',1)";
        $resultado_nuevo=$cone->ExecuteQuery($insertarNuevoCajero) or die("ERROR AL INSERTAR NUEVO CAJERO");
-        header('Location:cajeros.php');
+       echo "<script>
+       swal({
+           title: 'Tarea realizada', //titulo 
+           text: 'Se agregó correctamente el cajero!', //texto del alert
+           icon: 'success', //tipo de icono: success, info, error, warning
+           button: 'Continuar', //nombre del boton
+           //className: 'success',  //no sé como se usa
+           //closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+           //timer: 3000, //tiempo para que desaparezca
+           }).then((value)=>{
+               window.location.href='cajeros.php';
+           });
+           </script>";
         $cone->Cerrar();
     }
 

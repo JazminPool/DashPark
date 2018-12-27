@@ -1,5 +1,6 @@
 <?php
 include("Editar_datos.php");
+include("links.php");
 if(isset($_POST['cancelar_admin']))
 {header('Location:cortefinal.php');}
 else if(isset($_POST['guardar_admin']))
@@ -37,7 +38,19 @@ else if(isset($_POST['guardar_admin']))
                 $totalCobrados=$_POST['boletosTotales'];
                 editar_bd::ObtenerFecha($fecha);
                 editar_bd::enviar_fisicos($fecha,$totalCobrados);
-                header('Location:cortefinal.php');
+                echo "<script>
+                swal({
+                    title: 'Tarea realizada', //titulo 
+                    text: 'Se inserto correctamente los boletos fisicos!', //texto del alert
+                    icon: 'success', //tipo de icono: success, info, error, warning
+                    button: 'Continuar', //nombre del boton
+                    //className: 'success',  //no sé como se usa
+                    //closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+                    //timer: 3000, //tiempo para que desaparezca
+                    }).then((value)=>{
+                        window.location.href='cortefinal.php';
+                    });
+                    </script>";
 
             }
         else if(isset($_POST['guardarFisicos']))
@@ -48,9 +61,19 @@ else if(isset($_POST['guardar_admin']))
                 $turno3_efectivo=$_POST['turno3_efectivo'];
                 editar_bd::ObtenerFecha($fecha);
                 editar_bd::enviar_efectivo($turno1_efectivo,$turno2_efectivo,$turno3_efectivo);
-                //header('Location:cortefinal.php');
-                header("Location:cortefinal.php?date=".urlencode($fecha));                 
-                
+                echo "<script>
+                swal({
+                    title: 'Tarea realizada', //titulo 
+                    text: 'Se agrego correctamente el efectivo del turno!', //texto del alert
+                    icon: 'success', //tipo de icono: success, info, error, warning
+                    button: 'Continuar', //nombre del boton
+                    //className: 'success',  //no sé como se usa
+                    //closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+                    //timer: 3000, //tiempo para que desaparezca
+                    }).then((value)=>{
+                        window.location.href='cortefinal.php';
+                    });
+                    </script>";
             } 
         else if(isset($_POST['guardarDiaSig']))
             {
@@ -60,8 +83,20 @@ else if(isset($_POST['guardar_admin']))
                 $contador_siguiente=$_POST['contador_siguiente'];
                 $coches_siguiente=$_POST['coches_siguiente'];
                 editar_bd::ObtenerFecha($fecha);
-                editar_bd::dia_siguiente($emisor_siguiente,$rojos_siguiente,$contador_siguiente,$coches_siguiente);
-                header('Location:cortefinal.php');
+                editar_bd::BuscarSiguiente($emisor_siguiente,$rojos_siguiente,$contador_siguiente,$coches_siguiente,$fecha);
+                echo "<script>
+                swal({
+                    title: 'Tarea realizada', //titulo 
+                    text: 'Se agrego correctamente el día siguiente!', //texto del alert
+                    icon: 'success', //tipo de icono: success, info, error, warning
+                    button: 'Continuar', //nombre del boton
+                    //className: 'success',  //no sé como se usa
+                    //closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+                    //timer: 3000, //tiempo para que desaparezca
+                    }).then((value)=>{
+                        window.location.href='cortefinal.php';
+                    });
+                    </script>";
             }
         else if(isset($_POST['AgregarCincho']))
             {
@@ -93,5 +128,6 @@ else if(isset($_POST['guardar_admin']))
                 $finCorte=$_POST['finCorte'];
                 editar_bd::actualizarNuevoCorte($cochesNuevo,$entradasNuevo,$saltarjeNuevo,$cobradosNuevo,$toleranciaNuevo,$guadaNuevo,$cortesiaNuevo,$perdidosNuevo,$fecha,$idFolio,$observacionNuevo,
             $inicioCorte.":00",$finCorte.":00",$cochesAnterior);
+           
             }
 ?>

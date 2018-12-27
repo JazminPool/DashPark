@@ -14,6 +14,12 @@ if(!isset($_SESSION['Admin'])){
     <?php include("DatosBd.php");?>
 
 </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<script src="js/functions.js"></script>
+
+<script src="js/sweetalert.min.js"></script>
+
 <body class="bg_content">   
     <?php include('nav.php')?>
    <div class="main">
@@ -33,7 +39,13 @@ if(!isset($_SESSION['Admin'])){
                             <p class="p_card">Seleccionar fecha</p>
                             <button type="submit" name="consultar_cortes" class="btn btn_main btn-block btn-sm">Consultar</button>                        
                         </div><!--fin cardbody-->
-                       
+                        <?php     
+                            if(isset($_POST['consultar_cortes']))
+                            { 
+                                $fecha_corte=$_POST['date'];
+                                $fecha=date("Ymd",strtotime($fecha_corte)); //Debe ser así para que agarre la consulta
+                                echo "Estas en el corte\t".$fecha_corte;
+                             ?>
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card-->
             </div><!--Fin row de seccion:opciones-->
@@ -42,19 +54,13 @@ if(!isset($_SESSION['Admin'])){
                 <div class="card w-100 mb-2 padcar shadows">
                     <div class="row"> <!--CRAN AL ALACRAN AQUI-->      
                           <?php     
-                            if(isset($_POST['consultar_cortes']))
-                            {                            
-                                $fecha_corte=$_POST['date'];
-                                $fecha=date("Ymd",strtotime($fecha_corte)); //Debe ser así para que agarre la consulta
-                                BD::trae_datos($fecha);
-                                //BD::mostrar_cortefinal($fecha);     
-                                                     
+                                $var=BD::trae_datos($fecha);
                         ?>
                     </div><!--fin row de tablas -->
                     <div class="row container">    
                         <h6 class="p_card">
-                            <strong>Resumen del día:</strong><br>
-                            Aquí irán comentarios del resumen final del día.
+                        <strong>Resumen del día:</strong><br>
+                            <?php BD::MandarResultado(); ?>
                         </h6>
                     </div> <!--Fin del row seccion:resumen-->
                     
@@ -97,13 +103,8 @@ if(!isset($_SESSION['Admin'])){
                         
                         <!-- Dia siguiente -->
                         <div class="col">
-                         <?php BD::MostrarDiaSiguiente(); 
-                            }else if(isset($_POST['ver_admin']))
-                         {
-                            $fecha_corte=$_POST['date'];
-                            $fecha=date("Ymd",strtotime($fecha_corte));
-                            header("Location:admonExcel.php?date=".urlencode($fecha));
-                         } ?>
+                         <?php BD::MostrarDiaSiguiente(); }
+                            }?>
                         </div><!--fin de columna Dia sifuiente-->
 
                     </div><!--fin row de dia sig-->
@@ -115,4 +116,4 @@ if(!isset($_SESSION['Admin'])){
    </div><!--Fin main-->
 </body>
 </html>
-                        <?php }ob_end_flush(); ?>
+                        <?php ob_end_flush(); ?>

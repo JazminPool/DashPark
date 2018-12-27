@@ -42,7 +42,7 @@ if(!isset($_SESSION['Admin'])){
                         </div><!--fin col-md-4-->
                     </div><!--fin row de select y date-->
                 </div> <!--Fin card header -->
-
+        </form>
                 <div class="card w-100 mb-2 padcar"> <!--Card del formulario-->
                     <div class="">
                         <?php
@@ -58,7 +58,6 @@ if(!isset($_SESSION['Admin'])){
                         {
                             if(empty($_POST['idAmin']))
                             {
-                                echo "Paso a nuevo";
                                $nomb=$_POST['nomAdmin'];
                                $apellidos=$_POST['ApeAdmin'];
                                $usuario=$_POST['usuAdmin'];

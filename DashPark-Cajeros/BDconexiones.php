@@ -16,6 +16,19 @@ class consultas{
         }
         return $cajero_id;
     }
+    public function VerificaTurno($turno)
+    {
+        $cone=new conexionbd();
+        $cone->Conectar_bd();
+        $turno_id=' ';
+        $verificaTurno="SELECT * FROM turnos_caje WHERE idturnos_caje=$turno";
+        $resultadoTurno=$cone->ExecuteQuery($verificaTurno) or die ("Error en turno");
+        while($colTurno=$resultadoTurno->fetch_array())
+        {
+         $turno_id=$colTurno['idturnos_caje'];   
+        }
+        return $turno_id;
+    }
     public function trae_turnos(){
         $cone=new conexionbd();
         $cone->Conectar_bd();
@@ -32,7 +45,7 @@ class consultas{
         echo "</select>"; 
     }
 
-    public function insertar_datos($folio_rojo, $folio_emisor, $contador, $coches_d, $e_tarjeta, $s_tarjeta, $b_cobr, $b_tol, $b_cort, $b_guada, $b_perd,$fecha,$horaEntrada,$horaSalida,$idCajero){
+    public function insertar_datos($folio_rojo, $folio_emisor, $contador, $coches_d, $e_tarjeta, $s_tarjeta, $b_cobr, $b_tol, $b_cort, $b_guada, $b_perd,$fecha,$horaEntrada,$horaSalida,$idCajero,$turnoCajero){
         $resultadoBoletos=$b_cobr+$b_tol+$b_cort+$b_guada+$b_perd;
         $salidasTotales=$resultadoBoletos+$s_tarjeta;
         $conexion = new conexionbd();
@@ -50,9 +63,10 @@ class consultas{
         $query4=("INSERT INTO boletos_tipos (idboletos_tipos, boletos_cobrados, boletos_tolerancia, boletos_guada, boletos_cortesia, boletos_perdidos, boletos_totales) VALUES ($folio_rojo, $b_cobr, $b_tol, $b_guada, $b_cort, $b_perd, $resultadoBoletos)");
         $resultadoCajero=$conexion->ExecuteQuery($query4) or die ("Error en al ingresar boletos tipos");
         
-        $query5=("INSERT INTO reportes_cortes (idreportes_cortes, fecha_corte, idcajeros, idrojos, id_contador,emisor_idfolio,coches_idcoches,boletos_idboletos,tarjetas_idtarjetas,total_salidas,observacion_cajero,efectivo_tarjeta, inicio_corte,fin_corte) 
-        VALUES ($folio_rojo, $fecha,$idCajero,$folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo,$salidasTotales,NULL,NULL,'$horaEntrada','$horaSalida')");
-        $resultadoCajero=$conexion->ExecuteQuery($query5) or die ("Error en al ingresar reportes cortes");   
+        $query5=("INSERT INTO reportes_cortes (idreportes_cortes, fecha_corte, idcajeros, idrojos, id_contador,emisor_idfolio,coches_idcoches,boletos_idboletos,tarjetas_idtarjetas,total_salidas,observacion_cajero,efectivo_tarjeta, inicio_corte,fin_corte,turnos_caje_idturnos_caje) 
+        VALUES ($folio_rojo, $fecha,$idCajero,$folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo, $folio_rojo,$salidasTotales,NULL,NULL,'$horaEntrada','$horaSalida',$turnoCajero)");
+        $resultadoCajero=$conexion->ExecuteQuery($query5) or die ("Error en al ingresar reportes cortes");
+        
          $conexion->Cerrar();     
         //print_r($query5);
 

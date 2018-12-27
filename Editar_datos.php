@@ -18,7 +18,6 @@ Class editar_bd {
         $cone->Conectar();
 
         $trae_ids="SELECT idreportes_cortes FROM reportes_cortes WHERE fecha_corte=$fecha";
-        print_r($trae_ids);
         echo "<br><br>";
         $resultado_ids=$cone->ExecuteQuery($trae_ids) or die("Error al traer turnos");
 
@@ -155,15 +154,40 @@ Class editar_bd {
         $cone->Cerrar();
     }
 
-    public function dia_siguiente($em_sig,$rojo_sig,$conta_sig,$coches_sig)
+    public function dia_siguiente($em_sig,$rojo_sig,$conta_sig,$coches_sig,$fecha)
     {
         $cone=new Conneciones();
         $cone->Conectar();
-        $fechadeSig=self::$fecha;
         $insertarDiaSiguiente="INSERT INTO dia_siguiente (iddia_siguiente,fecha_siguiente,folio_emisor,folios_rojos,
-        contador,coches_dentro,resumen_dia) VALUES ($rojo_sig,$fechadeSig,$em_sig,$rojo_sig,$conta_sig,$coches_sig,null)";
+        contador,coches_dentro,resumen_dia) VALUES ($rojo_sig,$fecha,$em_sig,$rojo_sig,$conta_sig,$coches_sig,null)";
         $resultadoSiguiente=$cone->ExecuteQuery($insertarDiaSiguiente) or die ("ERROR AL INSERTAR DIA SIGUIENTE");
         $cone->Cerrar();
+        
+    }
+    public function ActualizarSiguiente($em_sig,$rojo_sig,$conta_sig,$coches_sig,$fecha)
+    {
+        $cone=new Conneciones();
+        $cone->Conectar();
+        $actualizarSiguiente="UPDATE dia_siguiente SET folio_emisor=$em_sig ,folios_rojos=$rojo_sig,
+        contador=$conta_sig,coches_dentro=$coches_sig WHERE fecha_siguiente=$fecha";
+        $resultadoActualizar=$cone->ExecuteQuery($actualizarSiguiente) or die ("Error en actualizar");
+        $cone->Cerrar();
+    }
+    public function BuscarSiguiente($em_sig,$rojo_sig,$conta_sig,$coches_sig,$fecha)
+    {
+        $cone=new Conneciones();
+        $cone->Conectar();
+        $buscarId="SELECT * FROM dia_siguiente WHERE fecha_siguiente=$fecha";
+        $resultado_buscar=$cone->ExecuteQuery($buscarId) or die ("Error en la consulta");
+        $verificador=mysqli_num_rows($resultado_buscar);
+        if($verificador>0)
+        {
+            self::ActualizarSiguiente($em_sig,$rojo_sig,$conta_sig,$coches_sig,$fecha);
+          
+        }
+        else{
+            self:: dia_siguiente($em_sig,$rojo_sig,$conta_sig,$coches_sig,$fecha);
+        }
         
     }
 
@@ -176,6 +200,7 @@ Class editar_bd {
             $MostrarAdministradores="SELECT * from administrados_caje";
             $resultadoAdministrados=$cone->ExecuteQuery($MostrarAdministradores) or die ("ERROR AL CONSULTAR ADMIN");
             echo "<select class='form-control form-control-sm text-center' name='idAmin'>";
+            echo "<option value=''>Selecciona un Administrador</option>";       
                 while($columnaAdmin=$resultadoAdministrados->fetch_array())
                 {
                     echo "<option value='".$columnaAdmin['idadministrados_caje']."'>".$columnaAdmin['nombre_admin']." ".$columnaAdmin['apellido_pat_admin']."</option>";
@@ -295,18 +320,41 @@ Class editar_bd {
         $insertarNuevoAdmin="INSERT INTO administrados_caje (idadministrados_caje,nombre_admin,apellido_pat_admin,usuario_admin,password_admin)
          VALUES (null,'$nomb','$apellidos','$usuario','$password')";
        $resultado_nuevo=$cone->ExecuteQuery($insertarNuevoAdmin) or die("ERROR AL INSERTAR NUEVO ADMINISTRADOR");
-        header('Location:administradores.php');
+       echo "<script>
+       swal({
+           title: 'Tarea realizada', //titulo 
+           text: 'Se inserto correctamente el administrador!', //texto del alert
+           icon: 'success', //tipo de icono: success, info, error, warning
+           button: 'Continuar', //nombre del boton
+           //className: 'success',  //no sé como se usa
+           //closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+           //timer: 3000, //tiempo para que desaparezca
+           }).then((value)=>{
+               window.location.href='administradores.php';
+           });
+           </script>";
         $cone->Cerrar();
     }
     public function ModificarAdmin($idAdmin,$Nombre,$Apellido,$Usuario,$contrasena)
     {
         $cone=new Conneciones();
         $cone->Conectar();
-        $modificarAdmin="UPDATE empledos_cajeros SET Nombre_cajero='$Nombre', apellido_patCaje='$Apellido',
-        usuario_caje='$Usuario', password_caje='$contrasena' WHERE idempledos_cajeros=$idAdmin";
-       // print_r($modificarEmpleado);
+        $modificarAdmin="UPDATE administrados_caje SET nombre_admin='$Nombre', apellido_pat_admin='$Apellido',
+        usuario_admin='$Usuario', password_admin='$contrasena' WHERE idadministrados_caje=$idAdmin";
         $resultadoModif=$cone->ExecuteQuery($modificarAdmin) or die ("Error al modificar administrador");
-        header('Location:administradores.php');
+        echo "<script>
+        swal({
+            title: 'Tarea realizada', //titulo 
+            text: 'Se modificó correctamente el administrador!', //texto del alert
+            icon: 'success', //tipo de icono: success, info, error, warning
+            button: 'Continuar', //nombre del boton
+            //className: 'success',  //no sé como se usa
+            //closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+            //timer: 3000, //tiempo para que desaparezca
+            }).then((value)=>{
+                window.location.href='administradores.php';
+            });
+            </script>";
         $cone->Cerrar();
     }
     public function EliminarAdmin($idAdmin)
@@ -315,7 +363,19 @@ Class editar_bd {
         $cone->Conectar();
         $eliminarAdmin="DELETE From administrados_caje WHERE idadministrados_caje=$idAdmin";
         $resultadoEliminar=$cone->ExecuteQuery($eliminarAdmin) or die ("Error en eliminar Admin");
-        header('Location: administradores.php');
+        echo "<script>
+        swal({
+            title: 'Has eliminado usuario', //titulo 
+            text: 'Se elimino un administrador.', //texto del alert
+            icon: 'error', //tipo de icono: success, info, error, warning
+            button: 'Continuar', //nombre del boton
+            //className: 'success',  //no sé como se usa
+            closeOnClickOutside: false, //para que no desaparezca cuando se da click afuera
+            //timer: 4000, //tiempo para que desaparezca
+            }).then((value)=>{
+                window.location.href='administradores.php';
+            });
+        </script>";
         $cone->Cerrar();
     }
 
@@ -342,7 +402,10 @@ Class editar_bd {
         $actualizarSalidas="UPDATE reportes_cortes SET total_salidas=".$resultadoTotales.", observacion_cajero='".$observacionNuevo."',
         inicio_corte='".$inicioCorte."', fin_corte='".$finCorte."' WHERE idreportes_cortes=".$idFolio."";
         $resultadoSalidas=$cone->ExecuteQuery($actualizarSalidas) or die ("ERROR salidas reportes");
-        header('Location:cortefinal.php');
+        echo'<script type="text/javascript">
+        alert("Se actualizo corte correctamente");
+        window.location.href="cortefinal.php";
+        </script>';
     }
       
 }          
