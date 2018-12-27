@@ -10,7 +10,7 @@
                 $cone->Conectar();  //llamo al metodo de la clase donde esta la conexion mediante su objeto
 
                 $boletos_totales_anual = array();
-                for ($i=0; $i <5 ; $i++) { 
+                for ($i=0; $i <5 ; $i++) { //solo son 4 años los que muestro
                     $ano = $i+$ano_Actual;
                     $sql = $cone->ExecuteQuery("SELECT SUM(boletos_totales) AS boltotan 
                                                 FROM reportes_cortes INNER JOIN boletos_tipos ON idreportes_cortes=idboletos_tipos 
@@ -77,7 +77,7 @@
     //diario:
     if(isset($_POST['month'])&&isset($_POST['year'])){
         $classdi = new Consultas;
-        $exClase_diar = $classdi->chart_diario_boltot(8,2018);
+        $exClase_diar = $classdi->chart_diario_boltot(10,2018);
         exit(json_encode($exClase_diar));
     }
 

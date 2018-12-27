@@ -1,11 +1,16 @@
 body{
     font-family: 'Poppins', sans-serif !important;
     background-color: #222831 ; 
+    /* background-color: #e8e8e8; f3f8fb */
     /* background-color: #f7f7f7 ;  */
     color: #eeb6b7;
 }
 .bg-dark_{
     background-color: #1a1d24;
+}
+.bg-white_{
+    background-color: #101216;
+    font-size: 13px;
 }
 /* 
     colores:
@@ -41,18 +46,56 @@ body{
 	text-align: center;
 	font-weight: 600 !important;
 }
+
 .itemnav{
     text-decoration: none !important;
-    color: #f59bac;
+    color: #bbbbbb;
+    /* color: #f59bac; */
 }
 .itemnav:hover{
-    color: #f9ffee;
+    color: #97bbcd;
 }
+.navsec{
+    padding-right: 25%;
+    padding-left: 25%;
+}
+
+/*****************************
+* Config de select  
+******************************/
+.custom-select{
+    font-size: 17px !important;
+    font-weight: 700;
+}
+
+
+/* Opciones del nav principal */
+/**********************
+* Colores de iconos nav
+***********************/
+#sidenav .rep_color:hover{
+	color: #a7d2cb !important;
+}
+#sidenav .corte_color:hover{
+	color: #f2d388 !important;
+}
+#sidenav .chart_color:hover{
+	color: #c98474 !important;
+}
+#sidenav .cincho_color:hover{
+	color: #c97490 !important;
+}
+#sidenav .cajer_color:hover{
+	color: #93c178 !important;
+}
+#sidenav .admin_color:hover{
+	color: #eeb6b7 !important;
+}
+
+
 .options{
-    /* left: 50%; */
-    background-color: #efba353d;
-    margin-top: 0px;
-    /* width: 80%; */
+    margin-right: 1px !important;
+    width: 12% !important;
 }
 .left{
     float: left !important;

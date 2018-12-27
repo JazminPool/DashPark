@@ -17,10 +17,10 @@
         <div class="row">
             <div class="col-md-4 text-center">
                 <h4>Boletos totales por año</h4>
-                <button class="btn" onclick="tareabien();">Tarea hecha</button>
+                <!-- <button class="btn" onclick="tareabien();">Tarea hecha</button>
                 <button class="btn" onclick="borrar();">Advertencia</button>
                 <button class="btn" onclick="errorlogin();">Login</button>
-                <button class="btn" onclick="nofound();">No se encontró</button>
+                <button class="btn" onclick="nofound();">No se encontró</button> -->
             </div><!--Fin col-->
         </div><!--Fin row title anual-->
         <br>
@@ -40,8 +40,25 @@
             <div class="col-md-4 text-center">
                 <h4>Boletos totales por meses</h4>
             </div>
-            <div class="col-sm-1">
-                <select onchange="mensuales(this.value);" class="custom-select custom-select-sm">
+            <div class="col-sm-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Año</label>
+                    </div>
+                    <!-- años -->
+                    <select id="year" onchange="mensuales(this.value);" class="custom-select">
+                        <?php
+                            for ($i=2018; $i<= 2021; $i++) { 
+                                if ($i == 2018) {
+                                    echo '<option value="'.$i.'" selected>' .$i. '</option>';
+                                }else{
+                                    echo '<option value="'.$i.'">' .$i. '</option>';
+                                }
+                            }
+                        ?>
+                    </select>
+                </div>
+                <!-- <select onchange="mensuales(this.value);" class="custom-select custom-select-sm">
                     <?php
                         for ($i=2018; $i<= 2021; $i++) { 
                             if ($i == 2018) {
@@ -51,7 +68,7 @@
                             }
                         }
                     ?>
-                </select>
+                </select> -->
             </div> <!--Fin titulo-->
         </div><!--Fin de row title mensual-->
         <br>
@@ -73,23 +90,36 @@
             <div class="col-md-4 text-center">
                 <h4>Boletos totales diarios</h4>
             </div>
-            <div class="col-md-1">
-                <!-- meses: -->
-                <select id="month" onchange="diario($('#month').val(),$('#year').val());" class="custom-select custom-select-sm">
-                    <?php
-                        for ($i=1; $i <= 12; $i++) { 
-                            if ($i == 1) {
-                                echo '<option value="'.$i.'" selected>' .$i. '</option>';
-                            }else{
-                                echo '<option value="'.$i.'">' .$i. '</option>';
+            <div class="col-md-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Mes</label>
+                    </div>
+                     <!-- meses: -->
+                    <select id="month" onchange="diario($('#month').val(),$('#year').val());" class="custom-select">
+                        <?php
+                            $array_months = array("","Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+                            /*El primer valor del array de arriba es 'vacio' porque dentro
+                            * de la logica de los meses, va de 1 a 12,entonces el primer valor es 0
+                            */
+                            for ($i=1; $i <= 12; $i++) { 
+                                if ($i == 1) {
+                                    echo '<option value="'.$i.'" selected>'. $i ." - ". $array_months[$i] . '</option>';
+                                }else{
+                                    echo '<option value="'.$i.'">' . $i ." - ". $array_months[$i] .'</option>';
+                                }
                             }
-                        }
-                    ?>
-                </select>
+                        ?>
+                    </select>
+                </div>
             </div>
-            <div class="col-md-1">
-                <!-- años -->
-                <select id="year" onchange="diario($('#month').val(),$('#year').val());" class="custom-select custom-select-sm">
+            <div class="col-md-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Año</label>
+                    </div>
+                    <!-- años -->
+                    <select id="year" onchange="diario($('#month').val(),$('#year').val());" class="custom-select">
                     <?php
                         for ($i=2018; $i<= 2021; $i++) { 
                             if ($i == 2018) {
@@ -98,8 +128,9 @@
                                 echo '<option value="'.$i.'">' .$i. '</option>';
                             }
                         }
-                    ?>
-                </select>
+                        ?>
+                    </select>
+                </div>
             </div><!--Fin del titulo-->
         </div><!--Fin del row title diario-->
         <br>
@@ -221,11 +252,12 @@
                         labels : ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                         datasets: [
                             {
+                                label: "bisdajklz", //label
                                 fillColor : '#97bbcd80', //barra
                                 strokeColor : '#97bbcdcc', //borde
                                 highlightFill: '#97bbcdbf', //hover barra
                                 highlightStroke: '#97bbcd', //hover borde
-                                data: response
+                                data: response 
                             }
                         ]
                     }
@@ -243,11 +275,18 @@
         
         function diario(month, year){
             $('.diario').html('<canvas id="grafico_diario" width="450"></canvas>');
+            /**prueba abr si jala */
+                var mes_prueba= $("#month").val();
+                var ano_prueba= $("#year").val();
+            /*/fin prueba abr si jala */
             $.ajax({
                 type: 'POST',
                 url:'consultas.php',
-                data: 'month='+month,
-                data: 'year='+year,
+                /*data: {selected: valor1, selected2: valor2 },*/
+                /*data: {'month='+month, 'year='+year },*/
+                data: { month: mes_prueba, year: ano_prueba },
+                /*data: 'month='+month, el weno
+                data: 'year='+year, el wenocgun*/
                 dataType: 'JSON',
 
                 success:function(response){
